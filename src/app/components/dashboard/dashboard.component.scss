@@ -1,0 +1,14 @@
+@import "../../colors";
+
+.title-spacer {
+  flex: 1 1 auto;
+}
+
+.toolbar-title {
+  margin-left: 20px;
+}
+
+.mat-toolbar {
+  background: $toolbar-background;
+  color: $toolbar-text;
+}
