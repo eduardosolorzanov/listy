@@ -1,6 +1,6 @@
 # Listy
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 15.1.5.
+Listy is web application to easily create and keep track of lists.
 
 ## Development server
 
