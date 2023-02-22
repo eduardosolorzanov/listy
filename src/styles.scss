@@ -4,15 +4,30 @@
 
 /***** Imports *****/
 
-@import './app/colors.scss';
+@import './app/style-constants.scss';
 @import './app/fonts.scss';
 
 /***** Global styles *****/
 
 html, body { height: 100%; }
-body { margin: 0; font-family: "Roboto Slab", "Roboto Slab", sans-serif; }
+body { 
+  margin: 0; 
+  font-family: "Roboto Slab", "Roboto Slab", sans-serif; 
+  font-size: 16px;
+}
 h1 {
-  font-size: 24px;
+  font-size: 30px;
+}
+h2 {
   margin: 0px;
-  font-family: "Roboto Slab"
+  font-size: 22px;
+}
+h3 {
+  margin: 0px;
+  font-size: 18px;
+}
+h4 { // Body equivalent
+  margin: 0px;
+  font-size: 16px;
+  // font-style: bold;
 }

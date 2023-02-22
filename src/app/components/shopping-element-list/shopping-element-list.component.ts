@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { ShoppingElement } from '../../interfaces/interfaces';
+import { Component, Input } from '@angular/core';
+import { ShoppingElement, ShoppingElementList } from '../../interfaces/interfaces';
 
 @Component({
   selector: 'shopping-element-list',
@@ -8,37 +8,25 @@ import { ShoppingElement } from '../../interfaces/interfaces';
 })
 export class ShoppingElementListComponent {
 
+  /* –– Inputs
+   * –––––––––––––––––––––– */
+
+  @Input() shoppingElementList: ShoppingElementList = {
+    name: '', 
+    shoppingElements: []
+  }
+  
   /* –– Constructor
    * –––––––––––––––––––––– */
   
   constructor() { }
 
-  ngOnInit(): void {
-    console.log('hola estoy iniciando');
-  }
+  ngOnInit(): void {}
 
   /* –– Variables
    * –––––––––––––––––––––– */
 
   name: string = "Steve";
-
-  products: ShoppingElement[] = [
-    {
-      name: 'tomate',
-      price: 50,
-      description: 'un tomatito'
-    },
-    {
-      name: 'pera',
-      price: 30,
-      description: 'una perita'
-    },
-    {
-      name: 'mango',
-      price: 100,
-      description: 'un mango, muy deli'
-    },
-  ]
 
   /* –– Functions
    * –––––––––––––––––––––– */

@@ -1,14 +1,29 @@
-@import "../../colors";
-
-.title-spacer {
-  flex: 1 1 auto;
-}
+@import "../../style-constants.scss";
 
 .toolbar-title {
   margin-left: 20px;
 }
 
+.toolbar-elements-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-items: center;
+  column-gap: 10px;
+}
+
 .mat-toolbar {
   background: $toolbar-background;
   color: $toolbar-text;
+}
+
+.shopping-list-container {
+  padding-left: 10%;
+  padding-right: 10%;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  row-gap: 15px;
 }

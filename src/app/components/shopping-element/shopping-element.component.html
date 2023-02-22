@@ -1,0 +1,39 @@
+
+<div class="shopping-element-card">
+  <div class="shopping-element-name">
+    <div class="color-icon" [ngStyle]="{'background-color' : iconColor}"></div>
+    <div>
+      <h4>{{shoppingElement.name}}</h4>
+      <div class="item-information">
+        <span class="label">Precio por unidad: </span> <span>¢{{shoppingElement.unitPrice}}</span>
+      </div>
+      <div class="item-information">
+        <span class="label">Cantidad: </span> <span>{{shoppingElement.quantity}}</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="right-section">
+    
+    <div class="price-section">
+      <div class="price-information">
+        Total
+      </div>
+      <h3>
+        ¢{{totalPrice}}
+      </h3>
+    </div>
+  
+    <div class="actions-section">
+      <button mat-icon-button>
+        <mat-icon>edit</mat-icon>
+      </button>
+      <button mat-icon-button>
+        <mat-icon>delete</mat-icon>
+      </button>
+    </div>
+
+  </div>
+  
+</div>  
+

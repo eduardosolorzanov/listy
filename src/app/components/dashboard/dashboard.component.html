@@ -1,18 +1,23 @@
-<mat-toolbar>
-  <button mat-icon-button>
-    <mat-icon>menu</mat-icon>
-  </button>
-  <button mat-icon-button aria-label="Example icon button with a vertical three dot icon">
-    <mat-icon>more_vert</mat-icon>
-  </button>
+<!-- Header -->
+
+<mat-toolbar class="toolbar-elements-container">
+  <span class="buttons-container">
+    <button mat-icon-button>
+      <mat-icon>menu</mat-icon>
+    </button>
+    <button mat-icon-button>
+      <mat-icon>more_vert</mat-icon>
+    </button>
+  </span>
   <span class="toolbar-title">
     <h1>Listy</h1>
   </span>
-  <span class="title-spacer"></span>
-  <button mat-icon-button>
-    <mat-icon>favorite</mat-icon>
-  </button>
-  <button mat-icon-button>
-    <mat-icon>share</mat-icon>
-  </button>
 </mat-toolbar>
+
+<!-- Shopping element list -->
+<div class="shopping-list-container">
+  <shopping-element-list-header></shopping-element-list-header>
+  <shopping-element-list [shoppingElementList]="testShoppingElementList"></shopping-element-list>
+</div>
+
+
