@@ -1,7 +1,23 @@
+@import "../../style-constants.scss";
+
 .shopping-elements-container {
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
   justify-content: space-around;
   row-gap: 10px;
+}
+
+.total-price-section {
+  display: flex;
+  flex-direction: row ;
+  align-items: center;
+  justify-content: flex-end;
+  padding-top: 10px;
+  padding-right: 143px;
+  column-gap: 20px;
+
+  .label {
+    color: $subtitle-text;
+  }
 }

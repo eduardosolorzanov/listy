@@ -2,4 +2,9 @@
   <div *ngFor="let shoppingElement of shoppingElementList.shoppingElements">
     <shopping-element [shoppingElement]="shoppingElement"></shopping-element>
   </div>
+  <div class="total-price-section">
+    <h2 class="label">Total</h2><h2>{{formattedFinalPrice}}</h2>
+  </div>
 </div>
+
+

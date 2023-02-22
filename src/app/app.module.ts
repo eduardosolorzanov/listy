@@ -12,6 +12,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { ShoppingElementComponent } from './components/shopping-element/shopping-element.component';
 import { ShoppingElementListHeaderComponent } from './components/shopping-element-list-header/shopping-element-list-header.component';
+import { CurrencyFormatterService } from './services/currency-formatter.service';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,7 @@ import { ShoppingElementListHeaderComponent } from './components/shopping-elemen
     MatButtonModule,
     MatCardModule
   ],
-  providers: [],
+  providers: [CurrencyFormatterService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

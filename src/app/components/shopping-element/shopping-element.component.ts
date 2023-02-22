@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { ShoppingElement } from 'src/app/interfaces/interfaces';
+import { CurrencyFormatterService } from 'src/app/services/currency-formatter.service';
 
 @Component({
   selector: 'shopping-element',
@@ -21,18 +22,20 @@ export class ShoppingElementComponent {
   /* –– Constructor
    * –––––––––––––––––––––– */
   
-  constructor() { }
+  constructor(private currencyFormatter: CurrencyFormatterService) { }
 
   ngOnInit(): void {
     this.totalPrice = this.shoppingElement.unitPrice * this.shoppingElement.quantity
     this.iconColor = this.generateRandomColor();
-    console.log('totalPrice: ', this.totalPrice);
-    console.log('iconColor: ', this.iconColor);
+    this.formattedTotalPrice = '¢' + this.currencyFormatter.getFormattedPrice(this.totalPrice);
+    this.formattedUnitPrice = '¢' + this.currencyFormatter.getFormattedPrice(this.totalPrice);
   }
 
   /* –– Variables
   * –––––––––––––––––––––– */
 
+  formattedTotalPrice: string = '';
+  formattedUnitPrice: string = '';
   totalPrice: number = 0;
   iconColor: string = '';
 

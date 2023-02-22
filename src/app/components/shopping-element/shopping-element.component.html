@@ -5,10 +5,10 @@
     <div>
       <h4>{{shoppingElement.name}}</h4>
       <div class="item-information">
-        <span class="label">Precio por unidad: </span> <span>¢{{shoppingElement.unitPrice}}</span>
+        <span class="label">Precio por unidad: </span><span>{{formattedUnitPrice}}</span>
+        <div class="item-information">
       </div>
-      <div class="item-information">
-        <span class="label">Cantidad: </span> <span>{{shoppingElement.quantity}}</span>
+        <span class="label">Cantidad: </span><span>{{shoppingElement.quantity}}</span>
       </div>
     </div>
   </div>
@@ -19,9 +19,7 @@
       <div class="price-information">
         Total
       </div>
-      <h3>
-        ¢{{totalPrice}}
-      </h3>
+      <h3>{{formattedTotalPrice}}</h3>
     </div>
   
     <div class="actions-section">

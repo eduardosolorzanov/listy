@@ -30,7 +30,7 @@ export class DashboardComponent {
       },
       {
         name: 'Albahaca',
-        unitPrice: 475,
+        unitPrice: 475.50,
         quantity: 4,
       },
       {
