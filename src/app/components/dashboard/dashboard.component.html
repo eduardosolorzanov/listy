@@ -17,7 +17,7 @@
 <!-- Shopping element list -->
 <div class="shopping-list-container">
   <shopping-element-list-header></shopping-element-list-header>
-  <shopping-element-list [shoppingElementList]="testShoppingElementList"></shopping-element-list>
+  <shopping-element-list [shoppingElementList]="testShoppingElementList" (onCreateShoppingElement)="createShoppingElement($event)"></shopping-element-list>
 </div>
 
 

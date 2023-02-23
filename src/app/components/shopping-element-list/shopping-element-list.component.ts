@@ -1,13 +1,29 @@
 import { Component, Input } from '@angular/core';
 import { CurrencyFormatterService } from 'src/app/services/currency-formatter.service';
 import { ShoppingElement, ShoppingElementList } from '../../interfaces/interfaces';
+import { Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'shopping-element-list',
   templateUrl: './shopping-element-list.component.html',
-  styleUrls: ['./shopping-element-list.component.scss']
+  styleUrls: ['./shopping-element-list.component.scss'],
 })
 export class ShoppingElementListComponent {
+
+  /* –– Outputs
+   * –––––––––––––––––––––– */
+
+  @Output() onCreateShoppingElement = new EventEmitter<ShoppingElement>();
+
+  createShoppingElement() {
+    let newShoppingElement: ShoppingElement =  {
+      name: 'Queso',
+      unitPrice: 4690,
+      quantity: 3,
+      notes: 'Un quesito'
+    }
+    this.onCreateShoppingElement.emit(newShoppingElement);
+  }
 
   /* –– Inputs
    * –––––––––––––––––––––– */
@@ -36,10 +52,6 @@ export class ShoppingElementListComponent {
 
   /* –– Functions
    * –––––––––––––––––––––– */
-
-  share(product: string) {
-    console.log(product);
-  }
 
   getTotalPrice(shoppingElementList: ShoppingElementList){
     let totalPrice = 0;

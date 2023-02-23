@@ -1,5 +1,22 @@
 @import "../../style-constants.scss";
 
+.add-button{
+  background-color: $button-background;
+  color: white;
+  width: 64px;
+  height: 64px;
+  // Specific to icon whithin add button
+  mat-icon{
+    width: 64px;
+    height: 64px; 
+    font-size: 36px;
+    // Fix icon position when font-size is larger than original
+    position: relative;
+    right: 12px;
+    top: 1px;
+  }
+}
+
 .shopping-elements-container {
   display: flex;
   flex-direction: column;
@@ -14,8 +31,8 @@
   align-items: center;
   justify-content: flex-end;
   padding-top: 10px;
-  padding-right: 143px;
-  column-gap: 20px;
+  padding-right: 55px;
+  column-gap: 23px;
 
   .label {
     color: $subtitle-text;

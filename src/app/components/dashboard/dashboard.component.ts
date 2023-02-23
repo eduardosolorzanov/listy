@@ -13,44 +13,52 @@ export class DashboardComponent {
   
   constructor() { }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.testShoppingElementList = {
+      name: 'Compras para cena formal',
+      shoppingElements: [
+        {
+          name: 'Tomate',
+          unitPrice: 200,
+          quantity: 8,
+          notes: 'Muy bueno para cocinar salsas'
+        },
+        {
+          name: 'Albahaca',
+          unitPrice: 475.50,
+          quantity: 4,
+        },
+        {
+          name: 'Aceite de oliva',
+          unitPrice: 3570,
+          quantity: 1,
+        },
+        {
+          name: 'Mantel',
+          unitPrice: 15600,
+          quantity: 1,
+        },
+      ],
+    }
+  }
 
   /* –– Variables
    * –––––––––––––––––––––– */
 
+  
   name: string = "Steve";
   testShoppingElementList: ShoppingElementList = {
-    name: 'Compras para cena formal',
-    shoppingElements: [
-      {
-        name: 'Tomate',
-        unitPrice: 200,
-        quantity: 8,
-        notes: 'Muy bueno para cocinar salsas'
-      },
-      {
-        name: 'Albahaca',
-        unitPrice: 475.50,
-        quantity: 4,
-      },
-      {
-        name: 'Aceite de oliva',
-        unitPrice: 3570,
-        quantity: 1,
-      },
-      {
-        name: 'Mantel',
-        unitPrice: 15600,
-        quantity: 1,
-      },
-    ],
+    name: '',
+    shoppingElements: []
   }
 
   /* –– Functions
    * –––––––––––––––––––––– */
 
-  share(product: string) {
+  createShoppingElement(product: any) {
     console.log(product);
+    this.testShoppingElementList.shoppingElements.push(product);
+    console.log(this.testShoppingElementList);
   }
 
 }
