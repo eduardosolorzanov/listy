@@ -1,8 +1,6 @@
-
-<div @myInsertRemoveTrigger *ngIf="isShown" class="shopping-element-card">
-  
+<div class="shopping-element-card">
   <div class="shopping-element-name">
-    <div class="color-icon" [ngStyle]="{'background-color' : iconColor}"></div>
+    <div class="color-icon" [ngStyle]="{'background-color' : shoppingElement.iconColor}"></div>
     <div>
       <h4>{{shoppingElement.name}}</h4>
       <div class="item-information">
@@ -14,8 +12,7 @@
     </div>
   </div>
 
-  <div class="right-section">
-    
+  <div class="right-section">     
     <div class="price-section">
       <div class="price-information">
         Total
@@ -25,10 +22,12 @@
   
     <div class="actions-section">
       <button mat-icon-button> <mat-icon>edit</mat-icon> </button>
-      <button mat-icon-button (click)="toggle()"> <mat-icon>delete</mat-icon> </button>
+      <button mat-icon-button (click)="deleteShoppingElement(shoppingElementIndex)"> <mat-icon>delete</mat-icon> </button>
     </div>
+  </div>  
+</div> 
 
-  </div>
-  
-</div>  
+
+
+
 

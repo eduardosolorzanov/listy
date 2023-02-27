@@ -6,6 +6,7 @@ export interface ShoppingElement {
   unitPrice: number;
   quantity: number;
   notes?: string;
+  iconColor?: string;
 }
 
 export interface ShoppingElementList {

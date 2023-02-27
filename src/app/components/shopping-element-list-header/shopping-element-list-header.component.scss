@@ -3,3 +3,17 @@
 .shopping-list-subtitle {
   color: $subtitle-text;
 }
+
+.total-price-section {
+  display: flex;
+  flex-direction: row ;
+  align-items: center;
+  justify-content: flex-end;
+  padding-top: 10px;
+  padding-right: 55px;
+  column-gap: 23px;
+
+  .label {
+    color: $subtitle-text;
+  }
+}
