@@ -12,12 +12,12 @@ export const Animations = {
         opacity: 0,
       }),
       // Style after entering DOM 
-      animate('500ms cubic-bezier(0.83, 0, 0.17, 1)', style({ 
+      animate('1000ms cubic-bezier(0.83, 0, 0.17, 1)', style({ 
         opacity: 1, 
       })),
     ]),  // alias for void => *
     transition ( ':leave', [ 
-      animate('500ms', style({ opacity: 0 })) 
+      animate('1000ms', style({ opacity: 0 })) 
       // alias for * => void
     ]),
   ]),
@@ -31,16 +31,16 @@ export const Animations = {
     // fade in when created. this could also be written as transition('void => *')
     transition(':enter', [
       style({
-        opacity: 0
+        opacity: 0,
       }),
       animate('500ms cubic-bezier(0.83, 0, 0.17, 1)')
     ]),
 
     // fade out when destroyed. this could also be written as transition('void => *')
     transition(':leave',
-      animate('400ms cubic-bezier(0.83, 0, 0.17, 1)', style({ 
+      animate('500ms cubic-bezier(0.83, 0, 0.17, 1)', style({ 
         opacity: 0, 
       })),
     )
-  ])
+  ]),
 }

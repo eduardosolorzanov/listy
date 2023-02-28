@@ -1,13 +1,22 @@
-<div class="shopping-element-card">
+<div class="shopping-element-card" [formGroup]="shoppingElementForm">
   <div class="shopping-element-name">
     <div class="color-icon" [ngStyle]="{'background-color' : shoppingElement.iconColor}"></div>
-    <div>
-      <h4>{{shoppingElement.name}}</h4>
-      <div class="item-information">
-        <span class="label">Precio por unidad: </span><span>{{formattedUnitPrice}}</span>
-        <div class="item-information">
-      </div>
-        <span class="label">Cantidad: </span><span>{{shoppingElement.quantity}}</span>
+    <div class="item-information-container">
+      <h4 *ngIf="!editMode; else editModeTextField" (click)="toggleEditMode($event)" class="edit-name-clickable">{{shoppingElement.name}}</h4>
+      
+      <ng-template #editModeTextField>
+        <mat-form-field class="name-form-field-wrapper">
+          <input matInput type="text" [id]="nameElementId" [value]="shoppingElement.name" formControlName="name">
+        </mat-form-field>
+      </ng-template>
+
+      <div class="item-information-text">
+        <div>
+          <span class="label">Precio por unidad: </span><span>{{formattedUnitPrice}}</span>
+        </div>
+        <div>
+          <span class="label">Cantidad: </span><span>{{shoppingElement.quantity}}</span>
+        </div>        
       </div>
     </div>
   </div>
@@ -21,7 +30,7 @@
     </div>
   
     <div class="actions-section">
-      <button mat-icon-button> <mat-icon>edit</mat-icon> </button>
+      <button mat-icon-button (click)="toggleEditMode($event)"> <mat-icon>edit</mat-icon> </button>
       <button mat-icon-button (click)="deleteShoppingElement(shoppingElementIndex)"> <mat-icon>delete</mat-icon> </button>
     </div>
   </div>  

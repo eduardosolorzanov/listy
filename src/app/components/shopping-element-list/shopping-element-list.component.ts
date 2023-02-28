@@ -8,7 +8,7 @@ import { Animations } from './shopping-element-list-animations';
   selector: 'shopping-element-list',
   templateUrl: './shopping-element-list.component.html',
   styleUrls: ['./shopping-element-list.component.scss'],
-  animations:[Animations.shoppingElementsFirstLoadTrigger, Animations.simpleFadeAnimation]
+  animations:[Animations.shoppingElementsFirstLoadTrigger, Animations.simpleFadeAnimation] 
 })
 export class ShoppingElementListComponent {
 
@@ -110,22 +110,5 @@ export class ShoppingElementListComponent {
     let hue = Math.floor(Math.random() * 360);
     let pastel = 'hsl(' + hue + ', 100%, 80%)';
     return pastel;
-  }
-
-  // TEST
-
-  data = ["A", "B", "C"];
-
-  add(){
-    const random = Math.floor(Math.random() * 10);
-    this.data.push(random.toString());
-  }
-
-  remove(){
-    this.data.pop();
-  }
-
-  removeThis(index: any){
-    this.data.splice(index, 1);
   }
 }
