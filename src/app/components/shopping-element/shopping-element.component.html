@@ -2,8 +2,8 @@
   <div class="shopping-element-information-container">
     <div class="color-icon" [ngStyle]="{'background-color' : shoppingElement.iconColor}"></div>
     <div class="left-section">
-      <div class="item-name">
-        <!-- ITEM NAME -->
+      <div class="item-name-section">
+        <!-- Item name -->
         <h4 *ngIf="!isEditingProductName; else editName" (click)="editProductName($event)" class="edit-property-clickable">{{shoppingElementForm.controls['name'].value}}</h4>
         <!-- Edit mode - Name -->
         <ng-template #editName>
@@ -14,9 +14,8 @@
         <!-- Edit mode - Name -->
       </div>
       
-      
+      <div class="item-information-section">
 
-      <div class="item-info">
         <!-- Item price -->
         <div class="item-price-section">
           <span class="item-price-label">Precio por unidad:</span>&nbsp;
@@ -26,25 +25,28 @@
           (click)="editProductUnitPrice($event)">{{shoppingElementForm.controls['unitPrice'].value}}
           </span>
           <ng-template #editUnitPrice>
-            <mat-form-field class="edit-unit-price-container">
+            <mat-form-field>
               <input matInput type="text" (input)="onUnitPriceInput($event)" maxlength="15" [id]="unitPriceHtmlElementId" [value]="shoppingElement.unitPrice" formControlName="unitPrice">
             </mat-form-field>
           </ng-template>
         </div>
 
         <!-- Item quantity -->
-        <!-- <div class="item-quantity-section">
-          <div class="item-information-text">
-            <span class="label">Cantidad:</span>&nbsp;<span>{{shoppingElement.quantity}}</span>
-          </div> 
-        </div> -->
+        <div class="item-quantity-section">
+          <span class="item-quantity-label">Cantidad:</span>&nbsp; 
+          <span 
+          *ngIf="!isEditingProductQuantity else editProductQuantitySection" 
+          class="edit-property-clickable"
+          (click)="editProductQuantity($event)">{{shoppingElementForm.controls['quantity'].value}}
+          </span>
+          <ng-template #editProductQuantitySection>
+            <mat-form-field>
+              <input matInput type="number" (input)="onProductQuantityInput($event)" maxlength="15" [id]="quantityHtmlElementId" [value]="shoppingElement.quantity" formControlName="quantity">
+            </mat-form-field>
+          </ng-template>
+        </div>
 
       </div>
-
-      
-      
-      
-      
     </div>
   </div>
 

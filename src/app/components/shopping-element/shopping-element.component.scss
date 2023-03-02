@@ -30,12 +30,19 @@
   // Edit mode form width
   width: 25vw;
   align-items: flex-start;
-  .item-name, .item-info {
+  .item-name-section, .item-info{
     // Get form to take all container space
     width: 100%;
   }
 
-  .item-price-section {
+  .item-information-section {
+    display: flex;
+    flex-direction: column;
+    row-gap: 5px;
+    width: 100%;
+  }
+
+  .item-price-section, .item-quantity-section {
     display: flex;
     flex-direction: row;
     width: 100%;
@@ -46,6 +53,12 @@
       color: $subtitle-text;
       font-weight: bold;
       min-width: 138px;
+    }
+
+    .item-quantity-label {
+      color: $subtitle-text;
+      font-weight: bold;
+      min-width: 72px;
     }
   }
 

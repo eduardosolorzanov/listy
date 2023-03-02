@@ -80,7 +80,7 @@ export class ShoppingElementComponent {
     return value.replace(/\D/g, "").replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   }
 
-  // On each input form control is patched and formatted to match currency format
+  // On each key input form control is patched and formatted to match currency format
   onUnitPriceInput(inputElement: any) {
     let inputValue = inputElement;
     // If formatting from Event, get value
@@ -118,6 +118,16 @@ export class ShoppingElementComponent {
       inputValue = inputValue.slice(0,-1);
       this.shoppingElementForm.patchValue({unitPrice: inputValue}) 
     }
+  }
+
+  // On each key input form control is patched and formatted to match currency format
+  onProductQuantityInput(inputElement: any) {
+    let inputValue = inputElement?.target?.value;
+    // If value has more than 3 digits, slice
+    if(inputValue.length > 3){
+      inputValue = inputValue.slice(0,-1);
+    }
+    this.shoppingElementForm.patchValue({quantity: inputValue});
   }
 
   onChanges(): void {
@@ -159,6 +169,18 @@ export class ShoppingElementComponent {
     this.toggleEditProductUnitPriceMode();
     const unitPriceInputElement = document.getElementById(this.unitPriceHtmlElementId) as HTMLInputElement;
     this.selectText(unitPriceInputElement);
+  }
+
+  editProductQuantity(event: Event){
+    this.toggleEditProductQuantityMode();
+    const productQuantityInputElement = document.getElementById(this.quantityHtmlElementId) as HTMLInputElement;
+    this.selectText(productQuantityInputElement);
+  }
+
+  toggleEditProductQuantityMode(){
+    this.isEditingProductQuantity = !this.isEditingProductQuantity;
+    // Updates DOM because edit name form is now visible
+    this.ref.detectChanges();
   }
   
   toggleEditProductNameMode(){
@@ -206,9 +228,19 @@ export class ShoppingElementComponent {
     this.shoppingElementForm.patchValue({unitPrice: unitPriceCheckedValue})    
   }
 
+  validateQuantityInputControl(){
+    let quantityCheckedValue = this.shoppingElementForm.controls['quantity'].value!;
+    // If input is empty, assign 1
+    if(!quantityCheckedValue || quantityCheckedValue < 1){
+      quantityCheckedValue = 1;
+    }
+    this.shoppingElementForm.patchValue({quantity: quantityCheckedValue})    
+  }
+
   // Check unit price and toggle editing mode for all elements
   saveChanges(){
     this.validateUnitPriceInputControl();
+    this.validateQuantityInputControl();
     this.isEditingProductName = false;
     this.isEditingProductQuantity = false;
     this.isEditingProductUnitPrice = false;
