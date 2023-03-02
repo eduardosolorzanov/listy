@@ -51,6 +51,9 @@ export class ShoppingElementComponent {
   isEditingProductName: boolean = false;
   isEditingProductUnitPrice: boolean = false;
   isEditingProductQuantity: boolean = false;
+  isEditingAnyProperty() : boolean{
+    return this.isEditingProductName || this.isEditingProductQuantity || this.isEditingProductUnitPrice;
+  }
 
   /* –– Constructor
    * –––––––––––––––––––––– */
@@ -82,45 +85,35 @@ export class ShoppingElementComponent {
 
   // On each key input form control is patched and formatted to match currency format
   onUnitPriceInput(inputElement: any) {
-    let inputValue = inputElement;
-    // If formatting from Event, get value
-    if( typeof(inputElement) !== 'number' ) { 
-      inputValue = inputElement?.target?.value;
-    } 
-
-    console.log('inputValue', inputValue.length);
-
-    let formattedValue;
-    if(inputValue.length < 12){
+    let inputValue = inputElement?.target?.value;;
+    // Check for max length, if longer, slice
+    if (inputValue.length < 12) {
       // If decimals are entered, process right and left side and separate by .
-    if (inputValue.indexOf(".") >= 0) {
-      console.log('decimals');
-      // Get position of first decimal to prevent multiple decimals from being entered
-      let decimalPosition = inputValue.indexOf(".");
-      // Split number by decimal point
-      let leftSide = inputValue.substring(0, decimalPosition);
-      let rightSide = inputValue.substring(decimalPosition);
-      // Add commas to left side of number
-      leftSide = this.formatNumber(leftSide);
-      // Validate right side
-      rightSide = this.formatNumber(rightSide);
-      // Limit decimal to only 2 digits and join two sides by .
-      rightSide = rightSide.substring(0, 2);
-      formattedValue = "¢" + leftSide + "." + rightSide;
-    } else {
-      console.log('no decimals');
-      formattedValue = "¢" + this.formatNumber(inputValue);
-    }
-    
-    this.shoppingElementForm.patchValue({unitPrice: formattedValue}) 
+      if (inputValue.indexOf(".") >= 0) {
+        // Get position of first decimal to prevent multiple decimals from being entered
+        let decimalPosition = inputValue.indexOf(".");
+        // Split number by decimal point
+        let leftSide = inputValue.substring(0, decimalPosition);
+        let rightSide = inputValue.substring(decimalPosition);
+        // Add commas to left side of number
+        leftSide = this.formatNumber(leftSide);
+        // Validate right side
+        rightSide = this.formatNumber(rightSide);
+        // Limit decimal to only 2 digits and join two sides by .
+        rightSide = rightSide.substring(0, 2);
+        inputValue = "¢" + leftSide + "." + rightSide;
+      } else {
+        inputValue = "¢" + this.formatNumber(inputValue);
+      }
+      this.shoppingElementForm.patchValue({ unitPrice: inputValue })
     } else {
       // Slice and patchValue
-      inputValue = inputValue.slice(0,-1);
-      this.shoppingElementForm.patchValue({unitPrice: inputValue}) 
+      inputValue = inputValue.slice(0, -1);
+      this.shoppingElementForm.patchValue({ unitPrice: inputValue })
     }
   }
 
-  // On each key input form control is patched and formatted to match currency format
+  // On each key input form control is checked for max quantity and patched to form
   onProductQuantityInput(inputElement: any) {
     let inputValue = inputElement?.target?.value;
     // If value has more than 3 digits, slice
@@ -153,18 +146,12 @@ export class ShoppingElementComponent {
     });
   }
 
-  onSubmit(post: any) {
-    console.log(post)
-  }
-
-  // Toggle edit name mode to load form and select text
   editProductName(event: Event) {
     this.toggleEditProductNameMode();
     const nameInputElement = document.getElementById(this.nameHtmlElementId) as HTMLInputElement;
     this.selectText(nameInputElement);
   }
 
-  // Toggle edit unit price mode to load form and select text
   editProductUnitPrice(event: Event){
     this.toggleEditProductUnitPriceMode();
     const unitPriceInputElement = document.getElementById(this.unitPriceHtmlElementId) as HTMLInputElement;
@@ -179,7 +166,7 @@ export class ShoppingElementComponent {
 
   toggleEditProductQuantityMode(){
     this.isEditingProductQuantity = !this.isEditingProductQuantity;
-    // Updates DOM because edit name form is now visible
+    // Updates DOM because edit quantity form is now visible
     this.ref.detectChanges();
   }
   
@@ -195,14 +182,11 @@ export class ShoppingElementComponent {
     this.ref.detectChanges();
   }
 
-  toggleEditAllMode(){
+  // Activates all forms for edition
+  activateEditAllMode(){
     this.isEditingProductName = true;
     this.isEditingProductUnitPrice = true;
     this.isEditingProductQuantity = true;
-  }
-
-  isEditingAnyProperty() : boolean{
-    return this.isEditingProductName || this.isEditingProductQuantity || this.isEditingProductUnitPrice;
   }
   
   // Selects text from input element
@@ -215,12 +199,14 @@ export class ShoppingElementComponent {
   validateUnitPriceInputControl(){
     let unitPriceCheckedValue = '';
     unitPriceCheckedValue = unitPriceCheckedValue + this.shoppingElementForm.controls['unitPrice'].value;
-
+    // If input is empty, assign 0 as price
+    if(unitPriceCheckedValue === '' || unitPriceCheckedValue === '¢' ){
+      unitPriceCheckedValue = unitPriceCheckedValue + '0';
+    }
     // If last character is ., add 00
     if(unitPriceCheckedValue.at(-1) === '.'){
       unitPriceCheckedValue = unitPriceCheckedValue + '00';
     }
-    
     // If unit price has no decimals, add .00
     if (unitPriceCheckedValue.indexOf(".") <= 0) {
       unitPriceCheckedValue = unitPriceCheckedValue + '.00';
@@ -237,10 +223,20 @@ export class ShoppingElementComponent {
     this.shoppingElementForm.patchValue({quantity: quantityCheckedValue})    
   }
 
+  validateNameInputControl(){
+    let nameCheckedValue = this.shoppingElementForm.controls['name'].value!;
+    // If input is empty, assign 1
+    if(!nameCheckedValue || nameCheckedValue === ''){
+      nameCheckedValue = '(Sin nombre)';
+    }
+    this.shoppingElementForm.patchValue({name: nameCheckedValue})    
+  }
+
   // Check unit price and toggle editing mode for all elements
   saveChanges(){
     this.validateUnitPriceInputControl();
     this.validateQuantityInputControl();
+    this.validateNameInputControl();
     this.isEditingProductName = false;
     this.isEditingProductQuantity = false;
     this.isEditingProductUnitPrice = false;

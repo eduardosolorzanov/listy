@@ -8,7 +8,12 @@
         <!-- Edit mode - Name -->
         <ng-template #editName>
           <mat-form-field>
-            <input matInput type="text" [id]="nameHtmlElementId" [value]="shoppingElement.name" formControlName="name">
+            <input matInput 
+            (keydown.enter)="saveChanges()" 
+            type="text" 
+            [id]="nameHtmlElementId" 
+            [value]="shoppingElement.name" 
+            formControlName="name">
           </mat-form-field>
         </ng-template>
         <!-- Edit mode - Name -->
@@ -26,7 +31,13 @@
           </span>
           <ng-template #editUnitPrice>
             <mat-form-field>
-              <input matInput type="text" (input)="onUnitPriceInput($event)" maxlength="15" [id]="unitPriceHtmlElementId" [value]="shoppingElement.unitPrice" formControlName="unitPrice">
+              <input matInput 
+              (keydown.enter)="saveChanges()" 
+              type="text" 
+              (input)="onUnitPriceInput($event)" 
+              [id]="unitPriceHtmlElementId" 
+              [value]="shoppingElement.unitPrice" 
+              formControlName="unitPrice">
             </mat-form-field>
           </ng-template>
         </div>
@@ -41,7 +52,7 @@
           </span>
           <ng-template #editProductQuantitySection>
             <mat-form-field>
-              <input matInput type="number" (input)="onProductQuantityInput($event)" maxlength="15" [id]="quantityHtmlElementId" [value]="shoppingElement.quantity" formControlName="quantity">
+              <input matInput (keydown.enter)="saveChanges()" type="number" (input)="onProductQuantityInput($event)" maxlength="15" [id]="quantityHtmlElementId" [value]="shoppingElement.quantity" formControlName="quantity">
             </mat-form-field>
           </ng-template>
         </div>
@@ -59,7 +70,7 @@
     </div>
   
     <div class="actions-section">
-      <button mat-icon-button (click)="toggleEditAllMode()" *ngIf="!isEditingAnyProperty(); else saveChangesButton"><mat-icon>edit</mat-icon></button>
+      <button mat-icon-button (click)="activateEditAllMode()" *ngIf="!isEditingAnyProperty(); else saveChangesButton"><mat-icon>edit</mat-icon></button>
       <!-- Save changes button -->
       <ng-template #saveChangesButton>
         <button mat-icon-button (click)="saveChanges()"><mat-icon>done</mat-icon></button>
