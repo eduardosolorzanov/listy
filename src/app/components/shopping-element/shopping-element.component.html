@@ -1,36 +1,68 @@
 <div class="shopping-element-card" [formGroup]="shoppingElementForm">
-  <div class="shopping-element-name">
+  <div class="shopping-element-information-container">
     <div class="color-icon" [ngStyle]="{'background-color' : shoppingElement.iconColor}"></div>
-    <div class="item-information-container">
-      <h4 *ngIf="!editMode; else editModeTextField" (click)="toggleEditMode($event)" class="edit-name-clickable">{{shoppingElement.name}}</h4>
-      
-      <ng-template #editModeTextField>
-        <mat-form-field class="name-form-field-wrapper">
-          <input matInput type="text" [id]="nameElementId" [value]="shoppingElement.name" formControlName="name">
-        </mat-form-field>
-      </ng-template>
-
-      <div class="item-information-text">
-        <div>
-          <span class="label">Precio por unidad: </span><span>{{formattedUnitPrice}}</span>
-        </div>
-        <div>
-          <span class="label">Cantidad: </span><span>{{shoppingElement.quantity}}</span>
-        </div>        
+    <div class="left-section">
+      <div class="item-name">
+        <!-- ITEM NAME -->
+        <h4 *ngIf="!isEditingProductName; else editName" (click)="editProductName($event)" class="edit-property-clickable">{{shoppingElementForm.controls['name'].value}}</h4>
+        <!-- Edit mode - Name -->
+        <ng-template #editName>
+          <mat-form-field>
+            <input matInput type="text" [id]="nameHtmlElementId" [value]="shoppingElement.name" formControlName="name">
+          </mat-form-field>
+        </ng-template>
+        <!-- Edit mode - Name -->
       </div>
+      
+      
+
+      <div class="item-info">
+        <!-- Item price -->
+        <div class="item-price-section">
+          <span class="item-price-label">Precio por unidad:</span>&nbsp;
+          <span 
+          *ngIf="!isEditingProductUnitPrice else editUnitPrice" 
+          class="edit-property-clickable"
+          (click)="editProductUnitPrice($event)">{{shoppingElementForm.controls['unitPrice'].value}}
+          </span>
+          <ng-template #editUnitPrice>
+            <mat-form-field class="edit-unit-price-container">
+              <input matInput type="text" (input)="onUnitPriceInput($event)" maxlength="15" [id]="unitPriceHtmlElementId" [value]="shoppingElement.unitPrice" formControlName="unitPrice">
+            </mat-form-field>
+          </ng-template>
+        </div>
+
+        <!-- Item quantity -->
+        <!-- <div class="item-quantity-section">
+          <div class="item-information-text">
+            <span class="label">Cantidad:</span>&nbsp;<span>{{shoppingElement.quantity}}</span>
+          </div> 
+        </div> -->
+
+      </div>
+
+      
+      
+      
+      
     </div>
   </div>
 
   <div class="right-section">     
     <div class="price-section">
-      <div class="price-information">
+      <div class="final-price-information">
         Total
       </div>
       <h3>{{formattedTotalPrice}}</h3>
     </div>
   
     <div class="actions-section">
-      <button mat-icon-button (click)="toggleEditMode($event)"> <mat-icon>edit</mat-icon> </button>
+      <button mat-icon-button (click)="toggleEditAllMode()" *ngIf="!isEditingAnyProperty(); else saveChangesButton"><mat-icon>edit</mat-icon></button>
+      <!-- Save changes button -->
+      <ng-template #saveChangesButton>
+        <button mat-icon-button (click)="saveChanges()"><mat-icon>done</mat-icon></button>
+      </ng-template>
+      <!-- Save changes button -->
       <button mat-icon-button (click)="deleteShoppingElement(shoppingElementIndex)"> <mat-icon>delete</mat-icon> </button>
     </div>
   </div>  

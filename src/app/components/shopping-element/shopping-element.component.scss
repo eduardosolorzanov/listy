@@ -9,11 +9,9 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  // position: absolute;
-  // bottom: $shopping-card-height*2 ;
 }
 
-.shopping-element-name {
+.shopping-element-information-container {
   display: flex;
   align-items: center;
   column-gap: 30px;
@@ -25,37 +23,47 @@
   }
 }
 
-.price-information {
-  font-size: $subsubtitle-font-size;
-  color: $subtitle-text;
-
-  .label{
-    font-weight: bold;
-  }
-}
-
-.item-information-container {
+.left-section {
   display: flex;
   flex-direction: column;
-  row-gap: 5px;
-  width: 30vw;
-  // Match clickable padding-top
-  padding-bottom: 16px;
+  row-gap: 10px;
+  // Edit mode form width
+  width: 25vw;
+  align-items: flex-start;
+  .item-name, .item-info {
+    // Get form to take all container space
+    width: 100%;
+  }
+
+  .item-price-section {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    align-items: center;
+    font-size: $subtitle-font-size;
+    .item-price-label {
+      // font-size: $subtitle-font-size;
+      color: $subtitle-text;
+      font-weight: bold;
+      min-width: 138px;
+    }
+  }
+
   .item-information-text {
-    font-size: $subsubtitle-font-size;
+    font-size: $subtitle-font-size;
     color: $subtitle-text;
+    .item-quantity {
+      // Fill entire container
+      width: 100%;
+    }
     .label{
       font-weight: bold;
     }
   }
 }
 
-.edit-name-clickable {
+.edit-property-clickable {
   cursor: pointer;
-  // Keep this padding-top to not modify card height when editing
-  // padding-top: 8.5px;
-  padding-top: 16px;
-  padding-bottom: 3px;
 }
 
 .price-section{
@@ -74,9 +82,32 @@
   display: flex;
   flex-direction: row;
   column-gap: 10px;
+  .final-price-information {
+    font-size: $subsubtitle-font-size;
+    color: $subtitle-text;
+    .label{
+      font-weight: bold;
+    }
+  }
 }
 
-/***** Custom forms styles *****/
+// Remove arrows in number input
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+
+
+/***** Material form customization *****/
 
 // Default state
 .mdc-text-field--filled:not(.mdc-text-field--disabled) {
@@ -102,11 +133,18 @@
   align-items: flex-end;
 }
 
-// Remove padding in text field
-.mdc-text-field--no-label:not(.mdc-text-field--outlined):not(.mdc-text-field--textarea) .mat-mdc-form-field-infix {
-  padding-bottom: 3px;
+// Form takes all the space in its container
+.mat-mdc-form-field {
+  width: 100%;
 }
 
-
+// Remove padding-top in text forms
+.mdc-text-field--no-label:not(.mdc-text-field--outlined):not(.mdc-text-field--textarea) .mat-mdc-form-field-infix {
+  padding-top: 0px;
+  // Distance between text and animated line
+  padding-bottom: 0px;
+  // Remove min-height to prevent form inserting new space when editing
+  min-height: 0px;
+}
 
 

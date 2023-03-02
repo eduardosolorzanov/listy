@@ -56,7 +56,7 @@ export class ShoppingElementListComponent {
     };
     this.updateFinalPrice();
   }
-
+  
   /* –– Variables
    * –––––––––––––––––––––– */
 
@@ -83,19 +83,19 @@ export class ShoppingElementListComponent {
 
   updateFinalPrice(){
     this.finalPrice = this.getTotalPrice(this.shoppingElementList);
-    this.formattedFinalPrice = '¢' + this.currencyFormatter.getFormattedPrice(this.finalPrice);
+    this.formattedFinalPrice = this.currencyFormatter.getFormattedPrice(this.finalPrice);
   }
 
+  // Create shopping element, push to list and update final price (modify when having store)
   addShoppingElement(product: any) {
     this.isCreatingShoppingElement = true;
     let testShoppingElement: ShoppingElement =  {
-      name: Math.random()*100 + '',
-      unitPrice: 4690,
-      quantity: 3,
+      name: 'Nuevo producto',
+      unitPrice: Math.random()*1000,
+      quantity: Math.trunc(Math.random()*10) + 1,
       notes: 'Hola',
       iconColor: this.generateRandomColor(),
     };
-  
     this.shoppingElementList.shoppingElements.push(testShoppingElement);
     this.updateFinalPrice();
     this.isCreatingShoppingElement = false;

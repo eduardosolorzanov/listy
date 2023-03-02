@@ -9,8 +9,9 @@ export class CurrencyFormatterService {
   getFormattedPrice (price : number) : string{
     const formatter = new Intl.NumberFormat('en-US', {
       style: 'decimal',
-      minimumFractionDigits: 2
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2
     });
-    return formatter.format(price);
+    return "¢" + formatter.format(price);
   }
 }
