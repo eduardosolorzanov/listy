@@ -13,15 +13,16 @@ import { ShoppingElementComponent } from '../shopping-element/shopping-element.c
 })
 export class ShoppingElementListComponent {
 
+  /* –– Variables
+   * –––––––––––––––––––––– */
   @ViewChildren(ShoppingElementComponent) public shoppingElementComponents: QueryList<ShoppingElementComponent>;
-
-  // @ViewChild(ShoppingElementComponent) child: ShoppingElementComponent | undefined;
-
-  /* –– Outputs
-   * –––––––––––––––––––––– */
-
-  /* –– Inputs
-   * –––––––––––––––––––––– */
+  finalPrice: number = 0;
+  formattedFinalPrice: string = '';
+  
+  shoppingElementList: ShoppingElementList = {
+    name: '',
+    shoppingElements: []
+  };
 
   /* –– Constructor
    * –––––––––––––––––––––– */
@@ -70,17 +71,6 @@ export class ShoppingElementListComponent {
     // this.changeDetectorRef.detectChanges();
     // console.log("Hello ", this.shoppingElementComponents.last.editProductName());
   }
-  
-  /* –– Variables
-   * –––––––––––––––––––––– */
-
-  finalPrice: number = 0;
-  formattedFinalPrice: string = '';
-  
-  shoppingElementList: ShoppingElementList = {
-    name: '',
-    shoppingElements: []
-  };
 
   /* –– Functions
    * –––––––––––––––––––––– */
@@ -99,8 +89,10 @@ export class ShoppingElementListComponent {
   }
 
   addShoppingElement(product: any) {
-    // Toggle edition mode on last element back to non edition mode
-    this.shoppingElementComponents.last.isEditingProductName = false;
+    // Toggle edition mode on last element back to non edition mode, if list has at least 1 element
+    if( this.shoppingElementComponents.length > 0) {
+      this.shoppingElementComponents.last.isEditingProductName = false;
+    }
     // Push new element to shopping element list
     let testShoppingElement: ShoppingElement =  {
       name: 'Producto ' + Math.trunc(Math.random()*1000),

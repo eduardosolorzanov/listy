@@ -14,7 +14,7 @@
     </div>
   </div>
   
-  <div class="shopping-element-list">
+  <div *ngIf="shoppingElementList; else emptyState" class="shopping-element-list">
     <div [@modifyShoppingElementListTrigger]="'in'" *ngFor="let shoppingElement of shoppingElementList.shoppingElements; let i = index">
       <shopping-element 
       (onDeleteShoppingElement)="deleteShoppingElement(i)"
@@ -24,6 +24,10 @@
       ></shopping-element>
     </div>
   </div>
+
+  <ng-template #emptyState>
+    empty
+  </ng-template>
   
 
 </div>
