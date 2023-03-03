@@ -4,7 +4,7 @@
     <div class="left-section">
       <div class="item-name-section">
         <!-- Item name -->
-        <h4 *ngIf="!isEditingProductName; else editName" (click)="editProductName($event)" class="edit-property-clickable">{{shoppingElementForm.controls['name'].value}}</h4>
+        <h4 *ngIf="!isEditingProductName; else editName" (click)="editProductName()" class="edit-property-clickable">{{shoppingElementForm.controls['name'].value}}</h4>
         <!-- Edit mode - Name -->
         <ng-template #editName>
           <mat-form-field>

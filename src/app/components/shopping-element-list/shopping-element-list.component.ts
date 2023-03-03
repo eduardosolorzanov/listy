@@ -1,8 +1,9 @@
-import { Component, Input } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { CurrencyFormatterService } from 'src/app/services/currency-formatter.service';
 import { ShoppingElement, ShoppingElementList } from '../../interfaces/interfaces';
 import { Output, EventEmitter } from '@angular/core';
 import { Animations } from './shopping-element-list-animations';
+import { ShoppingElementComponent } from '../shopping-element/shopping-element.component';
 
 @Component({
   selector: 'shopping-element-list',
@@ -11,6 +12,10 @@ import { Animations } from './shopping-element-list-animations';
   animations:[Animations.shoppingElementsFirstLoadTrigger, Animations.simpleFadeAnimation] 
 })
 export class ShoppingElementListComponent {
+
+  @ViewChildren(ShoppingElementComponent) public shoppingElementComponents: QueryList<ShoppingElementComponent>;
+
+  // @ViewChild(ShoppingElementComponent) child: ShoppingElementComponent | undefined;
 
   /* –– Outputs
    * –––––––––––––––––––––– */
@@ -21,7 +26,10 @@ export class ShoppingElementListComponent {
   /* –– Constructor
    * –––––––––––––––––––––– */
   
-  constructor( private currencyFormatter: CurrencyFormatterService ) { }
+  constructor( 
+    private currencyFormatter: CurrencyFormatterService, private changeDetectorRef: ChangeDetectorRef  ) { 
+    this.shoppingElementComponents = new QueryList<ShoppingElementComponent>;
+  }
 
   ngOnInit(): void {
     this.shoppingElementList = {
@@ -56,14 +64,18 @@ export class ShoppingElementListComponent {
     };
     this.updateFinalPrice();
   }
+
+  // Access children here when done loading
+  ngAfterViewInit() {
+    // this.changeDetectorRef.detectChanges();
+    // console.log("Hello ", this.shoppingElementComponents.last.editProductName());
+  }
   
   /* –– Variables
    * –––––––––––––––––––––– */
 
   finalPrice: number = 0;
   formattedFinalPrice: string = '';
-  isCreatingShoppingElement: boolean = false;
-  isDeletingShoppingElement: boolean = false;
   
   shoppingElementList: ShoppingElementList = {
     name: '',
@@ -86,9 +98,10 @@ export class ShoppingElementListComponent {
     this.formattedFinalPrice = this.currencyFormatter.getFormattedPrice(this.finalPrice);
   }
 
-  // Create shopping element, push to list and update final price (modify when having store)
   addShoppingElement(product: any) {
-    this.isCreatingShoppingElement = true;
+    // Toggle edition mode on last element back to non edition mode
+    this.shoppingElementComponents.last.isEditingProductName = false;
+    // Push new element to shopping element list
     let testShoppingElement: ShoppingElement =  {
       name: 'Producto ' + Math.trunc(Math.random()*1000),
       unitPrice: Math.random()*1000,
@@ -97,9 +110,13 @@ export class ShoppingElementListComponent {
       iconColor: this.generateRandomColor(),
     };
     this.shoppingElementList.shoppingElements.push(testShoppingElement);
+    // Update final price
     this.updateFinalPrice();
-    this.isCreatingShoppingElement = false;
+    // Scroll to new element
     this.scrollToBottom();
+    // Detect changes on DOM and focus on new element's name form
+    this.changeDetectorRef.detectChanges();
+    this.shoppingElementComponents.last.editProductName();
   }
 
   scrollToBottom(){

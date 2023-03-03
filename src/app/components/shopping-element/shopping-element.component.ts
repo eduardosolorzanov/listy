@@ -62,7 +62,7 @@ export class ShoppingElementComponent {
   constructor(
     private currencyFormatter: CurrencyFormatterService, 
     private formBuilder: FormBuilder,
-    private ref: ChangeDetectorRef ) { }
+    private changeDetectorRef: ChangeDetectorRef ) { }
 
   ngOnInit(): void {
     this.createForm();
@@ -152,7 +152,7 @@ export class ShoppingElementComponent {
     });
   }
 
-  editProductName(event: Event) {
+  editProductName() {
     this.toggleEditProductNameMode();
     const nameInputElement = document.getElementById(this.nameHtmlElementId) as HTMLInputElement;
     this.selectText(nameInputElement);
@@ -173,19 +173,19 @@ export class ShoppingElementComponent {
   toggleEditProductQuantityMode(){
     this.isEditingProductQuantity = !this.isEditingProductQuantity;
     // Updates DOM because edit quantity form is now visible
-    this.ref.detectChanges();
+    this.changeDetectorRef.detectChanges();
   }
   
   toggleEditProductNameMode(){
     this.isEditingProductName = !this.isEditingProductName;
     // Updates DOM because edit name form is now visible
-    this.ref.detectChanges();
+    this.changeDetectorRef.detectChanges();
   }
 
   toggleEditProductUnitPriceMode(){
     this.isEditingProductUnitPrice = !this.isEditingProductUnitPrice;
     // Updates DOM because edit unit price form is now visible
-    this.ref.detectChanges();
+    this.changeDetectorRef.detectChanges();
   }
 
   // Activates all forms for edition
