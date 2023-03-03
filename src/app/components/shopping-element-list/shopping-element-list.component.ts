@@ -90,7 +90,7 @@ export class ShoppingElementListComponent {
   addShoppingElement(product: any) {
     this.isCreatingShoppingElement = true;
     let testShoppingElement: ShoppingElement =  {
-      name: 'Nuevo producto',
+      name: 'Producto ' + Math.trunc(Math.random()*1000),
       unitPrice: Math.random()*1000,
       quantity: Math.trunc(Math.random()*10) + 1,
       notes: 'Hola',
@@ -99,6 +99,11 @@ export class ShoppingElementListComponent {
     this.shoppingElementList.shoppingElements.push(testShoppingElement);
     this.updateFinalPrice();
     this.isCreatingShoppingElement = false;
+    this.scrollToBottom();
+  }
+
+  scrollToBottom(){
+    window.scrollTo(0, document.body.scrollHeight);
   }
 
   deleteShoppingElement(shoppingElementIndex: number) {

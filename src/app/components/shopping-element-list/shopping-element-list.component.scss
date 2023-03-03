@@ -17,7 +17,7 @@
   }
 }
 
-.shopping-elements-container {
+.shopping-elements-container, .shopping-element-list {
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
@@ -25,13 +25,18 @@
   row-gap: 10px;
 }
 
+.shopping-element-list {
+  padding-top: $list-header-height;
+}
+
+
 .total-price-section {
   display: flex;
   flex-direction: row ;
   align-items: center;
   justify-content: flex-end;
   padding-top: 10px;
-  padding-right: 55px;
+  // padding-right: 55px;
   column-gap: 23px;
 
   .label {
@@ -39,8 +44,27 @@
   }
 }
 
+.shopping-list-subtitle {
+  color: $subtitle-text;
+}
+
 .header-section {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  // Align with edit and delete buttons from cards
+  padding-right: calc(7.5% + 52px);
+  padding-left: 7.5%;
+  // width: 100%;
+}
+
+.header-section-container {
+  position: fixed;
+  top: $toolbar-height;
+  left: 0px;
+  right: 0px;
+  width: 100%;
+  // width: 85%;
+  z-index: 999;
+  background-color: $toolbar-background;
 }

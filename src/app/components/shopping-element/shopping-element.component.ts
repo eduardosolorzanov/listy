@@ -28,6 +28,7 @@ export class ShoppingElementComponent {
    * –––––––––––––––––––––– */
 
   @Output() onDeleteShoppingElement = new EventEmitter<number>();
+  @Output() onUpdateShoppingElementUnitPrice = new EventEmitter<number>();
   
   /* –– Properties
    * –––––––––––––––––––––– */
@@ -70,13 +71,18 @@ export class ShoppingElementComponent {
     this.nameHtmlElementId = 'name-textbox-' + this.shoppingElementIndex;
     this.unitPriceHtmlElementId = 'price-textbox-' + this.shoppingElementIndex;
     this.quantityHtmlElementId = 'quantity-textbox-' + this.shoppingElementIndex;
-    
-    this.totalPrice = this.shoppingElement.unitPrice * this.shoppingElement.quantity
-    this.formattedTotalPrice = this.currencyFormatter.getFormattedPrice(this.totalPrice);
+    this.updateTotalPrice();
   }
 
   /* –– Functions
   * –––––––––––––––––––––– */
+
+  // Update total price from form control values
+  updateTotalPrice(){
+    // this.totalPrice = this.shoppingElementForm.controls['unitPrice'].value! * this.shoppingElementForm.controls['quantity'].value!
+    this.totalPrice = this.shoppingElement.unitPrice * this.shoppingElement.quantity
+    this.formattedTotalPrice = this.currencyFormatter.getFormattedPrice(this.totalPrice);
+  }
 
   // Format numbers as currency as user types in unitPrice form control
   formatNumber(value: any){
@@ -199,14 +205,15 @@ export class ShoppingElementComponent {
   validateUnitPriceInputControl(){
     let unitPriceCheckedValue = '';
     unitPriceCheckedValue = unitPriceCheckedValue + this.shoppingElementForm.controls['unitPrice'].value;
-    // If input is empty, assign 0 as price
-    if(unitPriceCheckedValue === '' || unitPriceCheckedValue === '¢' ){
-      unitPriceCheckedValue = unitPriceCheckedValue + '0';
+    // If input is empty, assign ¢0.00 as price
+    if(unitPriceCheckedValue === '' || unitPriceCheckedValue === '¢' || unitPriceCheckedValue === '¢.' ){
+      unitPriceCheckedValue = '¢0.00';
     }
     // If last character is ., add 00
     if(unitPriceCheckedValue.at(-1) === '.'){
       unitPriceCheckedValue = unitPriceCheckedValue + '00';
     }
+
     // If unit price has no decimals, add .00
     if (unitPriceCheckedValue.indexOf(".") <= 0) {
       unitPriceCheckedValue = unitPriceCheckedValue + '.00';
@@ -232,11 +239,29 @@ export class ShoppingElementComponent {
     this.shoppingElementForm.patchValue({name: nameCheckedValue})    
   }
 
+  getPriceInNumberFormat(price: string) : number {
+    let priceNumber = price.replaceAll(',', '').replaceAll('¢', '');
+    return +priceNumber;
+  }
+
+  getPriceInCurrencyFormat(price: number): string{
+    return '';
+  }
+
   // Check unit price and toggle editing mode for all elements
   saveChanges(){
+    // Validate inputs
     this.validateUnitPriceInputControl();
     this.validateQuantityInputControl();
     this.validateNameInputControl();
+
+    // Update values in shopping element, update total price in card and trigger update in finalPrice in parent component
+    this.shoppingElement.name = this.shoppingElementForm.controls['name'].value!;
+    this.shoppingElement.unitPrice = this.getPriceInNumberFormat(this.shoppingElementForm.controls['unitPrice'].value!);
+    this.shoppingElement.quantity = this.shoppingElementForm.controls['quantity'].value!;
+    this.onUpdateShoppingElementUnitPrice.emit(this.shoppingElement.unitPrice);
+
+    this.updateTotalPrice();
     this.isEditingProductName = false;
     this.isEditingProductQuantity = false;
     this.isEditingProductUnitPrice = false;

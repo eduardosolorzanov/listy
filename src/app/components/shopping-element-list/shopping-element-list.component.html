@@ -1,19 +1,31 @@
 <div @shoppingElementsFirstLoadTrigger class="shopping-elements-container">
-  <div class="header-section">
-    <shopping-element-list-header></shopping-element-list-header>
-    <div class="total-price-section">
-      <h2 class="label">Total</h2><h2>{{formattedFinalPrice}}</h2>
-      <button mat-icon-button class="add-button" (click)="addShoppingElement('')"><mat-icon>add</mat-icon></button>
+  <div class="header-section-container">
+    <div class="header-section">
+      <!-- <shopping-element-list-header></shopping-element-list-header> -->
+      <div>
+        <h2>Compras para cena formal</h2>
+        <span class="shopping-list-subtitle">5 de mayo de 2023</span>
+      </div>
+  
+      <div class="total-price-section">
+        <h2 class="label">Total</h2><h2>{{formattedFinalPrice}}</h2>
+        <button mat-icon-button class="add-button" (click)="addShoppingElement('')"><mat-icon>add</mat-icon></button>
+      </div>
     </div>
   </div>
-
-  <div [@modifyShoppingElementListTrigger]="'in'" *ngFor="let shoppingElement of shoppingElementList.shoppingElements; let i = index">
-    <shopping-element 
-    (onDeleteShoppingElement)="deleteShoppingElement(i)"
-    [shoppingElement]="shoppingElement"
-    [shoppingElementIndex]="i"
-    ></shopping-element>
+  
+  <div class="shopping-element-list">
+    <div [@modifyShoppingElementListTrigger]="'in'" *ngFor="let shoppingElement of shoppingElementList.shoppingElements; let i = index">
+      <shopping-element 
+      (onDeleteShoppingElement)="deleteShoppingElement(i)"
+      (onUpdateShoppingElementUnitPrice)="updateFinalPrice()"
+      [shoppingElement]="shoppingElement"
+      [shoppingElementIndex]="i"
+      ></shopping-element>
+    </div>
   </div>
+  
+
 </div>
 
 

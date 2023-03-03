@@ -9,7 +9,10 @@
 
 /***** Global styles *****/
 
-html, body { height: 100%; }
+html, body { 
+  height: 100%; 
+  scroll-behavior: smooth;
+}
 body { 
   margin: 0; 
   font-family: "Roboto Slab", "Roboto Slab", sans-serif; 
