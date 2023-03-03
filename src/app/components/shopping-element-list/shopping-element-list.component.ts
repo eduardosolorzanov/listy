@@ -112,11 +112,11 @@ export class ShoppingElementListComponent {
     this.shoppingElementList.shoppingElements.push(testShoppingElement);
     // Update final price
     this.updateFinalPrice();
-    // Scroll to new element
-    this.scrollToBottom();
     // Detect changes on DOM and focus on new element's name form
     this.changeDetectorRef.detectChanges();
     this.shoppingElementComponents.last.editProductName();
+    // Scroll to new element
+    this.scrollToBottom();
   }
 
   scrollToBottom(){
