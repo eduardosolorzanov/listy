@@ -1,7 +1,7 @@
 @import "../../style-constants.scss";
 
 .shopping-list-subtitle {
-  color: $subtitle-text;
+  color: $subtitle-text-color;
 }
 
 .total-price-section {
@@ -14,6 +14,6 @@
   column-gap: 23px;
 
   .label {
-    color: $subtitle-text;
+    color: $subtitle-text-color;
   }
 }

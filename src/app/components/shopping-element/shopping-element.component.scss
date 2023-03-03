@@ -50,13 +50,13 @@
     font-size: $subtitle-font-size;
     .item-price-label {
       // font-size: $subtitle-font-size;
-      color: $subtitle-text;
+      color: $subtitle-text-color;
       font-weight: bold;
       min-width: 138px;
     }
 
     .item-quantity-label {
-      color: $subtitle-text;
+      color: $subtitle-text-color;
       font-weight: bold;
       min-width: 72px;
     }
@@ -64,7 +64,7 @@
 
   .item-information-text {
     font-size: $subtitle-font-size;
-    color: $subtitle-text;
+    color: $subtitle-text-color;
     .item-quantity {
       // Fill entire container
       width: 100%;
@@ -97,7 +97,7 @@
   column-gap: 10px;
   .final-price-information {
     font-size: $subsubtitle-font-size;
-    color: $subtitle-text;
+    color: $subtitle-text-color;
     .label{
       font-weight: bold;
     }

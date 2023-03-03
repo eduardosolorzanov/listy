@@ -28,11 +28,26 @@ export class ShoppingElementListComponent {
    * –––––––––––––––––––––– */
   
   constructor( 
-    private currencyFormatter: CurrencyFormatterService, private changeDetectorRef: ChangeDetectorRef  ) { 
+  private currencyFormatter: CurrencyFormatterService, 
+  private changeDetectorRef: ChangeDetectorRef ) { 
     this.shoppingElementComponents = new QueryList<ShoppingElementComponent>;
   }
 
   ngOnInit(): void {
+    
+    this.updateFinalPrice();
+  }
+
+  // Access children here when done loading
+  ngAfterViewInit() {
+    // this.changeDetectorRef.detectChanges();
+    // console.log("Hello ", this.shoppingElementComponents.last.editProductName());
+  }
+
+  /* –– Functions
+   * –––––––––––––––––––––– */
+
+  setTestShoppingElementList(){
     this.shoppingElementList = {
       name: 'Compras para cena formal',
       shoppingElements: [
@@ -63,17 +78,7 @@ export class ShoppingElementListComponent {
         },
       ],
     };
-    this.updateFinalPrice();
   }
-
-  // Access children here when done loading
-  ngAfterViewInit() {
-    // this.changeDetectorRef.detectChanges();
-    // console.log("Hello ", this.shoppingElementComponents.last.editProductName());
-  }
-
-  /* –– Functions
-   * –––––––––––––––––––––– */
 
   getTotalPrice(shoppingElementList: ShoppingElementList){
     let totalPrice = 0;
@@ -117,7 +122,9 @@ export class ShoppingElementListComponent {
 
   deleteShoppingElement(shoppingElementIndex: number) {
     this.shoppingElementList.shoppingElements.splice(shoppingElementIndex, 1);
+    console.log(this.shoppingElementList);
     this.updateFinalPrice();
+    this.changeDetectorRef.detectChanges();
   }
 
   generateRandomColor() : string {

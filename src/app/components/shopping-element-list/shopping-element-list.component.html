@@ -13,23 +13,35 @@
       </div>
     </div>
   </div>
-  
-  <div *ngIf="shoppingElementList; else emptyState" class="shopping-element-list">
-    <div [@modifyShoppingElementListTrigger]="'in'" *ngFor="let shoppingElement of shoppingElementList.shoppingElements; let i = index">
-      <shopping-element 
-      (onDeleteShoppingElement)="deleteShoppingElement(i)"
-      (onUpdateShoppingElementUnitPrice)="updateFinalPrice()"
-      [shoppingElement]="shoppingElement"
-      [shoppingElementIndex]="i"
-      ></shopping-element>
+
+  <div class="content-wrapper">
+    <div *ngIf="shoppingElementList.shoppingElements.length > 0; else emptyState"  class="shopping-element-list">
+      <div [@modifyShoppingElementListTrigger]="'in'" *ngFor="let shoppingElement of shoppingElementList.shoppingElements; let i = index">
+        <shopping-element 
+        (onDeleteShoppingElement)="deleteShoppingElement(i)"
+        (onUpdateShoppingElementUnitPrice)="updateFinalPrice()"
+        [shoppingElement]="shoppingElement"
+        [shoppingElementIndex]="i"
+        ></shopping-element>
+      </div>
     </div>
-  </div>
-
-  <ng-template #emptyState>
-    empty
-  </ng-template>
   
+    <ng-template #emptyState>
+      <div class="empty-state-container">
+        <div class="empty-state">
+          <img class="empty-state-image" src="assets/svg/empty-list.svg">
 
+            <h2 class="empty-state-header">No posee listas</h2>
+            <div class="empty-state-message">¡Comience a organizar sus compras!</div>
+            <button mat-flat-button class="add-button-square" (click)="addShoppingElement('')">Crear nueva lista</button>
+
+        </div>
+      </div>
+      
+    </ng-template>
+
+  </div>
+  
 </div>
 
 
