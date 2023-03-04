@@ -4,6 +4,7 @@ import { ShoppingElement, ShoppingElementList } from '../../interfaces/interface
 import { Output, EventEmitter } from '@angular/core';
 import { Animations } from './shopping-element-list-animations';
 import { ShoppingElementComponent } from '../shopping-element/shopping-element.component';
+import { ColorGeneratorService } from 'src/app/services/color-generator.service copy';
 
 @Component({
   selector: 'shopping-element-list',
@@ -13,23 +14,28 @@ import { ShoppingElementComponent } from '../shopping-element/shopping-element.c
 })
 export class ShoppingElementListComponent {
 
-  /* –– Variables
+  /* –– Inputs
    * –––––––––––––––––––––– */
-  @ViewChildren(ShoppingElementComponent) public shoppingElementComponents: QueryList<ShoppingElementComponent>;
-  finalPrice: number = 0;
-  formattedFinalPrice: string = '';
-  
-  shoppingElementList: ShoppingElementList = {
+
+  @Input() shoppingElementList: ShoppingElementList = {
     name: '',
     shoppingElements: []
   };
+
+  /* –– Variables
+   * –––––––––––––––––––––– */
+
+  @ViewChildren(ShoppingElementComponent) public shoppingElementComponents: QueryList<ShoppingElementComponent>;
+  finalPrice: number = 0;
+  formattedFinalPrice: string = '';
 
   /* –– Constructor
    * –––––––––––––––––––––– */
   
   constructor( 
   private currencyFormatter: CurrencyFormatterService, 
-  private changeDetectorRef: ChangeDetectorRef ) { 
+  private changeDetectorRef: ChangeDetectorRef,
+  private colorGenerator: ColorGeneratorService ) { 
     this.shoppingElementComponents = new QueryList<ShoppingElementComponent>;
   }
 
@@ -46,39 +52,6 @@ export class ShoppingElementListComponent {
 
   /* –– Functions
    * –––––––––––––––––––––– */
-
-  setTestShoppingElementList(){
-    this.shoppingElementList = {
-      name: 'Compras para cena formal',
-      shoppingElements: [
-        {
-          name: 'Tomate',
-          unitPrice: 200,
-          quantity: 8,
-          notes: 'Muy bueno para cocinar salsas',
-          iconColor: this.generateRandomColor(),
-        },
-        {
-          name: 'Albahaca',
-          unitPrice: 475.50,
-          quantity: 4,
-          iconColor: this.generateRandomColor(),
-        },
-        {
-          name: 'Aceite de oliva',
-          unitPrice: 3570,
-          quantity: 1,
-          iconColor: this.generateRandomColor(),
-        },
-        {
-          name: 'Mantel',
-          unitPrice: 15600,
-          quantity: 1,
-          iconColor: this.generateRandomColor(),
-        },
-      ],
-    };
-  }
 
   getTotalPrice(shoppingElementList: ShoppingElementList){
     let totalPrice = 0;
@@ -104,7 +77,7 @@ export class ShoppingElementListComponent {
       unitPrice: Math.random()*1000,
       quantity: Math.trunc(Math.random()*10) + 1,
       notes: 'Hola',
-      iconColor: this.generateRandomColor(),
+      iconColor: this.colorGenerator.getRandomColor(),
     };
     this.shoppingElementList.shoppingElements.push(testShoppingElement);
     // Update final price
@@ -125,11 +98,5 @@ export class ShoppingElementListComponent {
     console.log(this.shoppingElementList);
     this.updateFinalPrice();
     this.changeDetectorRef.detectChanges();
-  }
-
-  generateRandomColor() : string {
-    let hue = Math.floor(Math.random() * 360);
-    let pastel = 'hsl(' + hue + ', 100%, 80%)';
-    return pastel;
   }
 }

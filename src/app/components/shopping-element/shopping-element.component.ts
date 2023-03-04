@@ -79,7 +79,6 @@ export class ShoppingElementComponent {
 
   // Update total price from form control values
   updateTotalPrice(){
-    // this.totalPrice = this.shoppingElementForm.controls['unitPrice'].value! * this.shoppingElementForm.controls['quantity'].value!
     this.totalPrice = this.shoppingElement.unitPrice * this.shoppingElement.quantity
     this.formattedTotalPrice = this.currencyFormatter.getFormattedPrice(this.totalPrice);
   }

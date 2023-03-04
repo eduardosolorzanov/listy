@@ -17,6 +17,7 @@ import { ShoppingElementComponent } from './components/shopping-element/shopping
 import { ShoppingElementListHeaderComponent } from './components/shopping-element-list-header/shopping-element-list-header.component';
 import { CurrencyFormatterService } from './services/currency-formatter.service';
 import { ReactiveFormsModule } from '@angular/forms';
+import { ColorGeneratorService } from './services/color-generator.service copy';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     MatFormFieldModule,
     MatInputModule
   ],
-  providers: [CurrencyFormatterService],
+  providers: [CurrencyFormatterService, ColorGeneratorService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
