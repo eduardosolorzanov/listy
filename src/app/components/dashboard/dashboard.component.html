@@ -17,7 +17,18 @@
 
 <!-- Shopping element list -->
 <div class="shopping-list-container">
-  <shopping-element-list></shopping-element-list>
+  <shopping-element-list [shoppingElementList]="user.shoppingElementLists[0]" @simpleFadeAnimation *ngIf="user.shoppingElementLists.length > 0; else emptyState" ></shopping-element-list>
+
+  <ng-template #emptyState>
+    <div @emptyStateFadeInTrigger class="empty-state-container">
+      <div class="empty-state">
+        <img class="empty-state-image" src="assets/svg/empty-list.svg">
+          <h2 class="empty-state-header">No posee listas</h2>
+          <div class="empty-state-message">¡Comience a organizar sus compras!</div>
+          <button mat-flat-button class="add-button-round-square" (click)="createShoppingList()">Crear nueva lista</button>
+      </div>
+    </div>
+  </ng-template>
 </div>
 
 

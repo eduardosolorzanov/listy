@@ -95,7 +95,6 @@ export class ShoppingElementListComponent {
 
   deleteShoppingElement(shoppingElementIndex: number) {
     this.shoppingElementList.shoppingElements.splice(shoppingElementIndex, 1);
-    console.log(this.shoppingElementList);
     this.updateFinalPrice();
     this.changeDetectorRef.detectChanges();
   }

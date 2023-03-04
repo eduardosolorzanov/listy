@@ -1,51 +1,27 @@
-import { Component } from '@angular/core';
-import { ShoppingElement, ShoppingElementList } from 'src/app/interfaces/interfaces';
+import { ChangeDetectorRef, Component } from '@angular/core';
+import { ShoppingElement, ShoppingElementList, User } from 'src/app/interfaces/interfaces';
 import { ColorGeneratorService } from 'src/app/services/color-generator.service copy';
+import { Animations } from '../shopping-element-list/shopping-element-list-animations';
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.scss']
+  styleUrls: ['./dashboard.component.scss'],
+  animations: [Animations.emptyStateFadeIn, Animations.simpleFadeAnimation],
 })
 export class DashboardComponent {
 
-  shoppingElementList: ShoppingElementList = {
-    name: 'Compras para cena formal',
-    shoppingElements: [
-      {
-        name: 'Tomate',
-        unitPrice: 200,
-        quantity: 8,
-        notes: 'Muy bueno para cocinar salsas',
-        iconColor: this.colorGenerator.getRandomColor(),
-      },
-      {
-        name: 'Albahaca',
-        unitPrice: 475.50,
-        quantity: 4,
-        iconColor: this.colorGenerator.getRandomColor(),
-      },
-      {
-        name: 'Aceite de oliva',
-        unitPrice: 3570,
-        quantity: 1,
-        iconColor: this.colorGenerator.getRandomColor(),
-      },
-      {
-        name: 'Mantel',
-        unitPrice: 15600,
-        quantity: 1,
-        iconColor: this.colorGenerator.getRandomColor(),
-      },
-    ],
-  };
+  user: User = {name: 'Test User', shoppingElementLists: []}
 
   /* –– Constructor
    * –––––––––––––––––––––– */
   
-  constructor(private colorGenerator: ColorGeneratorService) { }
+  constructor(private colorGenerator: ColorGeneratorService, private changeDetectorRef: ChangeDetectorRef,) { }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    // Initialize mock user
+
+  }
 
   /* –– Variables
    * –––––––––––––––––––––– */
@@ -53,4 +29,15 @@ export class DashboardComponent {
   /* –– Functions
    * –––––––––––––––––––––– */
 
+  createShoppingList(){
+
+    let testShoppingElementList = {name: '', shoppingElements: [{
+      name: 'Tomate',
+      unitPrice: 200,
+      quantity: 8,
+      notes: 'Muy bueno para cocinar salsas',
+      iconColor: this.colorGenerator.getRandomColor(),
+    }]};
+    this.user.shoppingElementLists.push(testShoppingElementList);
+  }
 }

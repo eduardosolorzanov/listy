@@ -1,6 +1,11 @@
 /* –– Interfaces
  * –––––––––––––––––––––– */
 
+export interface User {
+  name: string;
+  shoppingElementLists: ShoppingElementList[];
+}
+
 export interface ShoppingElement {
   name: string;
   unitPrice: number;

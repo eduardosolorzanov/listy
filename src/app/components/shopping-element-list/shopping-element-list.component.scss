@@ -17,17 +17,9 @@
   }
 }
 
-.add-button-round-square{
-  width: 100%;
-  min-width: 140px;
-  border-radius: 20px;
-}
-
-// Customize material button
-.mat-mdc-unelevated-button:not(:disabled){
-  background-color: $button-background;
-  color: white;
-  font-family: inherit;
+.add-button-container {
+  width: 64px;
+  height: 64px; 
 }
 
 .shopping-elements-container, .shopping-element-list {
@@ -38,7 +30,7 @@
   row-gap: 10px;
 }
 
-.content-wrapper {
+.shopping-list-wrapper {
   padding-top: $list-header-height;
 }
 
@@ -50,13 +42,10 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 20%;
-    min-width: 100px;
+    width: 10%;
+    min-width: 160px;
     row-gap: 15px;
     text-align: center;
-    .empty-state-header {
-      font-weight: bold;
-    }
     .empty-state-message{
       color: $subtitle-text-color;
     }

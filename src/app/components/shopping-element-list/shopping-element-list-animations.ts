@@ -33,12 +33,12 @@ export const Animations = {
       style({
         opacity: 0,
       }),
-      animate('500ms cubic-bezier(0.83, 0, 0.17, 1)')
+      animate('300ms cubic-bezier(0.83, 0, 0.17, 1)')
     ]),
 
     // fade out when destroyed. this could also be written as transition('void => *')
     transition(':leave',
-      animate('500ms cubic-bezier(0.83, 0, 0.17, 1)', style({ 
+      animate('300ms cubic-bezier(0.83, 0, 0.17, 1)', style({ 
         opacity: 0, 
       })),
     )

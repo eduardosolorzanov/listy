@@ -14,7 +14,6 @@ import { ShoppingElementListComponent } from './components/shopping-element-list
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { ShoppingElementComponent } from './components/shopping-element/shopping-element.component';
-import { ShoppingElementListHeaderComponent } from './components/shopping-element-list-header/shopping-element-list-header.component';
 import { CurrencyFormatterService } from './services/currency-formatter.service';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ColorGeneratorService } from './services/color-generator.service copy';
@@ -25,7 +24,6 @@ import { ColorGeneratorService } from './services/color-generator.service copy';
     ShoppingElementListComponent,
     DashboardComponent,
     ShoppingElementComponent,
-    ShoppingElementListHeaderComponent
   ],
   imports: [
     BrowserModule,
