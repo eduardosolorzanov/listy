@@ -1,4 +1,4 @@
-<div @shoppingElementsFirstLoadTrigger class="shopping-elements-container">
+<div @simpleFadeAnimation class="shopping-elements-container">
   <div class="header-section-container">
     <div class="header-section">
       <!-- <shopping-element-list-header></shopping-element-list-header> -->
@@ -16,7 +16,7 @@
 
   <div class="content-wrapper">
     <div *ngIf="shoppingElementList.shoppingElements.length > 0; else emptyState"  class="shopping-element-list">
-      <div [@modifyShoppingElementListTrigger]="'in'" *ngFor="let shoppingElement of shoppingElementList.shoppingElements; let i = index">
+      <div @simpleFadeAnimation *ngFor="let shoppingElement of shoppingElementList.shoppingElements; let i = index">
         <shopping-element 
         (onDeleteShoppingElement)="deleteShoppingElement(i)"
         (onUpdateShoppingElementUnitPrice)="updateFinalPrice()"
@@ -27,13 +27,13 @@
     </div>
   
     <ng-template #emptyState>
-      <div class="empty-state-container">
+      <div @emptyStateFadeInTrigger class="empty-state-container">
         <div class="empty-state">
           <img class="empty-state-image" src="assets/svg/empty-list.svg">
 
             <h2 class="empty-state-header">No posee listas</h2>
             <div class="empty-state-message">¡Comience a organizar sus compras!</div>
-            <button mat-flat-button class="add-button-square" (click)="addShoppingElement('')">Crear nueva lista</button>
+            <button mat-flat-button class="add-button-round-square" (click)="addShoppingElement('')">Crear nueva lista</button>
 
         </div>
       </div>

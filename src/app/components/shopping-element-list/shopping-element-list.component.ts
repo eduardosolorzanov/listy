@@ -9,7 +9,7 @@ import { ShoppingElementComponent } from '../shopping-element/shopping-element.c
   selector: 'shopping-element-list',
   templateUrl: './shopping-element-list.component.html',
   styleUrls: ['./shopping-element-list.component.scss'],
-  animations:[Animations.shoppingElementsFirstLoadTrigger, Animations.simpleFadeAnimation] 
+  animations:[Animations.shoppingElementsFirstLoadTrigger, Animations.simpleFadeAnimation, Animations.emptyStateFadeIn] 
 })
 export class ShoppingElementListComponent {
 

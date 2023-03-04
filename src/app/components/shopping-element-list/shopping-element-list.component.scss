@@ -17,14 +17,10 @@
   }
 }
 
-.add-button-square{
+.add-button-round-square{
   width: 100%;
   min-width: 140px;
-  // background-color: $button-background;
-  // color: white;
-  // // width: 64px;
-  // height: 64px;
-  // Specific to icon whithin add button
+  border-radius: 20px;
 }
 
 // Customize material button
@@ -46,26 +42,25 @@
   padding-top: $list-header-height;
 }
 
-.empty-state {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 20%;
-  min-width: 100px;
-  row-gap: 15px;
-  text-align: center;
-  .empty-state-header {
-    font-weight: bold;
-  }
-  .empty-state-message{
-    color: $subtitle-text-color;
-  }
-}
-
 .empty-state-container{
   display: flex;
   flex-direction: column;
   align-items: center;
+  .empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 20%;
+    min-width: 100px;
+    row-gap: 15px;
+    text-align: center;
+    .empty-state-header {
+      font-weight: bold;
+    }
+    .empty-state-message{
+      color: $subtitle-text-color;
+    }
+  }
 }
 
 .total-price-section {
