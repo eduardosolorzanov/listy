@@ -10,8 +10,9 @@ export class CurrencyFormatterService {
     const formatter = new Intl.NumberFormat('en-US', {
       style: 'decimal',
       minimumFractionDigits: 2,
-      maximumFractionDigits: 2
+      maximumFractionDigits: 2,
     });
+    // formatter.setMaximumFractionDigits(4)
     return "¢" + formatter.format(price);
   }
 }

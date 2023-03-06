@@ -96,9 +96,6 @@
   .final-price-information {
     font-size: $subsubtitle-font-size;
     color: $subtitle-text-color;
-    // .label{
-    //   font-weight: bold;
-    // }
   }
 }
 
@@ -115,8 +112,6 @@ input::-webkit-inner-spin-button {
 input[type=number] {
   -moz-appearance: textfield;
 }
-
-
 
 /***** Material form customization *****/
 
@@ -157,5 +152,6 @@ input[type=number] {
   // Remove min-height to prevent form inserting new space when editing
   min-height: 0px;
 }
+
 
 

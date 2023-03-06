@@ -1,4 +1,4 @@
-import { animate, query, stagger, state, style, transition, trigger } from "@angular/animations";
+import { animate, state, style, transition, trigger } from "@angular/animations";
 
 export const Animations = {
   // Fade in list when first loading

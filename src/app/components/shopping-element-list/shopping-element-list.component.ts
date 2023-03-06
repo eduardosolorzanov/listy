@@ -1,16 +1,18 @@
-import { ChangeDetectorRef, Component, Input, QueryList, ViewChild, ViewChildren } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, QueryList, ViewChild, ViewChildren, ViewEncapsulation } from '@angular/core';
 import { CurrencyFormatterService } from 'src/app/services/currency-formatter.service';
 import { ShoppingElement, ShoppingElementList } from '../../interfaces/interfaces';
 import { Output, EventEmitter } from '@angular/core';
-import { Animations } from './shopping-element-list-animations';
+import { Animations } from '../../shopping-element-list-animations';
 import { ShoppingElementComponent } from '../shopping-element/shopping-element.component';
 import { ColorGeneratorService } from 'src/app/services/color-generator.service copy';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'shopping-element-list',
   templateUrl: './shopping-element-list.component.html',
   styleUrls: ['./shopping-element-list.component.scss'],
-  animations:[Animations.shoppingElementsFirstLoadTrigger, Animations.simpleFadeAnimation, Animations.emptyStateFadeIn] 
+  encapsulation: ViewEncapsulation.None,
+  animations:[Animations.shoppingElementsFirstLoadTrigger, Animations.simpleFadeAnimation, Animations.emptyStateFadeIn], 
 })
 export class ShoppingElementListComponent {
 
@@ -18,16 +20,23 @@ export class ShoppingElementListComponent {
    * –––––––––––––––––––––– */
 
   @Input() shoppingElementList: ShoppingElementList = {
-    name: '',
+    name: 'Mi lista de compras',
     shoppingElements: []
   };
 
-  /* –– Variables
+  /* –– Properties
    * –––––––––––––––––––––– */
 
   @ViewChildren(ShoppingElementComponent) public shoppingElementComponents: QueryList<ShoppingElementComponent>;
   finalPrice: number = 0;
   formattedFinalPrice: string = '';
+  shoppingElementListForm = new FormGroup({
+    name: new FormControl(''),
+  });
+  // Editing triggers
+  isEditingShoppingElementListName: boolean = false;
+  // To identify and select shopping element list name
+  shoppingElementListNameHtmlElementId: string = '';
 
   /* –– Constructor
    * –––––––––––––––––––––– */
@@ -35,24 +44,53 @@ export class ShoppingElementListComponent {
   constructor( 
   private currencyFormatter: CurrencyFormatterService, 
   private changeDetectorRef: ChangeDetectorRef,
-  private colorGenerator: ColorGeneratorService ) { 
+  private colorGenerator: ColorGeneratorService,
+  private formBuilder: FormBuilder) { 
     this.shoppingElementComponents = new QueryList<ShoppingElementComponent>;
   }
 
   ngOnInit(): void {
-    
+    this.createShoppingElementListForm();
     this.updateFinalPrice();
+    this.shoppingElementListNameHtmlElementId = 'shopping-element-list-name-textbox';
   }
 
   // Access children here when done loading
-  ngAfterViewInit() {
-    // this.changeDetectorRef.detectChanges();
-    // console.log("Hello ", this.shoppingElementComponents.last.editProductName());
-  }
+  ngAfterViewInit() {}
 
   /* –– Functions
    * –––––––––––––––––––––– */
 
+  // Selects text from input element
+  selectText(inputElement: HTMLInputElement) {
+    inputElement?.focus();
+    inputElement?.select();
+  }
+
+  toggleEditShoppingElementListNameMode(){
+    this.isEditingShoppingElementListName = !this.isEditingShoppingElementListName;
+    // Updates DOM because edit name form is now visible
+    this.changeDetectorRef.detectChanges();
+  }
+
+  // Initialize form with shoppingElement data
+  createShoppingElementListForm() {
+    this.shoppingElementListForm = this.formBuilder.group({
+      name: this.shoppingElementList.name,
+    });
+  }
+
+
+  editShoppingElementListName(){
+    console.log('editShoppingElementListName');
+    this.toggleEditShoppingElementListNameMode();
+    const shoppingElementListNameInputElement = document.getElementById(this.shoppingElementListNameHtmlElementId) as HTMLInputElement;
+    this.selectText(shoppingElementListNameInputElement);
+  }
+
+  saveChanges(){
+    console.log('saveChanges');
+  }
   getTotalPrice(shoppingElementList: ShoppingElementList){
     let totalPrice = 0;
     shoppingElementList.shoppingElements.forEach(shoppingElement => {
@@ -74,7 +112,7 @@ export class ShoppingElementListComponent {
     // Push new element to shopping element list
     let testShoppingElement: ShoppingElement =  {
       name: 'Producto ' + Math.trunc(Math.random()*1000),
-      unitPrice: Math.random()*1000,
+      unitPrice: +(Math.random()*1000).toFixed(2),
       quantity: Math.trunc(Math.random()*10) + 1,
       notes: 'Hola',
       iconColor: this.colorGenerator.getRandomColor(),

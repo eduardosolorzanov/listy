@@ -3,8 +3,9 @@
 .add-button{
   background-color: $button-background;
   color: white;
-  width: 64px;
-  height: 64px;
+  // Overwrite mat button default properties
+  width: 64px !important;
+  height: 64px !important;
   // Specific to icon whithin add button
   mat-icon{
     width: 64px;
@@ -89,4 +90,52 @@
   // width: 85%;
   z-index: 999;
   background-color: $toolbar-background;
+}
+
+.edit-property-clickable {
+  cursor: pointer;
+}
+
+/***** Material form customization *****/
+
+.shopping-element-list-name-form {
+  font-size: 22px;
+}
+
+// Default state
+.mdc-text-field--filled:not(.mdc-text-field--disabled) {
+  background-color: $shopping-element-card-background;
+  // Remove padding left
+  padding-left: 0px;
+}
+
+// Remove overlay when element is focused
+.mat-mdc-form-field-focus-overlay {
+  background-color: $shopping-element-card-background;
+}
+
+// Remove form subscript
+.mat-mdc-form-field-subscript-wrapper {
+  display: none;
+}
+
+// Modify min height
+.mat-mdc-form-field-infix {
+  min-height: 30px;
+  display: flex;
+  align-items: flex-end;
+}
+
+// Form takes all the space in its container
+.mat-mdc-form-field {
+  width: 100%;
+}
+
+// Remove padding-top in text forms
+.mdc-text-field--no-label:not(.mdc-text-field--outlined):not(.mdc-text-field--textarea) .mat-mdc-form-field-infix {
+  padding-top: 0px;
+  // Distance between text and animated line
+  padding-bottom: 0px;
+  // Remove min-height to prevent form inserting new space when editing
+  min-height: 0px;
 }

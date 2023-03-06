@@ -1,7 +1,7 @@
 import { ChangeDetectorRef, Component } from '@angular/core';
 import { ShoppingElement, ShoppingElementList, User } from 'src/app/interfaces/interfaces';
 import { ColorGeneratorService } from 'src/app/services/color-generator.service copy';
-import { Animations } from '../shopping-element-list/shopping-element-list-animations';
+import { Animations } from '../../shopping-element-list-animations';
 
 @Component({
   selector: 'app-dashboard',
@@ -30,14 +30,7 @@ export class DashboardComponent {
    * –––––––––––––––––––––– */
 
   createShoppingList(){
-
-    let testShoppingElementList = {name: '', shoppingElements: [{
-      name: 'Tomate',
-      unitPrice: 200,
-      quantity: 8,
-      notes: 'Muy bueno para cocinar salsas',
-      iconColor: this.colorGenerator.getRandomColor(),
-    }]};
+    let testShoppingElementList = {name: 'Nueva lista', shoppingElements: []};
     this.user.shoppingElementLists.push(testShoppingElementList);
   }
 }
