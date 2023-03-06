@@ -52,7 +52,7 @@
           </span>
           <ng-template #editProductQuantitySection>
             <mat-form-field>
-              <input matInput (keydown.enter)="saveChanges()" type="number" (input)="onProductQuantityInput($event)" maxlength="15" [id]="quantityHtmlElementId" [value]="shoppingElement.quantity" formControlName="quantity">
+              <input matInput (keydown.enter)="saveChanges()" type="number" (input)="onProductQuantityInput($event)" [id]="quantityHtmlElementId" [value]="shoppingElement.quantity" formControlName="quantity">
             </mat-form-field>
           </ng-template>
         </div>

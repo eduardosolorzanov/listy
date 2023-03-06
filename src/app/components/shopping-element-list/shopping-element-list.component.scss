@@ -93,7 +93,21 @@
 }
 
 .edit-property-clickable {
+  display: flex;
+  align-items: center;
+  column-gap: 7px;
   cursor: pointer;
+  .edit-icon {
+    color: $subtitle-text-color;
+    font-size: 17px;
+    height: 17px;
+    width: 17px;
+  }
+}
+
+.list-name-date-section {
+  width: 35%;
+  min-width: 180px;
 }
 
 /***** Material form customization *****/

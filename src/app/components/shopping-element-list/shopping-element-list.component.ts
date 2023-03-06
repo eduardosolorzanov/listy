@@ -88,9 +88,6 @@ export class ShoppingElementListComponent {
     this.selectText(shoppingElementListNameInputElement);
   }
 
-  saveChanges(){
-    console.log('saveChanges');
-  }
   getTotalPrice(shoppingElementList: ShoppingElementList){
     let totalPrice = 0;
     shoppingElementList.shoppingElements.forEach(shoppingElement => {
@@ -135,5 +132,36 @@ export class ShoppingElementListComponent {
     this.shoppingElementList.shoppingElements.splice(shoppingElementIndex, 1);
     this.updateFinalPrice();
     this.changeDetectorRef.detectChanges();
+  }
+
+  // Check unit price and toggle editing mode for all elements
+  saveChanges(){
+    // Validate inputs
+    this.validateShoppingElementListNameInputControl();
+    // Update name value in shoppingElementList
+    this.shoppingElementList.name = this.shoppingElementListForm.controls['name'].value!;
+    // Toggle editing mode
+    this.isEditingShoppingElementListName = false;
+  }
+
+  validateShoppingElementListNameInputControl(){
+    let shoppingElementListValue = this.shoppingElementListForm.controls['name'].value!;
+    // If input is empty, assign name
+    if(shoppingElementListValue === ''){
+      shoppingElementListValue = '(Lista sin nombre)';
+    }
+    this.shoppingElementListForm.patchValue({name: shoppingElementListValue})    
+  }
+
+
+  // On each key input form control is checked for max characters and patched
+  // Max input: 30 characters
+  onShoppingElementListFormInput(inputElement: any) {
+    let inputValue = inputElement?.target?.value;
+    // If value has more than 32 characters, slice
+    if(inputValue.length > 30){
+      inputValue = inputValue.slice(0,-1);
+    }
+    this.shoppingElementListForm.patchValue({name: inputValue});
   }
 }
