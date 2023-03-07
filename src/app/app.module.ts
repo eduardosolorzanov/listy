@@ -20,6 +20,11 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { ColorGeneratorService } from './services/color-generator.service copy';
 import { DatePipe } from '@angular/common';
 import {MatSidenavModule} from '@angular/material/sidenav';
+import { StoreModule } from '@ngrx/store';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { reducers } from './store/reducers';
+import { EffectsModule } from '@ngrx/effects';
+import { ShoppingElementsEffects } from './store/effects';
 
 @NgModule({
   declarations: [
@@ -32,6 +37,17 @@ import {MatSidenavModule} from '@angular/material/sidenav';
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
+    StoreModule.forRoot({}),
+    EffectsModule.forRoot(),
+    StoreDevtoolsModule.instrument({
+      maxAge: 25, // Retains last 25 states
+      // logOnly: environment.production, // Restrict extension to log-only mode
+      // autoPause: true,
+      // logOnly: false,
+    }),
+    // This create a new slice of shoppingElements inside our state
+    StoreModule.forFeature('shoppingElements', reducers),
+    EffectsModule.forFeature([ShoppingElementsEffects]),
     BrowserAnimationsModule,
     MatToolbarModule,
     MatIconModule,

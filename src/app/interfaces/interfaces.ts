@@ -19,3 +19,19 @@ export interface ShoppingElementList {
   creationDate?: string;
   shoppingElements: ShoppingElement[];
 }
+
+/***** Store *****/ 
+
+export interface ShoppingElementsState {
+  isLoading: boolean;
+  name: string;
+  creationDate?: string;
+  shoppingElements: ShoppingElement[];
+  error: string | null;
+}
+
+// Global state
+export interface AppState {
+  shoppingElements: ShoppingElementsState;
+}
+

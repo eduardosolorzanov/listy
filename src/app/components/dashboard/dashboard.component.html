@@ -39,12 +39,17 @@
 
     <div *ngIf="selectedTab === 'Listas'" class="shopping-list-container">
       Ver listas
+      <div *ngIf="isLoading">Loading...</div>
     </div>
 
     <!-- Shopping element list -->
     <div *ngIf="selectedTab === 'Ver lista'" class="shopping-list-container">
       <!-- <shopping-element-list [shoppingElementList]="user.shoppingElementLists[0]" @simpleFadeAnimation -->
-      <shopping-element-list @simpleFadeAnimation *ngIf="user.shoppingElementLists.length > 0; else noListsState"></shopping-element-list>
+      <shopping-element-list @simpleFadeAnimation 
+      *ngIf="user.shoppingElementLists.length > 0; else noListsState" 
+      [shoppingElementList]="user.shoppingElementLists[0]">
+      </shopping-element-list>
+
       <ng-template #noListsState>
         <div @emptyStateFadeInTrigger class="empty-state-container">
           <div class="empty-state">

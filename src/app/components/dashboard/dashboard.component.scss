@@ -75,8 +75,8 @@
 }
 
 mat-drawer{
-  width: 15%;
-  min-width: 200px;
+  width: 10%;
+  min-width: 100px;
 }
 
 .sidenav-content {
@@ -105,7 +105,6 @@ mat-drawer{
 }
 
 .sidenav-selected-tab {
-  // color: mat-color($accent, default);;
   color: $listy-accent;
 }
 

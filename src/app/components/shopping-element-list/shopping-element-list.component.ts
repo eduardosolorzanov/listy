@@ -1,12 +1,16 @@
 import { ChangeDetectorRef, Component, Input, QueryList, ViewChild, ViewChildren, ViewEncapsulation } from '@angular/core';
 import { CurrencyFormatterService } from 'src/app/services/currency-formatter.service';
-import { ShoppingElement, ShoppingElementList } from '../../interfaces/interfaces';
+import { AppState, ShoppingElement, ShoppingElementList } from '../../interfaces/interfaces';
 import { Output, EventEmitter } from '@angular/core';
 import { Animations } from '../../listy-animations';
 import { ShoppingElementComponent } from '../shopping-element/shopping-element.component';
 import { ColorGeneratorService } from 'src/app/services/color-generator.service copy';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { DatePipe } from '@angular/common';
+import { Subject, takeUntil } from 'rxjs';
+import { select, Store } from '@ngrx/store';
+import { isLoadingSelector, shoppingElementsSelector } from 'src/app/store/selectors';
+import * as ShoppingElementsActions from '../../store/actions'
 
 @Component({
   selector: 'shopping-element-list',
@@ -41,6 +45,9 @@ export class ShoppingElementListComponent {
   // To identify and select shopping element list name
   shoppingElementListNameHtmlElementId: string = '';
 
+  isLoading: boolean = false;
+  private unsubscribe$ = new Subject<void>();
+
   /* –– Constructor
    * –––––––––––––––––––––– */
   
@@ -48,18 +55,34 @@ export class ShoppingElementListComponent {
   private currencyFormatter: CurrencyFormatterService, 
   private changeDetectorRef: ChangeDetectorRef,
   private colorGenerator: ColorGeneratorService,
-  private formBuilder: FormBuilder) { 
+  private formBuilder: FormBuilder,
+  private store: Store<AppState>,) { 
     this.shoppingElementComponents = new QueryList<ShoppingElementComponent>;
   }
-
+  
   ngOnInit(): void {
+    console.log('shopping element list')
+    console.log(this.shoppingElementList.shoppingElements);
+    // Get properties from observables
+    this.store
+      .pipe(select(isLoadingSelector), takeUntil(this.unsubscribe$)) // unsubscribe to prevent memory leak
+      .subscribe(
+        // unwrap observable
+        isLoading => this.isLoading = isLoading
+    ); 
+
     this.createShoppingElementListForm();
     this.updateFinalPrice();
     this.shoppingElementListNameHtmlElementId = 'shopping-element-list-name-textbox';
     // When creating list, focus on name
-    // this.toggleEditShoppingElementListNameMode();
-    // const shoppingElementListInputElement = document.getElementById(this.shoppingElementListNameHtmlElementId) as HTMLInputElement;
-    // this.focusInputElement(shoppingElementListInputElement);
+    this.toggleEditShoppingElementListNameMode();
+    const shoppingElementListInputElement = document.getElementById(this.shoppingElementListNameHtmlElementId) as HTMLInputElement;
+    this.focusInputElement(shoppingElementListInputElement);
+  }
+
+  ngOnDestroy(): void {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
   }
 
   // Access children here when done loading
@@ -87,7 +110,6 @@ export class ShoppingElementListComponent {
     });
   }
 
-
   editShoppingElementListName(){
     this.toggleEditShoppingElementListNameMode();
     const shoppingElementListNameInputElement = document.getElementById(this.shoppingElementListNameHtmlElementId) as HTMLInputElement;
@@ -113,11 +135,11 @@ export class ShoppingElementListComponent {
       this.shoppingElementComponents.last.isEditingProductName = false;
     }
     // Push new element to shopping element list
+    // 
     let testShoppingElement: ShoppingElement =  {
-      name: 'Producto ' + Math.trunc(Math.random()*1000),
-      unitPrice: +(Math.random()*1000).toFixed(2),
-      quantity: Math.trunc(Math.random()*10) + 1,
-      notes: 'Hola',
+      name: 'Nuevo producto',
+      unitPrice: 0,
+      quantity: 1,
       iconColor: this.colorGenerator.getRandomColor(),
     };
     this.shoppingElementList.shoppingElements.push(testShoppingElement);
