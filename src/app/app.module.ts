@@ -6,6 +6,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import {MatCheckboxModule} from '@angular/material/checkbox';
 
 
 import { AppRoutingModule } from './app-routing.module';
@@ -35,7 +36,8 @@ import { ColorGeneratorService } from './services/color-generator.service copy';
     MatButtonModule,
     MatCardModule,
     MatFormFieldModule,
-    MatInputModule
+    MatInputModule,
+    MatCheckboxModule
   ],
   providers: [CurrencyFormatterService, ColorGeneratorService],
   bootstrap: [AppComponent]

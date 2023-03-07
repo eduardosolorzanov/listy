@@ -11,17 +11,19 @@ import { Animations } from '../../shopping-element-list-animations';
 })
 export class DashboardComponent {
 
-  user: User = {name: 'Test User', shoppingElementLists: []}
+  user: User = {name: 'Test User', shoppingElementLists: [
+    {
+      name: 'Lista de prueba',
+      shoppingElements: []
+    }
+  ]}
 
   /* –– Constructor
    * –––––––––––––––––––––– */
   
   constructor(private colorGenerator: ColorGeneratorService, private changeDetectorRef: ChangeDetectorRef,) { }
 
-  ngOnInit(): void {
-    // Initialize mock user
-
-  }
+  ngOnInit(): void {}
 
   /* –– Variables
    * –––––––––––––––––––––– */
@@ -30,7 +32,13 @@ export class DashboardComponent {
    * –––––––––––––––––––––– */
 
   createShoppingList(){
-    let testShoppingElementList = {name: 'Nueva lista', shoppingElements: []};
+    let testShoppingElementList = { name: 'Nueva lista', shoppingElements: [
+      {
+        name: 'Test list',
+        unitPrice: 300,
+        quantity: 4,
+      }
+    ]};
     this.user.shoppingElementLists.push(testShoppingElementList);
   }
 }

@@ -50,6 +50,10 @@ export class ShoppingElementListComponent {
   }
 
   ngOnInit(): void {
+    this.addShoppingElement();
+    this.addShoppingElement();
+    this.addShoppingElement();
+
     this.createShoppingElementListForm();
     this.updateFinalPrice();
     this.shoppingElementListNameHtmlElementId = 'shopping-element-list-name-textbox';
@@ -105,7 +109,7 @@ export class ShoppingElementListComponent {
     this.formattedFinalPrice = this.currencyFormatter.getFormattedPrice(this.finalPrice);
   }
 
-  addShoppingElement(product: any) {
+  addShoppingElement() {
     // Toggle edition mode on last element back to non edition mode, if list has at least 1 element
     if( this.shoppingElementComponents.length > 0) {
       this.shoppingElementComponents.last.isEditingProductName = false;

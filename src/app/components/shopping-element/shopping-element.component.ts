@@ -34,9 +34,10 @@ export class ShoppingElementComponent {
    * –––––––––––––––––––––– */
 
   shoppingElementForm = new FormGroup({
-    name: new FormControl(''),
-    unitPrice: new FormControl(''),
-    quantity: new FormControl(0),
+    completed: new FormControl(),
+    name: new FormControl(),
+    unitPrice: new FormControl(),
+    quantity: new FormControl(),
   });
 
   formattedTotalPrice: string = '';
@@ -47,6 +48,7 @@ export class ShoppingElementComponent {
   nameHtmlElementId: string = '';
   unitPriceHtmlElementId: string = '';
   quantityHtmlElementId: string = '';
+  isCompleted: boolean = false;
 
   // Editing triggers
   isEditingProductName: boolean = false;
@@ -145,6 +147,7 @@ export class ShoppingElementComponent {
   // Initialize form with shoppingElement data
   createForm() {
     this.shoppingElementForm = this.formBuilder.group({
+      completed: false,
       name: this.shoppingElement.name,
       unitPrice: this.currencyFormatter.getFormattedPrice(this.shoppingElement.unitPrice),
       quantity: this.shoppingElement.quantity,

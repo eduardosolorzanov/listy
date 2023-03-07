@@ -9,7 +9,7 @@
           (click)="editShoppingElementListName()" 
           class="edit-property-clickable">
             {{shoppingElementListForm.controls['name'].value}}
-            <mat-icon class="edit-icon"> edit</mat-icon>
+            <mat-icon class="edit-icon">edit</mat-icon>
           </h2 >
           <!-- Edit mode - Name -->
           <ng-template #editShoppingElementListNameForm>
@@ -38,7 +38,7 @@
           *ngIf="shoppingElementList.shoppingElements.length > 0;" 
           mat-icon-button 
           class="add-button" 
-          (click)="addShoppingElement('')">
+          (click)="addShoppingElement()">
             <mat-icon>add</mat-icon>
           </button>
         </div>
@@ -61,7 +61,7 @@
     <ng-template #emptyState>
       <div @emptyStateFadeInTrigger class="empty-state-container">
         <div class="empty-state">
-            <button mat-icon-button class="add-button" (click)="addShoppingElement('')"><mat-icon>add</mat-icon></button>
+            <button mat-icon-button class="add-button" (click)="addShoppingElement()"><mat-icon>add</mat-icon></button>
             <div class="empty-state-message">Agregar un elemento a la lista</div>
         </div>
       </div>

@@ -1,10 +1,13 @@
 <div class="shopping-element-card" [formGroup]="shoppingElementForm">
   <div class="shopping-element-information-container">
+    <mat-checkbox [checked]="isCompleted" ></mat-checkbox>
     <div class="color-icon" [ngStyle]="{'background-color' : shoppingElement.iconColor}"></div>
     <div class="left-section">
       <div class="item-information-form">
         <!-- Item name -->
-        <span *ngIf="!isEditingProductName; else editName" (click)="editProductName()" class="edit-property-clickable">{{shoppingElementForm.controls['name'].value}}</span>
+        <span *ngIf="!isEditingProductName; else editName" (click)="editProductName()" class="edit-property-clickable">
+          {{shoppingElementForm.controls['name'].value}}
+        </span>
         <!-- Edit mode - Name -->
         <ng-template #editName>
           <mat-form-field>
@@ -26,7 +29,8 @@
           <span 
           *ngIf="!isEditingProductUnitPrice else editUnitPrice" 
           class="edit-property-clickable"
-          (click)="editProductUnitPrice($event)">{{shoppingElementForm.controls['unitPrice'].value}}
+          (click)="editProductUnitPrice($event)">
+            {{shoppingElementForm.controls['unitPrice'].value}}
           </span>
           <ng-template #editUnitPrice>
             <mat-form-field>
@@ -47,7 +51,8 @@
           <span 
           *ngIf="!isEditingProductQuantity else editProductQuantitySection" 
           class="edit-property-clickable"
-          (click)="editProductQuantity($event)">{{shoppingElementForm.controls['quantity'].value}}
+          (click)="editProductQuantity($event)">
+            {{shoppingElementForm.controls['quantity'].value}}
           </span>
           <ng-template #editProductQuantitySection>
             <mat-form-field>
