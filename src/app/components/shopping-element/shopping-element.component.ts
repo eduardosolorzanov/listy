@@ -8,7 +8,7 @@ import {ChangeDetectorRef} from '@angular/core'
   selector: 'shopping-element',
   templateUrl: './shopping-element.component.html',
   styleUrls: ['./shopping-element.component.scss'],
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
 })
 export class ShoppingElementComponent {
 
@@ -78,6 +78,14 @@ export class ShoppingElementComponent {
 
   /* –– Functions
   * –––––––––––––––––––––– */
+
+  getCardOpacity(){
+    return this.isCompleted ? '50%' : '100%';
+  }
+
+  toggleCompletedState(){
+    this.isCompleted = !this.isCompleted;
+  }
 
   // Update total price from form control values
   updateTotalPrice(){

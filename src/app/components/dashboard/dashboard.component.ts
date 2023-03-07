@@ -1,7 +1,7 @@
 import { ChangeDetectorRef, Component } from '@angular/core';
 import { ShoppingElement, ShoppingElementList, User } from 'src/app/interfaces/interfaces';
 import { ColorGeneratorService } from 'src/app/services/color-generator.service copy';
-import { Animations } from '../../shopping-element-list-animations';
+import { Animations } from '../../listy-animations';
 
 @Component({
   selector: 'app-dashboard',

@@ -1,6 +1,7 @@
-<div class="shopping-element-card" [formGroup]="shoppingElementForm">
+
+<div [ngStyle]="{'opacity' : getCardOpacity()}" class="shopping-element-card" [formGroup]="shoppingElementForm">
   <div class="shopping-element-information-container">
-    <mat-checkbox [checked]="isCompleted" ></mat-checkbox>
+    <mat-checkbox [checked]="isCompleted" (change)="toggleCompletedState()"></mat-checkbox>
     <div class="color-icon" [ngStyle]="{'background-color' : shoppingElement.iconColor}"></div>
     <div class="left-section">
       <div class="item-information-form">

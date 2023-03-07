@@ -2,7 +2,7 @@ import { ChangeDetectorRef, Component, Input, QueryList, ViewChild, ViewChildren
 import { CurrencyFormatterService } from 'src/app/services/currency-formatter.service';
 import { ShoppingElement, ShoppingElementList } from '../../interfaces/interfaces';
 import { Output, EventEmitter } from '@angular/core';
-import { Animations } from '../../shopping-element-list-animations';
+import { Animations } from '../../listy-animations';
 import { ShoppingElementComponent } from '../shopping-element/shopping-element.component';
 import { ColorGeneratorService } from 'src/app/services/color-generator.service copy';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
@@ -12,7 +12,7 @@ import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
   templateUrl: './shopping-element-list.component.html',
   styleUrls: ['./shopping-element-list.component.scss'],
   encapsulation: ViewEncapsulation.None,
-  animations:[Animations.shoppingElementsFirstLoadTrigger, Animations.simpleFadeAnimation, Animations.emptyStateFadeIn], 
+  animations:[Animations.simpleFadeAnimation, Animations.emptyStateFadeIn], 
 })
 export class ShoppingElementListComponent {
 
