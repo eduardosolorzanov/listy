@@ -1,3 +1,4 @@
+import { DatePipe } from '@angular/common';
 import { ChangeDetectorRef, Component } from '@angular/core';
 import { ShoppingElement, ShoppingElementList, User } from 'src/app/interfaces/interfaces';
 import { ColorGeneratorService } from 'src/app/services/color-generator.service copy';
@@ -11,19 +12,28 @@ import { Animations } from '../../listy-animations';
 })
 export class DashboardComponent {
 
-  user: User = {name: 'Test User', shoppingElementLists: [
+  userWithEmptyList: User = {name: 'Test User', shoppingElementLists: [
     {
       name: 'Lista de prueba',
-      shoppingElements: []
+      shoppingElements: [],
+      creationDate: '',
     }
   ]}
+
+  userWithNoLists: User = {name: 'Test User', shoppingElementLists: []}
+  user: User = {name: '', shoppingElementLists: []};
+
+  tabOptions: string[] = ['Listas', 'Ver lista', 'Usuario'];
+  selectedTab: string = this.tabOptions[0];
 
   /* –– Constructor
    * –––––––––––––––––––––– */
   
-  constructor(private colorGenerator: ColorGeneratorService, private changeDetectorRef: ChangeDetectorRef,) { }
+  constructor(private datePipe: DatePipe) { }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.user = this.userWithNoLists;
+  }
 
   /* –– Variables
    * –––––––––––––––––––––– */
@@ -32,7 +42,12 @@ export class DashboardComponent {
    * –––––––––––––––––––––– */
 
   createShoppingList(){
-    let testShoppingElementList = { name: 'Nueva lista', shoppingElements: [
+    let today = new Date();
+    let shoppingListDate = this.datePipe.transform(today, 'dd/MM/yyyy HH:mm')!;
+    let testShoppingElementList = { 
+      name: 'Nueva lista', 
+      creationDate: shoppingListDate,
+      shoppingElements: [
       {
         name: 'Test list',
         unitPrice: 300,
@@ -41,4 +56,24 @@ export class DashboardComponent {
     ]};
     this.user.shoppingElementLists.push(testShoppingElementList);
   }
+
+  selectViewListsOption(){
+    this.selectedTab = this.tabOptions[0];
+  }
+
+  selectViewListOption(){
+    this.selectedTab = this.tabOptions[1];
+  }
+
+  selectUserOption(){
+    this.selectedTab = this.tabOptions[2];
+  }
+
+  isSelectedTab(tabOption: string){
+    return tabOption === this.selectedTab ? true : false;
+  }
+  
+
 }
+
+

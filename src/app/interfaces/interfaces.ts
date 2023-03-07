@@ -16,5 +16,6 @@ export interface ShoppingElement {
 
 export interface ShoppingElementList {
   name: string;
+  creationDate?: string;
   shoppingElements: ShoppingElement[];
 }

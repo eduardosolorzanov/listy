@@ -18,6 +18,8 @@ import { ShoppingElementComponent } from './components/shopping-element/shopping
 import { CurrencyFormatterService } from './services/currency-formatter.service';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ColorGeneratorService } from './services/color-generator.service copy';
+import { DatePipe } from '@angular/common';
+import {MatSidenavModule} from '@angular/material/sidenav';
 
 @NgModule({
   declarations: [
@@ -37,9 +39,10 @@ import { ColorGeneratorService } from './services/color-generator.service copy';
     MatCardModule,
     MatFormFieldModule,
     MatInputModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    MatSidenavModule
   ],
-  providers: [CurrencyFormatterService, ColorGeneratorService],
+  providers: [CurrencyFormatterService, ColorGeneratorService, DatePipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

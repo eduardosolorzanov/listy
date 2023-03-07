@@ -67,3 +67,49 @@
   color: white;
   font-family: inherit;
 }
+
+// Customize mat drawer
+.mat-drawer-container{
+  background-color: white;
+  height: 100%;
+}
+
+mat-drawer{
+  width: 15%;
+  min-width: 200px;
+}
+
+.sidenav-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 50px;
+  row-gap: 30px;
+  button{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    row-gap: 10px;
+    width: 90px;
+    height: 90px;
+    mat-icon {
+      font-size: 30px;
+      height: 30px;
+      width: 30px;
+    }
+    .list-button-label{
+      font-family: "Roboto Slab";
+      font-size: $subtitle-font-size;
+    }
+  }
+}
+
+.sidenav-selected-tab {
+  // color: mat-color($accent, default);;
+  color: $listy-accent;
+}
+
+.sidenav-unselected-tab {
+  color: $subtitle-text-color;
+}
+

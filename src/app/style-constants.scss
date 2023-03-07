@@ -1,5 +1,16 @@
-/***** Custom colors *****/
+// Import material theming functions
+@import '@angular/material/theming';
+@import '../listy-theme.scss'; 
 
+// Copy palettes from custom theme
+$listy-primary-palette: mat-palette($md-graypalette);
+$listy-accent-palette:  mat-palette($md-graypalette, A200, A100, A400);
+
+/***** Theme colors *****/
+$listy-primary: mat-color($listy-primary-palette);
+$listy-accent: mat-color($listy-accent-palette);
+
+/***** Custom colors *****/
 $toolbar-background-past: #F5821F;
 $toolbar-background: #FEFFFF;
 $toolbar-text: #060606;
@@ -10,11 +21,5 @@ $subtitle-text-color: #9FA0A1;
 $shopping-element-card-background: #FFFFFF;
 
 /***** Custom sizes *****/
-
-// $subtitle-font-size: 12px;
 $subtitle-font-size: 16px;
 $subsubtitle-font-size: 12px;
-// Used for animations
-$shopping-card-height: 85.5px; 
-
-

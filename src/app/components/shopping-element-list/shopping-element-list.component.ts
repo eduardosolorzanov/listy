@@ -6,6 +6,7 @@ import { Animations } from '../../listy-animations';
 import { ShoppingElementComponent } from '../shopping-element/shopping-element.component';
 import { ColorGeneratorService } from 'src/app/services/color-generator.service copy';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'shopping-element-list',
@@ -13,6 +14,7 @@ import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
   styleUrls: ['./shopping-element-list.component.scss'],
   encapsulation: ViewEncapsulation.None,
   animations:[Animations.simpleFadeAnimation, Animations.emptyStateFadeIn], 
+  providers: [DatePipe]
 })
 export class ShoppingElementListComponent {
 
@@ -21,7 +23,8 @@ export class ShoppingElementListComponent {
 
   @Input() shoppingElementList: ShoppingElementList = {
     name: 'Mi lista de compras',
-    shoppingElements: []
+    shoppingElements: [],
+    creationDate: '',
   };
 
   /* –– Properties
@@ -50,17 +53,13 @@ export class ShoppingElementListComponent {
   }
 
   ngOnInit(): void {
-    this.addShoppingElement();
-    this.addShoppingElement();
-    this.addShoppingElement();
-
     this.createShoppingElementListForm();
     this.updateFinalPrice();
     this.shoppingElementListNameHtmlElementId = 'shopping-element-list-name-textbox';
     // When creating list, focus on name
-    this.toggleEditShoppingElementListNameMode();
-    const shoppingElementListInputElement = document.getElementById(this.shoppingElementListNameHtmlElementId) as HTMLInputElement;
-    this.focusInputElement(shoppingElementListInputElement);
+    // this.toggleEditShoppingElementListNameMode();
+    // const shoppingElementListInputElement = document.getElementById(this.shoppingElementListNameHtmlElementId) as HTMLInputElement;
+    // this.focusInputElement(shoppingElementListInputElement);
   }
 
   // Access children here when done loading
@@ -90,7 +89,6 @@ export class ShoppingElementListComponent {
 
 
   editShoppingElementListName(){
-    console.log('editShoppingElementListName');
     this.toggleEditShoppingElementListNameMode();
     const shoppingElementListNameInputElement = document.getElementById(this.shoppingElementListNameHtmlElementId) as HTMLInputElement;
     this.focusInputElement(shoppingElementListNameInputElement);

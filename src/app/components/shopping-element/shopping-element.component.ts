@@ -64,7 +64,7 @@ export class ShoppingElementComponent {
   constructor(
     private currencyFormatter: CurrencyFormatterService, 
     private formBuilder: FormBuilder,
-    private changeDetectorRef: ChangeDetectorRef ) { }
+    private changeDetectorRef: ChangeDetectorRef) { }
 
   ngOnInit(): void {
     this.createForm();
