@@ -3,23 +3,30 @@
   <div class="header-section-container" [formGroup]="shoppingElementListForm">
     <div class="header-section">
       <div class="list-name-date-section">
-        <!-- Item name -->
-        <h2 *ngIf="!isEditingShoppingElementListName; else editShoppingElementListNameForm" (click)="editShoppingElementListName()" class="edit-property-clickable">
-          {{shoppingElementListForm.controls['name'].value}}
-          <mat-icon class="edit-icon"> edit</mat-icon>
-        </h2>
-        <!-- Edit mode - Name -->
-        <ng-template #editShoppingElementListNameForm>
-          <mat-form-field class="shopping-element-list-name-form" >
-            <input matInput
-            (keydown.enter)="saveChanges()" 
-            type="text" 
-            [id]="shoppingElementListNameHtmlElementId" 
-            [value]="shoppingElementList.name" 
-            (input)="onShoppingElementListFormInput($event)"
-            formControlName="name">
-          </mat-form-field>
-        </ng-template>
+        <div class="list-information-form">
+          <h2 
+          *ngIf="!isEditingShoppingElementListName; else editShoppingElementListNameForm" 
+          (click)="editShoppingElementListName()" 
+          class="edit-property-clickable">
+            {{shoppingElementListForm.controls['name'].value}}
+            <mat-icon class="edit-icon"> edit</mat-icon>
+          </h2 >
+          <!-- Edit mode - Name -->
+          <ng-template #editShoppingElementListNameForm>
+            <div class="shopping-element-list-name-form-section">
+              <mat-form-field class="shopping-element-list-name-form">
+                <input matInput
+                (keydown.enter)="saveChanges()" 
+                type="text" 
+                [id]="shoppingElementListNameHtmlElementId" 
+                [value]="shoppingElementList.name" 
+                (input)="onShoppingElementListFormInput($event)"
+                formControlName="name">
+              </mat-form-field>
+            </div>
+            <button mat-icon-button (click)="saveChanges()"><mat-icon>done</mat-icon></button>
+          </ng-template>
+        </div>
         <!-- Edit mode - Name -->
         <span class="shopping-list-subtitle">5 de mayo de 2023</span>
       </div>

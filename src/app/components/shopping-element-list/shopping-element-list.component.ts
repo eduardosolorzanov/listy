@@ -53,6 +53,10 @@ export class ShoppingElementListComponent {
     this.createShoppingElementListForm();
     this.updateFinalPrice();
     this.shoppingElementListNameHtmlElementId = 'shopping-element-list-name-textbox';
+    // When creating list, focus on name
+    this.toggleEditShoppingElementListNameMode();
+    const shoppingElementListInputElement = document.getElementById(this.shoppingElementListNameHtmlElementId) as HTMLInputElement;
+    this.focusInputElement(shoppingElementListInputElement);
   }
 
   // Access children here when done loading
@@ -62,7 +66,7 @@ export class ShoppingElementListComponent {
    * –––––––––––––––––––––– */
 
   // Selects text from input element
-  selectText(inputElement: HTMLInputElement) {
+  focusInputElement(inputElement: HTMLInputElement) {
     inputElement?.focus();
     inputElement?.select();
   }
@@ -85,7 +89,7 @@ export class ShoppingElementListComponent {
     console.log('editShoppingElementListName');
     this.toggleEditShoppingElementListNameMode();
     const shoppingElementListNameInputElement = document.getElementById(this.shoppingElementListNameHtmlElementId) as HTMLInputElement;
-    this.selectText(shoppingElementListNameInputElement);
+    this.focusInputElement(shoppingElementListNameInputElement);
   }
 
   getTotalPrice(shoppingElementList: ShoppingElementList){

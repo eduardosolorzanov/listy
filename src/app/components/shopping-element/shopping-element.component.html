@@ -2,9 +2,9 @@
   <div class="shopping-element-information-container">
     <div class="color-icon" [ngStyle]="{'background-color' : shoppingElement.iconColor}"></div>
     <div class="left-section">
-      <div class="item-name-section">
+      <div class="item-information-form">
         <!-- Item name -->
-        <h4 *ngIf="!isEditingProductName; else editName" (click)="editProductName()" class="edit-property-clickable">{{shoppingElementForm.controls['name'].value}}</h4>
+        <span *ngIf="!isEditingProductName; else editName" (click)="editProductName()" class="edit-property-clickable">{{shoppingElementForm.controls['name'].value}}</span>
         <!-- Edit mode - Name -->
         <ng-template #editName>
           <mat-form-field>
@@ -20,9 +20,8 @@
       </div>
       
       <div class="item-information-section">
-
         <!-- Item price -->
-        <div class="item-price-section">
+        <div class="item-information-form">
           <span class="item-price-label">Precio por unidad:</span>&nbsp;
           <span 
           *ngIf="!isEditingProductUnitPrice else editUnitPrice" 
@@ -43,7 +42,7 @@
         </div>
 
         <!-- Item quantity -->
-        <div class="item-quantity-section">
+        <div class="item-information-form">
           <span class="item-quantity-label">Cantidad:</span>&nbsp; 
           <span 
           *ngIf="!isEditingProductQuantity else editProductQuantitySection" 

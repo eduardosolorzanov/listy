@@ -106,14 +106,40 @@
 }
 
 .list-name-date-section {
+  display: flex;
+  flex-direction: column;
   width: 35%;
   min-width: 180px;
+}
+
+.list-information-form {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: 40px;
+  align-items: center;
+  font-size: $subtitle-font-size;
+  .item-price-label {
+    color: $subtitle-text-color;
+    min-width: 138px;
+  }
+  .item-quantity-label {
+    color: $subtitle-text-color;
+    min-width: 72px;
+  }
+}
+
+.shopping-element-list-name-form-section{
+  display: flex;
+  width: 100%;
 }
 
 /***** Material form customization *****/
 
 .shopping-element-list-name-form {
   font-size: 22px;
+  // height: 40px;
+  // width: 100%;
 }
 
 // Default state

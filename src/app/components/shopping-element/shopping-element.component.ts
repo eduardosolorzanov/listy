@@ -154,19 +154,19 @@ export class ShoppingElementComponent {
   editProductName() {
     this.toggleEditProductNameMode();
     const nameInputElement = document.getElementById(this.nameHtmlElementId) as HTMLInputElement;
-    this.selectText(nameInputElement);
+    this.focusInputElement(nameInputElement);
   }
 
   editProductUnitPrice(event: Event){
     this.toggleEditProductUnitPriceMode();
     const unitPriceInputElement = document.getElementById(this.unitPriceHtmlElementId) as HTMLInputElement;
-    this.selectText(unitPriceInputElement);
+    this.focusInputElement(unitPriceInputElement);
   }
 
   editProductQuantity(event: Event){
     this.toggleEditProductQuantityMode();
     const productQuantityInputElement = document.getElementById(this.quantityHtmlElementId) as HTMLInputElement;
-    this.selectText(productQuantityInputElement);
+    this.focusInputElement(productQuantityInputElement);
   }
 
   toggleEditProductQuantityMode(){
@@ -195,7 +195,7 @@ export class ShoppingElementComponent {
   }
   
   // Selects text from input element
-  selectText(inputElement: HTMLInputElement) {
+  focusInputElement(inputElement: HTMLInputElement) {
     inputElement?.focus();
     inputElement?.select();
   }
