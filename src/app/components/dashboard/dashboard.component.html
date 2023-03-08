@@ -1,19 +1,25 @@
 <mat-drawer-container autosize>
   <mat-drawer #drawer mode="over">
     <div class="sidenav-content">
-      <button class="sidenav-button" [ngClass]="isSelectedTab(tabOptions[0]) ? 'sidenav-selected-tab' : 'sidenav-unselected-tab'" (click)="selectViewListsOption()" mat-icon-button>
+      <button class="sidenav-button"
+        [ngClass]="isSelectedTab(tabOptions[0]) ? 'sidenav-selected-tab' : 'sidenav-unselected-tab'"
+        (click)="selectViewListsOption()" mat-icon-button>
         <mat-icon>
           auto_stories
         </mat-icon>
         <span class="list-button-label">{{tabOptions[0]}}</span>
       </button>
-      <button class="sidenav-button" [ngClass]="isSelectedTab(tabOptions[1]) ? 'sidenav-selected-tab' : 'sidenav-unselected-tab'" (click)="selectViewListOption()" mat-icon-button>
+      <button class="sidenav-button"
+        [ngClass]="isSelectedTab(tabOptions[1]) ? 'sidenav-selected-tab' : 'sidenav-unselected-tab'"
+        (click)="selectViewListOption()" mat-icon-button>
         <mat-icon>
           list_alt
         </mat-icon>
         <span class="list-button-label">{{tabOptions[1]}}</span>
       </button>
-      <button class="sidenav-button" [ngClass]="isSelectedTab(tabOptions[2]) ? 'sidenav-selected-tab' : 'sidenav-unselected-tab'" (click)="selectUserOption()" mat-icon-button>
+      <button class="sidenav-button"
+        [ngClass]="isSelectedTab(tabOptions[2]) ? 'sidenav-selected-tab' : 'sidenav-unselected-tab'"
+        (click)="selectUserOption()" mat-icon-button>
         <mat-icon>
           account_circle
         </mat-icon>
@@ -22,50 +28,53 @@
     </div>
   </mat-drawer>
 
-    <!-- Header -->
-    <mat-toolbar class="toolbar-elements-container">
-      <span class="buttons-container">
-        <button mat-icon-button (click)="drawer.toggle()">
-          <mat-icon>menu</mat-icon>
-        </button>
-        <button mat-icon-button>
-          <mat-icon>more_vert</mat-icon>
-        </button>
-      </span>
-      <span class="toolbar-title">
-        <h1>Listy</h1>
-      </span>
-    </mat-toolbar>
+  <!-- Header -->
+  <mat-toolbar class="toolbar-elements-container">
+    <span class="buttons-container">
+      <button mat-icon-button (click)="drawer.toggle()">
+        <mat-icon>menu</mat-icon>
+      </button>
+      <button mat-icon-button>
+        <mat-icon>more_vert</mat-icon>
+      </button>
+    </span>
+    <span class="toolbar-title">
+      <h1>Listy</h1>
+    </span>
+  </mat-toolbar>
 
-    <div *ngIf="selectedTab === 'Listas'" class="shopping-list-container">
-      Ver listas
-      <div *ngIf="isLoading">Loading...</div>
+  <!-- Content -->
+  <div class="content-container">
+    <div *ngIf="user.shoppingElementLists.length > 0; else noListsState">
+      <!-- Shopping element lists list -->
+      <div *ngIf="selectedTab === 'Listas'">
+        Ver listas
+        <div *ngIf="isLoading">Loading...</div>
+      </div>
+
+      <!-- Shopping element lists detail -->
+      <div *ngIf="selectedTab === 'Ver lista'" class="shopping-list-container">
+        <shopping-element-list @simpleFadeAnimation [shoppingElementList]="user.shoppingElementLists[0]">
+        </shopping-element-list>
+      </div>
     </div>
 
-    <!-- Shopping element list -->
-    <div *ngIf="selectedTab === 'Ver lista'" class="shopping-list-container">
-      <!-- <shopping-element-list [shoppingElementList]="user.shoppingElementLists[0]" @simpleFadeAnimation -->
-      <shopping-element-list @simpleFadeAnimation 
-      *ngIf="user.shoppingElementLists.length > 0; else noListsState" 
-      [shoppingElementList]="user.shoppingElementLists[0]">
-      </shopping-element-list>
-
-      <ng-template #noListsState>
-        <div @emptyStateFadeInTrigger class="empty-state-container">
-          <div class="empty-state">
-            <img class="empty-state-image" src="assets/svg/empty-list.svg">
-            <h2 class="empty-state-header">No posee listas</h2>
-            <div class="empty-state-message">¡Comience a organizar sus compras!</div>
-            <button mat-flat-button class="add-button-round-square" (click)="createShoppingList()">Crear nueva
-              lista</button>
-          </div>
-        </div>
-      </ng-template>
-    </div>
-
-    <div *ngIf="selectedTab === 'Usuario'" class="shopping-list-container">
+    <!-- User settings -->
+    <div *ngIf="selectedTab === 'Usuario'">
       Usuario
     </div>
 
+    <ng-template #noListsState>
+      <div @emptyStateFadeInTrigger class="empty-state-container">
+        <div class="empty-state">
+          <img class="empty-state-image" src="assets/svg/empty-list.svg">
+          <h2 class="empty-state-header">No posee listas</h2>
+          <div class="empty-state-message">¡Comience a organizar sus compras!</div>
+          <button mat-flat-button class="add-button-round-square" (click)="createShoppingList()">Crear nueva
+            lista</button>
+        </div>
+      </div>
+    </ng-template>
+  </div>
 
 </mat-drawer-container>

@@ -26,12 +26,15 @@
   padding-left: 7.5%;
   padding-right: 7.5%;
   padding-bottom: 2%;
-  padding-top: $toolbar-height;
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
   justify-content: flex-start;
   row-gap: 15px;
+}
+
+.content-container {
+  padding-top: $toolbar-height;
 }
 
 .empty-state-container{
