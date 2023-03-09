@@ -61,8 +61,6 @@ export class ShoppingElementListComponent {
   }
   
   ngOnInit(): void {
-    console.log('shopping element list')
-    console.log(this.shoppingElementList.shoppingElements);
     // Get properties from observables
     this.store
       .pipe(select(isLoadingSelector), takeUntil(this.unsubscribe$)) // unsubscribe to prevent memory leak

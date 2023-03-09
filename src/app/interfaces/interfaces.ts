@@ -11,7 +11,7 @@ export interface ShoppingElement {
   unitPrice: number;
   quantity: number;
   notes?: string;
-  iconColor?: string;
+  iconColor: string;
 }
 
 export interface ShoppingElementList {
@@ -34,4 +34,6 @@ export interface ShoppingElementsState {
 export interface AppState {
   shoppingElements: ShoppingElementsState;
 }
+
+
 

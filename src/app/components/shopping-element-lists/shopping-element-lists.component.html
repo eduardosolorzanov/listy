@@ -1,9 +1,19 @@
 <div class="content-container">
   <h1>Listas</h1>
   <div class="shopping-element-list-card-list">
-    <div class="shopping-element-list-card">Lista 1</div>
-    <div class="shopping-element-list-card">Lista 2</div>
-    <div class="shopping-element-list-card">Lista 3</div>
+
+    <div *ngFor="let shoppingElementList of shoppingElementLists; let i = index" class="shopping-element-list-card">
+      <!-- List title -->
+      <div class="shopping-element-list-card-header">
+        {{shoppingElementList.name}}
+        <div class="shopping-element-list-card-subtitle">
+          {{shoppingElementList.creationDate}}
+        </div>
+      </div>
+      <!-- List elements preview and total price -->
+      <div class="shopping-element-list-card-preview">{{getShoppingElementsPreview(shoppingElementList, shoppingElementPreviewCardMaxCharacters)}}</div>
+    </div>
+
   </div>
 </div>
 

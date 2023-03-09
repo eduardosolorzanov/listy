@@ -40,7 +40,7 @@
       <!-- Shopping element lists list -->
       <div *ngIf="selectedTab === 'Listas'">
         <div class="shopping-element-lists-container">
-          <shopping-element-lists @simpleFadeAnimation></shopping-element-lists>
+          <shopping-element-lists @simpleFadeAnimation [shoppingElementLists]="user.shoppingElementLists"></shopping-element-lists>
         </div>
         <div *ngIf="isLoading">Loading...</div>
       </div>
