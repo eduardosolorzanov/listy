@@ -25,6 +25,7 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { reducers } from './store/reducers';
 import { EffectsModule } from '@ngrx/effects';
 import { ShoppingElementsEffects } from './store/effects';
+import { ShoppingElementListsComponent } from './components/shopping-element-lists/shopping-element-lists.component';
 
 @NgModule({
   declarations: [
@@ -32,6 +33,7 @@ import { ShoppingElementsEffects } from './store/effects';
     ShoppingElementListComponent,
     DashboardComponent,
     ShoppingElementComponent,
+    ShoppingElementListsComponent,
   ],
   imports: [
     BrowserModule,

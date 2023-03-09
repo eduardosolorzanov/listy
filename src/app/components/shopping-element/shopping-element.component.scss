@@ -9,6 +9,9 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  // This is to prevent shadow from showing outside header
+  margin-right: 2px;
+  margin-left: 2px;
 }
 
 .shopping-element-information-container {

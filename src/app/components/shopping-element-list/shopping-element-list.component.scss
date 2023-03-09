@@ -31,9 +31,6 @@
   row-gap: 10px;
 }
 
-.shopping-list-wrapper {
-  padding-top: $list-header-height;
-}
 
 .empty-state-container{
   display: flex;
@@ -58,8 +55,6 @@
   flex-direction: row ;
   align-items: center;
   justify-content: flex-end;
-  padding-top: 10px;
-  // padding-right: 55px;
   column-gap: 23px;
 
   .label {
@@ -77,20 +72,15 @@
   align-items: center;
   justify-content: space-between;
   // Align with edit and delete buttons from cards
-  padding-right: calc(7.5% + 52px);
-  padding-left: 7.5%;
-  // width: 100%;
+  padding-right: 57px;
+  padding-left: 2px;
+  background-color: $toolbar-background;
 }
 
 .header-section-container {
-  position: fixed;
+  position: sticky;
   top: $toolbar-height;
-  left: 0px;
-  right: 0px;
-  width: 100%;
-  // width: 85%;
-  z-index: 999;
-  background-color: $toolbar-background;
+  z-index: 1;
 }
 
 .edit-property-clickable {

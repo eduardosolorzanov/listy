@@ -35,6 +35,26 @@
 
 .content-container {
   padding-top: $toolbar-height;
+  padding-left: $sidenav-width;
+}
+
+.dashboard-container {
+  width: 100%;
+}
+
+.shopping-element-lists-container{
+  padding-left: 7.5%;
+  padding-right: 7.5%;
+  padding-bottom: 2%;
+}
+
+.sidenav-container {
+  height: 100%;
+  width: $sidenav-width;
+  position: fixed; 
+  z-index: 1; 
+  top: 0; 
+  left: 0;
 }
 
 .empty-state-container{
@@ -86,7 +106,7 @@ mat-drawer{
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding-top: 50px;
+  padding-top: $toolbar-height;
   row-gap: 30px;
   button{
     display: flex;

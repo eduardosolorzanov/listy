@@ -1,5 +1,11 @@
-<mat-drawer-container autosize>
-  <mat-drawer #drawer mode="over">
+<!-- Header -->
+<mat-toolbar class="toolbar-elements-container">
+  <h1>Listy</h1>
+</mat-toolbar>
+
+<div class="dashboard-container">
+  <!-- Sidenav -->
+  <div class="sidenav-container">
     <div class="sidenav-content">
       <button class="sidenav-button"
         [ngClass]="isSelectedTab(tabOptions[0]) ? 'sidenav-selected-tab' : 'sidenav-unselected-tab'"
@@ -26,29 +32,16 @@
         <span class="list-button-label">{{tabOptions[2]}}</span>
       </button>
     </div>
-  </mat-drawer>
-
-  <!-- Header -->
-  <mat-toolbar class="toolbar-elements-container">
-    <span class="buttons-container">
-      <button mat-icon-button (click)="drawer.toggle()">
-        <mat-icon>menu</mat-icon>
-      </button>
-      <button mat-icon-button>
-        <mat-icon>more_vert</mat-icon>
-      </button>
-    </span>
-    <span class="toolbar-title">
-      <h1>Listy</h1>
-    </span>
-  </mat-toolbar>
+  </div>
 
   <!-- Content -->
   <div class="content-container">
     <div *ngIf="user.shoppingElementLists.length > 0; else noListsState">
       <!-- Shopping element lists list -->
       <div *ngIf="selectedTab === 'Listas'">
-        Ver listas
+        <div class="shopping-element-lists-container">
+          <shopping-element-lists @simpleFadeAnimation></shopping-element-lists>
+        </div>
         <div *ngIf="isLoading">Loading...</div>
       </div>
 
@@ -76,5 +69,4 @@
       </div>
     </ng-template>
   </div>
-
-</mat-drawer-container>
+</div>

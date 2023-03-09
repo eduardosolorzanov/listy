@@ -45,7 +45,7 @@
     </div>
   </div>
 
-  <div class="shopping-list-wrapper">
+  <div>
     <div *ngIf="shoppingElementList.shoppingElements.length > 0; else emptyState"  class="shopping-element-list">
       <div @simpleFadeAnimation *ngFor="let shoppingElement of shoppingElementList.shoppingElements; let i = index">
         <shopping-element 
