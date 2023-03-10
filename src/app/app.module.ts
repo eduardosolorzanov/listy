@@ -24,8 +24,9 @@ import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { reducers } from './store/reducers';
 import { EffectsModule } from '@ngrx/effects';
-import { ShoppingElementsEffects } from './store/effects';
+import { ShoppingElementsEffects } from './store/shopping-elements-effects';
 import { ShoppingElementListsComponent } from './components/shopping-element-lists/shopping-element-lists.component';
+import { SidenavComponent } from './components/sidenav/sidenav.component';
 
 @NgModule({
   declarations: [
@@ -34,6 +35,7 @@ import { ShoppingElementListsComponent } from './components/shopping-element-lis
     DashboardComponent,
     ShoppingElementComponent,
     ShoppingElementListsComponent,
+    SidenavComponent,
   ],
   imports: [
     BrowserModule,

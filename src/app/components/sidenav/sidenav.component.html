@@ -1,0 +1,28 @@
+<div class="sidenav-container">
+  <div class="sidenav-content">
+    <button
+      [ngClass]="isSelectedTab(tabOptions[0]) ? 'sidenav-selected-tab' : 'sidenav-unselected-tab'"
+      (click)="selectViewListsOption()" routerLink="/shopping-lists" mat-icon-button>
+      <mat-icon>auto_stories</mat-icon>
+      <span class="list-button-label">{{tabOptions[0]}}</span>
+    </button>
+  
+    <button
+      [ngClass]="isSelectedTab(tabOptions[1]) ? 'sidenav-selected-tab' : 'sidenav-unselected-tab'"
+      (click)="selectViewListOption()" mat-icon-button routerLink="/shopping-list-detail/1">
+      <mat-icon>
+        list_alt
+      </mat-icon>
+      <span class="list-button-label">{{tabOptions[1]}}</span>
+    </button>
+  
+    <button
+      [ngClass]="isSelectedTab(tabOptions[2]) ? 'sidenav-selected-tab' : 'sidenav-unselected-tab'"
+      (click)="selectUserOption()" mat-icon-button>
+      <mat-icon>
+        account_circle
+      </mat-icon>
+      <span class="list-button-label">{{tabOptions[2]}}</span>
+    </button>
+  </div>
+</div>

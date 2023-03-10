@@ -34,8 +34,6 @@ export class DashboardComponent {
   selectedShoppingElementListIndex: number = 0;
   userWithNoLists: User = { name: 'Test User', shoppingElementLists: [] }
   user: User = { name: '', shoppingElementLists: [] };
-  tabOptions: string[] = ['Listas', 'Ver lista', 'Usuario'];
-  selectedTab: string = this.tabOptions[0];
   // isLoading$ : Observable<boolean>;
   // error$: Observable<string | null>;
   // shoppingElements$: Observable<ShoppingElement[]>;
@@ -106,23 +104,6 @@ export class DashboardComponent {
     this.user.shoppingElementLists = this.shoppingElementListsService.getShoppingElementLists();
   }
   /********  Testing purposes ********/
-
-  selectViewListsOption() {
-    this.selectedTab = this.tabOptions[0];
-  }
-
-  selectViewListOption() {
-    this.selectedTab = this.tabOptions[1];
-  }
-
-  selectUserOption() {
-    this.selectedTab = this.tabOptions[2];
-  }
-
-  isSelectedTab(tabOption: string) {
-    return tabOption === this.selectedTab ? true : false;
-  }
-
 
 }
 

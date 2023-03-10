@@ -50,14 +50,6 @@
   padding-bottom: 2%;
 }
 
-.sidenav-container {
-  height: 100%;
-  width: $sidenav-width;
-  position: fixed; 
-  z-index: 1; 
-  top: 0; 
-  left: 0;
-}
 
 .empty-state-container{
   display: flex;
@@ -104,36 +96,4 @@ mat-drawer{
   min-width: 100px;
 }
 
-.sidenav-content {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding-top: $toolbar-height;
-  row-gap: 30px;
-  button{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    row-gap: 10px;
-    width: 90px;
-    height: 90px;
-    mat-icon {
-      font-size: 30px;
-      height: 30px;
-      width: 30px;
-    }
-    .list-button-label{
-      font-family: "Roboto Slab";
-      font-size: $subtitle-font-size;
-    }
-  }
-}
-
-.sidenav-selected-tab {
-  color: $listy-accent;
-}
-
-.sidenav-unselected-tab {
-  color: $subtitle-text-color;
-}
 

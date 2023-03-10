@@ -6,9 +6,7 @@ import * as ShoppingElementsActions from './actions';
 
 @Injectable()
 export class ShoppingElementsEffects {
-
   constructor( private actions$: Actions, private shoppingElementsService: ShoppingElementsService ){}
-
   getShoppingElements$ = createEffect(() => 
     this.actions$.pipe(
       ofType(ShoppingElementsActions.getShoppingElements),
@@ -22,5 +20,4 @@ export class ShoppingElementsEffects {
       })
     )
   );
-  
 }
