@@ -4,6 +4,14 @@ h1 {
   margin: 0px;
 }
 
+// .sticky-header {
+//   position: sticky;
+//   top: $toolbar-height;
+//   z-index: 1;
+//   background-color: $toolbar-background;
+//   padding-bottom: 5px;
+// }
+
 .content-container {
   display: flex;
   flex-direction: column;
@@ -33,8 +41,6 @@ h1 {
   }
 }
 
-
-
 .shopping-element-list-card-list {
   display: flex;
   flex-direction: row;
@@ -42,4 +48,7 @@ h1 {
   column-gap: 30px;
   row-gap: 30px;
   justify-content: flex-start;
+  // Prevent card from showing outside header
+  // padding-left: 3px;
+  // padding-right: 3px;
 }

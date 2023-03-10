@@ -1,7 +1,9 @@
 import { Component, Input } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { ShoppingElementList } from 'src/app/interfaces/interfaces';
 import { ColorGeneratorService } from 'src/app/services/color-generator.service copy';
 import { CurrencyFormatterService } from 'src/app/services/currency-formatter.service';
+import { ShoppingElementListsService } from 'src/app/services/shopping-element-lists.service';
 
 @Component({
   selector: 'shopping-element-lists',
@@ -15,6 +17,11 @@ export class ShoppingElementListsComponent {
 
   @Input() shoppingElementLists: ShoppingElementList[] = [];
 
+  /* –– Outputs
+   * –––––––––––––––––––––– */
+
+  // @Output() shoppingElementLists: ShoppingElementList[] = [];
+
   /* –– Properties
    * –––––––––––––––––––––– */
 
@@ -23,14 +30,17 @@ export class ShoppingElementListsComponent {
   /* –– Constructor
    * –––––––––––––––––––––– */
 
-  constructor(private currencyFormatter: CurrencyFormatterService, ) { }
+  constructor(private currencyFormatter: CurrencyFormatterService, private shoppingElementListsService: ShoppingElementListsService ) { }
 
   ngOnInit(): void {
-    console.log(this.shoppingElementLists);
+    this.shoppingElementLists = this.shoppingElementListsService.getShoppingElementLists();
+
+    // console.log('shopping-lists: ', this.shoppingElementLists);
   }
 
   /* –– Functions
    * –––––––––––––––––––––– */
+
 
   getShoppingElementsPreview(shoppingElementList: ShoppingElementList, maxCharacters: number){
     let shoppingElementsPreview: string = '';
@@ -42,7 +52,6 @@ export class ShoppingElementListsComponent {
       shoppingElementsPreview += `${shoppingElement.quantity} ${shoppingElement.name} - ${formattedTotalPrice}`;
       // Don't add line change to last line
       if (!(index === shoppingElementList.shoppingElements.length - 1)){ 
-        // console.log("Last callback call at index " + idx + " with value " + i ); 
         shoppingElementsPreview += '\n';
       }
     });
@@ -59,6 +68,10 @@ export class ShoppingElementListsComponent {
     // Add total price in last line
     shoppingElementsPreview += '\n\n' + 'Total: ' + this.currencyFormatter.getFormattedPrice(totalListPrice);
     return shoppingElementsPreview
+  }
+
+  displayShoppingListDetail(shoppingElementListIndex: number){
+    console.log('displayShoppingListDetail ', shoppingElementListIndex);
   }
 
 }

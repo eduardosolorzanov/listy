@@ -11,6 +11,8 @@ import { Subject, takeUntil } from 'rxjs';
 import { select, Store } from '@ngrx/store';
 import { isLoadingSelector, shoppingElementsSelector } from 'src/app/store/selectors';
 import * as ShoppingElementsActions from '../../store/actions'
+import { ActivatedRoute } from '@angular/router';
+import { ShoppingElementListsService } from 'src/app/services/shopping-element-lists.service';
 
 @Component({
   selector: 'shopping-element-list',
@@ -25,14 +27,20 @@ export class ShoppingElementListComponent {
   /* –– Inputs
    * –––––––––––––––––––––– */
 
-  @Input() shoppingElementList: ShoppingElementList = {
+  // @Input() shoppingElementList: ShoppingElementList = {
+  //   name: 'Mi lista de compras',
+  //   shoppingElements: [],
+  //   creationDate: '',
+  // };
+
+  /* –– Properties
+   * –––––––––––––––––––––– */
+  shoppingElementListIndex: string = '';
+  shoppingElementList: ShoppingElementList = {
     name: 'Mi lista de compras',
     shoppingElements: [],
     creationDate: '',
   };
-
-  /* –– Properties
-   * –––––––––––––––––––––– */
 
   @ViewChildren(ShoppingElementComponent) public shoppingElementComponents: QueryList<ShoppingElementComponent>;
   finalPrice: number = 0;
@@ -56,11 +64,19 @@ export class ShoppingElementListComponent {
   private changeDetectorRef: ChangeDetectorRef,
   private colorGenerator: ColorGeneratorService,
   private formBuilder: FormBuilder,
-  private store: Store<AppState>,) { 
+  private store: Store<AppState>,
+  private route: ActivatedRoute,
+  private shoppingElementListsService: ShoppingElementListsService) { 
     this.shoppingElementComponents = new QueryList<ShoppingElementComponent>;
   }
   
   ngOnInit(): void {
+    // Get shopping list id from url
+    this.shoppingElementListIndex = this.route.snapshot.url[1].path || '';
+
+    // Fetch shoppingElementList
+    this.shoppingElementList = this.shoppingElementListsService.getShoppingElementList(+this.shoppingElementListIndex);
+
     // Get properties from observables
     this.store
       .pipe(select(isLoadingSelector), takeUntil(this.unsubscribe$)) // unsubscribe to prevent memory leak
@@ -69,10 +85,14 @@ export class ShoppingElementListComponent {
         isLoading => this.isLoading = isLoading
     ); 
 
+    // Create form from shoppingElementList object
     this.createShoppingElementListForm();
+
+    // Calculate final price
     this.updateFinalPrice();
+
+    // Focus on name when opening list
     this.shoppingElementListNameHtmlElementId = 'shopping-element-list-name-textbox';
-    // When creating list, focus on name
     this.toggleEditShoppingElementListNameMode();
     const shoppingElementListInputElement = document.getElementById(this.shoppingElementListNameHtmlElementId) as HTMLInputElement;
     this.focusInputElement(shoppingElementListInputElement);

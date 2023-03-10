@@ -35,7 +35,9 @@
 
 .content-container {
   padding-top: $toolbar-height;
-  padding-left: $sidenav-width;
+  padding-left: calc($sidenav-width + 5%);
+  padding-right: 5%;
+  padding-bottom: 30px;
 }
 
 .dashboard-container {

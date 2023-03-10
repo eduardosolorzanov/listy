@@ -1,0 +1,73 @@
+<!-- Header -->
+<mat-toolbar class="toolbar-elements-container">
+  <h1>Listy</h1>
+</mat-toolbar>
+
+<div class="dashboard-container">
+  <!-- Sidenav -->
+  <div class="sidenav-container">
+    <div class="sidenav-content">
+      <button class="sidenav-button"
+        [ngClass]="isSelectedTab(tabOptions[0]) ? 'sidenav-selected-tab' : 'sidenav-unselected-tab'"
+        (click)="selectViewListsOption()" mat-icon-button>
+        <mat-icon>
+          auto_stories
+        </mat-icon>
+        <span class="list-button-label">{{tabOptions[0]}}</span>
+      </button>
+      <button class="sidenav-button"
+        [ngClass]="isSelectedTab(tabOptions[1]) ? 'sidenav-selected-tab' : 'sidenav-unselected-tab'"
+        (click)="selectViewListOption()" mat-icon-button>
+        <mat-icon>
+          list_alt
+        </mat-icon>
+        <span class="list-button-label">{{tabOptions[1]}}</span>
+      </button>
+      <button class="sidenav-button"
+        [ngClass]="isSelectedTab(tabOptions[2]) ? 'sidenav-selected-tab' : 'sidenav-unselected-tab'"
+        (click)="selectUserOption()" mat-icon-button>
+        <mat-icon>
+          account_circle
+        </mat-icon>
+        <span class="list-button-label">{{tabOptions[2]}}</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Content -->
+  <div class="content-container">
+    <div *ngIf="user.shoppingElementLists.length > 0; else noListsState">
+      <!-- Shopping element lists list -->
+      <div *ngIf="selectedTab === 'Listas'">
+        <div class="shopping-element-lists-container">
+          <shopping-element-lists @simpleFadeAnimation [shoppingElementLists]="user.shoppingElementLists"></shopping-element-lists>
+        </div>
+        <div *ngIf="isLoading">Loading...</div>
+      </div>
+
+      <!-- Shopping element lists detail -->
+      <!-- <div *ngIf="selectedTab === 'Ver lista'" class="shopping-list-container"> -->
+      <div class="shopping-list-container">
+        <!-- <shopping-element-list @simpleFadeAnimation [shoppingElementList]="user.shoppingElementLists[0]"> </shopping-element-list>-->
+        <shopping-element-list @simpleFadeAnimation></shopping-element-list>
+      </div>
+    </div>
+
+    <!-- User settings -->
+    <div *ngIf="selectedTab === 'Usuario'">
+      Usuario
+    </div>
+
+    <ng-template #noListsState>
+      <div @emptyStateFadeInTrigger class="empty-state-container">
+        <div class="empty-state">
+          <img class="empty-state-image" src="assets/svg/empty-list.svg">
+          <h2 class="empty-state-header">No posee listas</h2>
+          <div class="empty-state-message">¡Comience a organizar sus compras!</div>
+          <button mat-flat-button class="add-button-round-square" (click)="createShoppingList()">Crear nueva
+            lista</button>
+        </div>
+      </div>
+    </ng-template>
+  </div>
+</div>

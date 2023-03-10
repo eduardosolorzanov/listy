@@ -23,6 +23,24 @@ export interface ShoppingElementList {
 /***** Store *****/ 
 
 export interface ShoppingElementsState {
+  // isLoading: boolean;
+  name: string;
+  creationDate?: string;
+  shoppingElements: ShoppingElement[];
+  // error: string | null;
+}
+
+// Global state
+export interface AppState {
+  selectedTab: string;
+  isLoading: boolean;
+  error: string | null;
+  shoppingElementLists: ShoppingElementList[];
+}
+
+// OLD
+/* 
+export interface ShoppingElementsState {
   isLoading: boolean;
   name: string;
   creationDate?: string;
@@ -34,6 +52,7 @@ export interface ShoppingElementsState {
 export interface AppState {
   shoppingElements: ShoppingElementsState;
 }
+*/
 
 
 

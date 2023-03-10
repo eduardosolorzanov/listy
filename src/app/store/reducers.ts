@@ -1,11 +1,21 @@
 import { createReducer, on } from "@ngrx/store";
-import { ShoppingElementsState } from "../interfaces/interfaces";
+import { AppState, ShoppingElementsState } from "../interfaces/interfaces";
 import * as ShoppingElementsActions from './actions';
 
+/*
+OLD
 export const initialState: ShoppingElementsState = {
   isLoading: false,
   name: '',
   shoppingElements: [],
+  error: null
+}
+*/
+
+export const initialState: AppState = {
+  isLoading: false,
+  selectedTab: '',
+  shoppingElementLists: [],
   error: null
 }
 

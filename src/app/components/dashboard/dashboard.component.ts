@@ -1,15 +1,17 @@
 import { DatePipe } from '@angular/common';
 import { ChangeDetectorRef, Component } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { select, Store } from '@ngrx/store';
 import { Observable, Subject, takeUntil } from 'rxjs';
 import { AppState, ShoppingElement, ShoppingElementList, User } from 'src/app/interfaces/interfaces';
 import { ColorGeneratorService } from 'src/app/services/color-generator.service copy';
+import { ShoppingElementListsService } from 'src/app/services/shopping-element-lists.service';
 import { errorSelector, isLoadingSelector, shoppingElementsSelector } from 'src/app/store/selectors';
 import { Animations } from '../../listy-animations';
 import * as ShoppingElementsActions from '../../store/actions'
 
 @Component({
-  selector: 'app-dashboard',
+  selector: 'dashboard',
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss'],
   animations: [Animations.emptyStateFadeIn, Animations.simpleFadeAnimation],
@@ -29,10 +31,11 @@ export class DashboardComponent {
     ]
   }
 
+  selectedShoppingElementListIndex: number = 0;
   userWithNoLists: User = { name: 'Test User', shoppingElementLists: [] }
   user: User = { name: '', shoppingElementLists: [] };
   tabOptions: string[] = ['Listas', 'Ver lista', 'Usuario'];
-  selectedTab: string = this.tabOptions[1];
+  selectedTab: string = this.tabOptions[0];
   // isLoading$ : Observable<boolean>;
   // error$: Observable<string | null>;
   // shoppingElements$: Observable<ShoppingElement[]>;
@@ -44,8 +47,8 @@ export class DashboardComponent {
 
   constructor(
     private store: Store<AppState>,
-    private datePipe: DatePipe,
-    private colorGenerator: ColorGeneratorService) {
+    private shoppingElementListsService: ShoppingElementListsService,
+    private route: ActivatedRoute) {
     // Initialize observables
     // this.isLoading$ = this.store.pipe(select(isLoadingSelector));
     // this.error$ = this.store.pipe(select(errorSelector));
@@ -53,14 +56,15 @@ export class DashboardComponent {
   }
 
   ngOnInit(): void {
-    this.user = this.userWithNoLists;
     // Get properties from observables
     this.store
       .pipe(select(isLoadingSelector), takeUntil(this.unsubscribe$)) // unsubscribe to prevent memory leak
       .subscribe(
         // unwrap observable
         isLoading => this.isLoading = isLoading
-      );
+    );
+    // this.getCurrentSelectedOption();
+    this.setTestShoppingLists();
   }
 
   ngOnDestroy(): void {
@@ -71,311 +75,35 @@ export class DashboardComponent {
   /* –– Functions
    * –––––––––––––––––––––– */
 
+  // getCurrentSelectedOption(){
+
+  //   // console.log(this.route.snapshot.url[0].path);
+  //   // console.log(this.route.snapshot.url[0].path || '');
+  //   let currentRoute = this.route.snapshot.url[0]?.path
+  //   console.log(currentRoute);
+
+  //   // Get shopping list id from url
+  //   // this.shoppingElementListIndex = this.route.snapshot.url[1].path || '';
+
+  //   // Fetch shoppingElementList
+  //   // this.shoppingElementList = this.shoppingElementListsService.getShoppingElementList(+this.shoppingElementListIndex);
+  // }
+
   // Use when fully implementing store
   fetchShoppingElementList() {
     this.store.dispatch(ShoppingElementsActions.getShoppingElements());
     this.store
       .pipe(select(shoppingElementsSelector), takeUntil(this.unsubscribe$))
       .subscribe(
-        shoppingElements => {
-          this.user.shoppingElementLists = [{ name: '', shoppingElements: shoppingElements }]
+        shoppingElementLists => {
+          this.user.shoppingElementLists = shoppingElementLists;
         }
       );
   }
 
   /********  Testing purposes ********/
-  createShoppingList() {
-    let today = new Date();
-    let shoppingListDate = this.datePipe.transform(today, 'dd/MM/yyyy HH:mm')!;
-    let testShoppingElementLists = [{
-      name: 'Lista de prueba 1',
-      creationDate: shoppingListDate,
-      shoppingElements: [
-        {
-          name: 'Tomate',
-          unitPrice: 500,
-          quantity: 7,
-          iconColor: this.colorGenerator.getRandomColor(),
-        },
-        {
-          name: 'Lechuga',
-          unitPrice: 275,
-          quantity: 4,
-          iconColor: this.colorGenerator.getRandomColor()
-        },
-        {
-          name: 'Cebolla',
-          unitPrice: 940,
-          quantity: 9,
-          iconColor: this.colorGenerator.getRandomColor()
-        },
-        {
-          name: 'Zanahora',
-          unitPrice: 290.75,
-          quantity: 5,
-          iconColor: this.colorGenerator.getRandomColor()
-        },
-        {
-          name: 'Sal',
-          unitPrice: 300,
-          quantity: 3,
-          iconColor: this.colorGenerator.getRandomColor()
-        },
-        {
-          name: 'Pimienta',
-          unitPrice: 400,
-          quantity: 4,
-          iconColor: this.colorGenerator.getRandomColor()
-        },
-        {
-          name: 'Espinaca',
-          unitPrice: 670,
-          quantity: 9,
-          iconColor: this.colorGenerator.getRandomColor()
-        },
-        {
-          name: 'Papas',
-          unitPrice: 200,
-          quantity: 3,
-          iconColor: this.colorGenerator.getRandomColor()
-        }
-      ]
-    },
-    {
-      name: 'Lista de prueba 2',
-      creationDate: shoppingListDate,
-      shoppingElements: [
-        {
-          name: 'Leche',
-          unitPrice: 1200,
-          quantity: 10,
-          iconColor: this.colorGenerator.getRandomColor(),
-        },
-        {
-          name: 'Huevos',
-          unitPrice: 1500,
-          quantity: 1,
-          iconColor: this.colorGenerator.getRandomColor()
-        },
-        {
-          name: 'Pan',
-          unitPrice: 100,
-          quantity: 3,
-          iconColor: this.colorGenerator.getRandomColor()
-        },
-        {
-          name: 'Aceite',
-          unitPrice: 1400,
-          quantity: 1,
-          iconColor: this.colorGenerator.getRandomColor()
-        },
-        {
-          name: 'Mesa',
-          unitPrice: 10575,
-          quantity: 1,
-          iconColor: this.colorGenerator.getRandomColor()
-        },
-      ]
-    },
-    {
-      name: 'Lista de prueba 3',
-      creationDate: shoppingListDate,
-      shoppingElements: [
-        {
-          name: 'Atún',
-          unitPrice: 2300,
-          quantity: 5,
-          iconColor: this.colorGenerator.getRandomColor(),
-        },
-        {
-          name: 'Chocolates',
-          unitPrice: 1780,
-          quantity: 3,
-          iconColor: this.colorGenerator.getRandomColor()
-        },
-        {
-          name: 'Harina',
-          unitPrice: 1280,
-          quantity: 4,
-          iconColor: this.colorGenerator.getRandomColor()
-        },
-        {
-          name: 'Planta',
-          unitPrice: 5400,
-          quantity: 1,
-          iconColor: this.colorGenerator.getRandomColor()
-        },
-        {
-          name: 'Salsa de tomate',
-          unitPrice: 2000,
-          quantity: 1,
-          iconColor: this.colorGenerator.getRandomColor()
-        },
-        {
-          name: 'Ajo',
-          unitPrice: 250,
-          quantity: 5,
-          iconColor: this.colorGenerator.getRandomColor()
-        },
-        {
-          name: 'Albhaca',
-          unitPrice: 460,
-          quantity: 3,
-          iconColor: this.colorGenerator.getRandomColor()
-        },
-        {
-          name: 'Paño',
-          unitPrice: 5000,
-          quantity: 5,
-          iconColor: this.colorGenerator.getRandomColor()
-        },
-        {
-          name: 'Otro producto',
-          unitPrice: 2000,
-          quantity: 1,
-          iconColor: this.colorGenerator.getRandomColor()
-        },
-        {
-          name: 'Otro producto',
-          unitPrice: 2000,
-          quantity: 1,
-          iconColor: this.colorGenerator.getRandomColor()
-        },
-        {
-          name: 'Otro producto',
-          unitPrice: 2000,
-          quantity: 1,
-          iconColor: this.colorGenerator.getRandomColor()
-        },
-        {
-          name: 'Otro producto',
-          unitPrice: 2000,
-          quantity: 1,
-          iconColor: this.colorGenerator.getRandomColor()
-        },
-        {
-          name: 'Otro producto',
-          unitPrice: 2000,
-          quantity: 1,
-          iconColor: this.colorGenerator.getRandomColor()
-        },
-        {
-          name: 'Otro producto',
-          unitPrice: 2000,
-          quantity: 1,
-          iconColor: this.colorGenerator.getRandomColor()
-        },
-        {
-          name: 'Otro producto',
-          unitPrice: 2000,
-          quantity: 1,
-          iconColor: this.colorGenerator.getRandomColor()
-        },
-        {
-          name: 'Otro producto',
-          unitPrice: 2000,
-          quantity: 1,
-          iconColor: this.colorGenerator.getRandomColor()
-        },
-        {
-          name: 'Otro producto',
-          unitPrice: 2000,
-          quantity: 1,
-          iconColor: this.colorGenerator.getRandomColor()
-        },
-      ]
-    },
-    {
-      name: 'Lista de prueba 4',
-      creationDate: shoppingListDate,
-      shoppingElements: [
-        {
-          name: 'Atún',
-          unitPrice: 2300,
-          quantity: 5,
-          iconColor: this.colorGenerator.getRandomColor(),
-        },
-        {
-          name: 'Chocolates',
-          unitPrice: 1780,
-          quantity: 3,
-          iconColor: this.colorGenerator.getRandomColor()
-        },
-        {
-          name: 'Harina',
-          unitPrice: 1280,
-          quantity: 4,
-          iconColor: this.colorGenerator.getRandomColor()
-        },
-        {
-          name: 'Planta',
-          unitPrice: 5400,
-          quantity: 1,
-          iconColor: this.colorGenerator.getRandomColor()
-        },
-      ]
-    },
-    {
-      name: 'Lista de prueba 5',
-      creationDate: shoppingListDate,
-      shoppingElements: [
-        {
-          name: 'Atún',
-          unitPrice: 2300,
-          quantity: 5,
-          iconColor: this.colorGenerator.getRandomColor(),
-        },
-        {
-          name: 'Chocolates',
-          unitPrice: 1780,
-          quantity: 3,
-          iconColor: this.colorGenerator.getRandomColor()
-        },
-        {
-          name: 'Harina',
-          unitPrice: 1280,
-          quantity: 4,
-          iconColor: this.colorGenerator.getRandomColor()
-        },
-        {
-          name: 'Planta',
-          unitPrice: 5400,
-          quantity: 1,
-          iconColor: this.colorGenerator.getRandomColor()
-        },
-      ]
-    },
-    {
-      name: 'Lista de prueba 6',
-      creationDate: shoppingListDate,
-      shoppingElements: [
-        {
-          name: 'Atún',
-          unitPrice: 2300,
-          quantity: 5,
-          iconColor: this.colorGenerator.getRandomColor(),
-        },
-        {
-          name: 'Chocolates',
-          unitPrice: 1780,
-          quantity: 3,
-          iconColor: this.colorGenerator.getRandomColor()
-        },
-        {
-          name: 'Harina',
-          unitPrice: 1280,
-          quantity: 4,
-          iconColor: this.colorGenerator.getRandomColor()
-        },
-        {
-          name: 'Planta',
-          unitPrice: 5400,
-          quantity: 1,
-          iconColor: this.colorGenerator.getRandomColor()
-        },
-      ]
-    }]
-    this.user.shoppingElementLists = testShoppingElementLists;
+  setTestShoppingLists() {
+    this.user.shoppingElementLists = this.shoppingElementListsService.getShoppingElementLists();
   }
   /********  Testing purposes ********/
 
