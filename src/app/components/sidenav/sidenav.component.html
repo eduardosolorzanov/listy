@@ -9,20 +9,20 @@
   
     <button
       [ngClass]="isSelectedTab(tabOptions[1]) ? 'sidenav-selected-tab' : 'sidenav-unselected-tab'"
-      (click)="selectViewListOption()" mat-icon-button routerLink="/shopping-list-detail/1">
+      (click)="selectViewListOption()" mat-icon-button routerLink="/shopping-list-detail/0">
       <mat-icon>
         list_alt
       </mat-icon>
       <span class="list-button-label">{{tabOptions[1]}}</span>
     </button>
-  
-    <button
+    <!-- TODO: Create account component, show statistics -->
+    <!-- <button
       [ngClass]="isSelectedTab(tabOptions[2]) ? 'sidenav-selected-tab' : 'sidenav-unselected-tab'"
       (click)="selectUserOption()" mat-icon-button>
       <mat-icon>
         account_circle
       </mat-icon>
       <span class="list-button-label">{{tabOptions[2]}}</span>
-    </button>
+    </button> -->
   </div>
 </div>

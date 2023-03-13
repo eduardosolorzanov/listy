@@ -1,5 +1,6 @@
 <sidenav [currentTab]=1></sidenav>
-<div class="shopping-elements-container">
+
+<div @simpleFadeAnimation class="shopping-elements-container">
   <div class="header-section-container" [formGroup]="shoppingElementListForm">
     <div class="header-section">
       <div class="list-name-date-section">
@@ -47,7 +48,7 @@
   </div>
 
   <div>
-    <div *ngIf="shoppingElementList.shoppingElements.length > 0; else emptyState"  class="shopping-element-list">
+    <div *ngIf="shoppingElementList.shoppingElements.length > 0; else emptyListState"  class="shopping-element-list">
       <div @simpleFadeAnimation *ngFor="let shoppingElement of shoppingElementList.shoppingElements; let i = index">
         <shopping-element 
         (onDeleteShoppingElement)="deleteShoppingElement(i)"
@@ -58,7 +59,7 @@
       </div>
     </div>
   
-    <ng-template #emptyState>
+    <ng-template #emptyListState>
       <div @emptyStateFadeInTrigger class="empty-state-container">
         <div class="empty-state">
             <button mat-icon-button class="add-button" (click)="addShoppingElement()"><mat-icon>add</mat-icon></button>

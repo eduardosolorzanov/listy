@@ -1,5 +1,7 @@
 @import "../../style-constants.scss";
 
+// Add button
+
 .add-button{
   background-color: $button-background;
   color: white;
@@ -22,6 +24,15 @@
   width: 64px;
   height: 64px; 
 }
+
+// Customize material button
+.mat-mdc-unelevated-button:not(:disabled){
+  background-color: $button-background;
+  color: white;
+  font-family: inherit;
+}
+
+// Shopping elements
 
 .shopping-elements-container, .shopping-element-list {
   display: flex;

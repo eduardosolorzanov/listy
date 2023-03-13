@@ -1,6 +1,8 @@
+import { DatePipe } from '@angular/common';
 import { Component, Input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ShoppingElementList } from 'src/app/interfaces/interfaces';
+import { Animations } from 'src/app/listy-animations';
 import { ColorGeneratorService } from 'src/app/services/color-generator.service copy';
 import { CurrencyFormatterService } from 'src/app/services/currency-formatter.service';
 import { ShoppingElementListsService } from 'src/app/services/shopping-element-lists.service';
@@ -8,7 +10,8 @@ import { ShoppingElementListsService } from 'src/app/services/shopping-element-l
 @Component({
   selector: 'shopping-element-lists',
   templateUrl: './shopping-element-lists.component.html',
-  styleUrls: ['./shopping-element-lists.component.scss']
+  styleUrls: ['./shopping-element-lists.component.scss'],
+  animations: [Animations.emptyStateFadeIn, Animations.simpleFadeAnimation],
 })
 export class ShoppingElementListsComponent {
 
@@ -20,8 +23,6 @@ export class ShoppingElementListsComponent {
   /* –– Outputs
    * –––––––––––––––––––––– */
 
-  // @Output() shoppingElementLists: ShoppingElementList[] = [];
-
   /* –– Properties
    * –––––––––––––––––––––– */
 
@@ -30,12 +31,16 @@ export class ShoppingElementListsComponent {
   /* –– Constructor
    * –––––––––––––––––––––– */
 
-  constructor(private currencyFormatter: CurrencyFormatterService, private shoppingElementListsService: ShoppingElementListsService ) { }
+  constructor(
+    private currencyFormatter: CurrencyFormatterService, 
+    private shoppingElementListsService: ShoppingElementListsService, 
+    private datePipe: DatePipe) { }
 
   ngOnInit(): void {
+    /***** TESTING *****/ 
     this.shoppingElementLists = this.shoppingElementListsService.getShoppingElementLists();
-
-    // console.log('shopping-lists: ', this.shoppingElementLists);
+    console.log('this.shoppingElementLists: ', this.shoppingElementLists);
+    /***** TESTING *****/ 
   }
 
   /* –– Functions
@@ -66,12 +71,28 @@ export class ShoppingElementListsComponent {
     }
     
     // Add total price in last line
-    shoppingElementsPreview += '\n\n' + 'Total: ' + this.currencyFormatter.getFormattedPrice(totalListPrice);
+    // If list is empty, don't add line changes before total price
+    if(shoppingElementList.shoppingElements.length > 0){
+      shoppingElementsPreview += '\n\n';
+    }
+    shoppingElementsPreview += 'Total: ' + this.currencyFormatter.getFormattedPrice(totalListPrice);
     return shoppingElementsPreview
   }
 
   displayShoppingListDetail(shoppingElementListIndex: number){
     console.log('displayShoppingListDetail ', shoppingElementListIndex);
+  }
+
+  // Push a new empty list
+  createShoppingList(){
+    const today = new Date();
+    const shoppingListDate = this.datePipe.transform(today, 'dd/MM/yyyy HH:mm')!;
+    const newShoppingElementList: ShoppingElementList = {
+      name: 'Nueva lista',
+      creationDate: shoppingListDate,
+      shoppingElements: [],
+    };
+    this.shoppingElementListsService.addShoppingElementList(newShoppingElementList);
   }
 
 }

@@ -61,8 +61,7 @@ export class DashboardComponent {
         // unwrap observable
         isLoading => this.isLoading = isLoading
     );
-    // this.getCurrentSelectedOption();
-    this.setTestShoppingLists();
+    // this.setTestShoppingLists();
   }
 
   ngOnDestroy(): void {

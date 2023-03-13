@@ -4,14 +4,6 @@ h1 {
   margin: 0px;
 }
 
-// .sticky-header {
-//   position: sticky;
-//   top: $toolbar-height;
-//   z-index: 1;
-//   background-color: $toolbar-background;
-//   padding-bottom: 5px;
-// }
-
 .content-container {
   display: flex;
   flex-direction: column;
@@ -48,7 +40,41 @@ h1 {
   column-gap: 30px;
   row-gap: 30px;
   justify-content: flex-start;
-  // Prevent card from showing outside header
-  // padding-left: 3px;
-  // padding-right: 3px;
+}
+
+.empty-state-container{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  .empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 15%;
+    min-width: 100px;
+    row-gap: 15px;
+    text-align: center;
+    .empty-state-header {
+      font-weight: bold;
+    }
+    .empty-state-message{
+      color: $subtitle-text-color;
+    }
+  }
+}
+
+.add-button-round-square{
+  width: 100%;
+  min-width: 140px;
+  border-radius: 20px;
+
+  background-color: $button-background;
+  color: white;
+}
+
+// Customize material button
+.mat-mdc-unelevated-button:not(:disabled){
+  background-color: $button-background;
+  color: white;
+  font-family: inherit;
 }
