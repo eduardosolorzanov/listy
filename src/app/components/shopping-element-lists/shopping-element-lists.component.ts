@@ -1,5 +1,5 @@
 import { DatePipe } from '@angular/common';
-import { Component, Input } from '@angular/core';
+import { ChangeDetectorRef, Component, Input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ShoppingElementList } from 'src/app/interfaces/interfaces';
 import { Animations } from 'src/app/listy-animations';
@@ -34,12 +34,12 @@ export class ShoppingElementListsComponent {
   constructor(
     private currencyFormatter: CurrencyFormatterService, 
     private shoppingElementListsService: ShoppingElementListsService, 
-    private datePipe: DatePipe) { }
+    private datePipe: DatePipe,
+    private changeDetectorRef: ChangeDetectorRef,) { }
 
   ngOnInit(): void {
     /***** TESTING *****/ 
     this.shoppingElementLists = this.shoppingElementListsService.getShoppingElementLists();
-    console.log('this.shoppingElementLists: ', this.shoppingElementLists);
     /***** TESTING *****/ 
   }
 
@@ -84,7 +84,7 @@ export class ShoppingElementListsComponent {
   }
 
   // Push a new empty list
-  createShoppingList(){
+  addShoppingList(){
     const today = new Date();
     const shoppingListDate = this.datePipe.transform(today, 'dd/MM/yyyy HH:mm')!;
     const newShoppingElementList: ShoppingElementList = {
@@ -93,6 +93,14 @@ export class ShoppingElementListsComponent {
       shoppingElements: [],
     };
     this.shoppingElementListsService.addShoppingElementList(newShoppingElementList);
+    // Detect changes to update document.body and scroll properly to bottom
+    this.changeDetectorRef.detectChanges();
+    this.scrollToBottom();
+  }
+
+  scrollToBottom(){
+    console.log('scroll')
+    window.scrollTo(0, document.body.scrollHeight);
   }
 
 }

@@ -2,7 +2,7 @@
 
 <div @simpleFadeAnimation *ngIf="shoppingElementLists.length > 0; else noListsState" class="content-container">
   <div class="shopping-element-list-card-list">
-    <div (click)="displayShoppingListDetail(i)" [routerLink]="['/shopping-list-detail', i]" *ngFor="let shoppingElementList of shoppingElementLists; let i = index" class="shopping-element-list-card">
+    <div (click)="displayShoppingListDetail(i)" [routerLink]="['/shopping-list-detail', i]" *ngFor="let shoppingElementList of shoppingElementLists; let i = index" @simpleFadeAnimation class="shopping-element-list-card">
       <div class="shopping-element-list-card-header">
         {{shoppingElementList.name}}
         <div class="shopping-element-list-card-subtitle">
@@ -10,6 +10,12 @@
         </div>
       </div>
       <div class="shopping-element-list-card-preview">{{getShoppingElementsPreview(shoppingElementList, shoppingElementPreviewCardMaxCharacters)}}</div>
+    </div>
+  </div>
+  <div class="create-list-button-container">
+    <div class="label-and-button-container">
+      <button @simpleFadeAnimation mat-icon-button class="add-button" (click)="addShoppingList()"><mat-icon>add</mat-icon></button>
+      <div class="empty-state-message">Agregar una nueva lista</div>
     </div>
   </div>
 </div>
@@ -20,7 +26,7 @@
       <img class="empty-state-image" src="assets/svg/empty-list.svg">
       <h2 class="empty-state-header">No posee listas</h2>
       <div class="empty-state-message">¡Comience a organizar sus compras!</div>
-      <button mat-flat-button class="add-button-round-square" (click)="createShoppingList()">Crear nueva
+      <button mat-flat-button class="add-button-round-square" (click)="addShoppingList()">Crear nueva
         lista</button>
     </div>
   </div>

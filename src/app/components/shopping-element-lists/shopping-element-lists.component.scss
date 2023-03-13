@@ -67,9 +67,39 @@ h1 {
   width: 100%;
   min-width: 140px;
   border-radius: 20px;
-
   background-color: $button-background;
   color: white;
+}
+
+.create-list-button-container {
+  display: flex;
+  justify-content: center;
+  .label-and-button-container {
+    display: flex;
+    flex-direction: column;
+    row-gap: 15px;
+    align-items: center;
+    text-align: center;
+    width: 100px;
+  }
+}
+
+.add-button{
+  background-color: $button-background;
+  color: white;
+  // Overwrite mat button default properties
+  width: 64px !important;
+  height: 64px !important;
+  // Specific to icon within add button
+  mat-icon{
+    width: 64px;
+    height: 64px; 
+    font-size: 36px;
+    // Fix icon position when font-size is larger than original
+    position: relative;
+    right: 12px;
+    top: 1px;
+  }
 }
 
 // Customize material button
