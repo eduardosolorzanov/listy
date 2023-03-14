@@ -98,6 +98,11 @@ export class ShoppingElementListsComponent {
     this.scrollToBottom();
   }
 
+  deleteShoppingList(deleteShoppingElementListIndex: number){
+    console.log('deleteShoppingList');
+    this.shoppingElementListsService.deleteShoppingElementList(deleteShoppingElementListIndex);
+  }
+
   scrollToBottom(){
     console.log('scroll')
     window.scrollTo(0, document.body.scrollHeight);

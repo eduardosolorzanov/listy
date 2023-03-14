@@ -43,6 +43,13 @@ export class ShoppingElementListsService {
     this.shoppingElementLists.push(shoppingElementList);
   }
 
+  deleteShoppingElementList(shoppingElementListIndex: number){
+    // Search and delete list
+    if( this.shoppingElementLists[shoppingElementListIndex] ) {
+      this.shoppingElementLists.splice(shoppingElementListIndex, 1);
+    }
+  }
+  
   addShoppingElement(shoppingElementListIndex: number, shoppingElement: ShoppingElement): void {
     this.shoppingElementLists[shoppingElementListIndex].shoppingElements.push(shoppingElement);
   }

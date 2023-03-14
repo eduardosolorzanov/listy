@@ -3,8 +3,8 @@
 // Add button
 
 .add-button{
-  background-color: $button-background;
-  color: white;
+  background-color: $button-background !important;
+  color: white !important;
   // Overwrite mat button default properties
   width: 64px !important;
   height: 64px !important;
@@ -23,13 +23,6 @@
 .add-button-container {
   width: 64px;
   height: 64px; 
-}
-
-// Customize material button
-.mat-mdc-unelevated-button:not(:disabled){
-  background-color: $button-background;
-  color: white;
-  font-family: inherit;
 }
 
 // Shopping elements
@@ -140,8 +133,6 @@
 
 .shopping-element-list-name-form {
   font-size: 22px;
-  // height: 40px;
-  // width: 100%;
 }
 
 // Default state

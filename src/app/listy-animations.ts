@@ -37,9 +37,4 @@ export const Animations = {
       animate('500ms cubic-bezier(0.83, 0, 0.17, 1)')
     ]),
   ]),
-  // applyOpacity: trigger('applyOpacityTrigger', [
-  //   state('true', style({ opacity: '50%' })),
-  //   state('false', style({ opacity: '100%' })),
-  //   transition('false <=> true', animate('300ms cubic-bezier(0.83, 0, 0.17, 1)'))
-  // ])
 }

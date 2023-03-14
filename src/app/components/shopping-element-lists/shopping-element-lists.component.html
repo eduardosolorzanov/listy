@@ -1,22 +1,51 @@
 <sidenav [currentTab]=0></sidenav>
 
-<div @simpleFadeAnimation *ngIf="shoppingElementLists.length > 0; else noListsState" class="content-container">
-  <div class="shopping-element-list-card-list">
-    <div (click)="displayShoppingListDetail(i)" [routerLink]="['/shopping-list-detail', i]" *ngFor="let shoppingElementList of shoppingElementLists; let i = index" @simpleFadeAnimation class="shopping-element-list-card">
-      <div class="shopping-element-list-card-header">
-        {{shoppingElementList.name}}
-        <div class="shopping-element-list-card-subtitle">
-          {{shoppingElementList.creationDate}}
-        </div>
+<div class="header-section-container">
+  <div class="header-section">
+    <h2>Mis listas</h2>
+    <div class="list-count-section">
+      <div class="label-section">
+        <h2 class="label">Conteo de listas</h2><h2>{{shoppingElementLists.length || 0}}</h2>
       </div>
-      <div class="shopping-element-list-card-preview">{{getShoppingElementsPreview(shoppingElementList, shoppingElementPreviewCardMaxCharacters)}}</div>
+      <div class="add-button-placeholder">
+        <button mat-icon-button 
+        class="add-button" 
+        *ngIf="shoppingElementLists.length > 0" 
+        (click)="addShoppingList()"
+        @simpleFadeAnimation>
+        <mat-icon>add</mat-icon>
+        </button>
+      </div>
     </div>
   </div>
-  <div class="create-list-button-container">
-    <div class="label-and-button-container">
-      <button @simpleFadeAnimation mat-icon-button class="add-button" (click)="addShoppingList()"><mat-icon>add</mat-icon></button>
-      <div class="empty-state-message">Agregar una nueva lista</div>
+</div>
+
+<div class="content-container">
+  <div *ngIf="shoppingElementLists.length > 0; else noListsState" class="shopping-element-list-card-list">
+    <div class="shopping-element-list-card" (click)="displayShoppingListDetail(i)"
+      *ngFor="let shoppingElementList of shoppingElementLists; let i = index"
+      [routerLink]="['/shopping-list-detail', i]" @simpleFadeAnimation>
+      <div class="card-content">
+        <div class="shopping-element-list-card-header">
+          {{shoppingElementList.name}}
+          <div class="shopping-element-list-card-subtitle">
+            {{shoppingElementList.creationDate}}
+          </div>
+        </div>
+        <div class="shopping-element-list-card-preview">{{getShoppingElementsPreview(shoppingElementList,shoppingElementPreviewCardMaxCharacters)}}</div>
+      </div>
+      <div class="card-actions">
+        <button mat-icon-button class="delete-list-button"
+          (click)="deleteShoppingList(i)"><mat-icon>delete</mat-icon></button>
+      </div>
     </div>
+    <!-- Add button -->
+    <!-- <div class="create-list-button-container">
+      <div class="label-and-button-container">
+        <button mat-icon-button class="add-button" (click)="addShoppingList()"><mat-icon>add</mat-icon></button>
+        <div class="empty-state-message">Agregar una nueva lista</div>
+      </div>
+    </div> -->
   </div>
 </div>
 
@@ -31,7 +60,4 @@
     </div>
   </div>
 </ng-template>
-
-
-
 
