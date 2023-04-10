@@ -12,7 +12,7 @@ export class ShoppingElementListsService {
    * –––––––––––––––––––––– */
 
   constructor(private colorGenerator: ColorGeneratorService, private datePipe: DatePipe) {
-    // this.setTestShoppingElementLists();
+    this.setTestShoppingElementLists();
   }
   
   ngOnInit(): void {}
