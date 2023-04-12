@@ -18,11 +18,10 @@ import { selectShoppingElementListByIndex } from 'src/app/store/selectors';
   templateUrl: './shopping-element-list.component.html',
   styleUrls: ['./shopping-element-list.component.scss'],
   encapsulation: ViewEncapsulation.None,
-  animations:[Animations.simpleFadeAnimation, Animations.emptyStateFadeIn], 
-  providers: [DatePipe]
+  animations: [Animations.simpleFadeAnimation, Animations.emptyStateFadeIn],
+  providers: [DatePipe],
 })
 export class ShoppingElementListComponent {
-
   /* –– Inputs
    * –––––––––––––––––––––– */
 
@@ -32,10 +31,11 @@ export class ShoppingElementListComponent {
   shoppingElementList: ShoppingElementList = {
     name: '',
     creationDate: '',
-    shoppingElements: []
+    shoppingElements: [],
   };
 
-  @ViewChildren(ShoppingElementComponent) public shoppingElementComponents: QueryList<ShoppingElementComponent>;
+  @ViewChildren(ShoppingElementComponent)
+  public shoppingElementComponents: QueryList<ShoppingElementComponent>;
   finalPrice: number = 0;
   formattedFinalPrice: string = '';
   shoppingElementListForm = new FormGroup({
@@ -52,45 +52,47 @@ export class ShoppingElementListComponent {
 
   /* –– Constructor
    * –––––––––––––––––––––– */
-  
-  constructor( 
-  private currencyFormatter: CurrencyFormatterService, 
-  private changeDetectorRef: ChangeDetectorRef,
-  private colorGenerator: ColorGeneratorService,
-  private formBuilder: FormBuilder,
-  private route: ActivatedRoute,
-  private router: Router,
-  private shoppingElementListsService: ShoppingElementListsService,
-  private store: Store< fromApp.AppState >) { 
-    this.shoppingElementComponents = new QueryList<ShoppingElementComponent>;
+
+  constructor(
+    private currencyFormatter: CurrencyFormatterService,
+    private changeDetectorRef: ChangeDetectorRef,
+    private colorGenerator: ColorGeneratorService,
+    private formBuilder: FormBuilder,
+    private route: ActivatedRoute,
+    private router: Router,
+    private shoppingElementListsService: ShoppingElementListsService,
+    private store: Store<fromApp.AppState>
+  ) {
+    this.shoppingElementComponents = new QueryList<ShoppingElementComponent>();
   }
-  
+
   ngOnInit(): void {
     // Get shopping list index from url
     this.shoppingElementListIndex = +this.route.snapshot.url[1].path || 0;
-    
+
     // Select list by index
-    this.subscription = this.store.select(selectShoppingElementListByIndex(this.shoppingElementListIndex)).subscribe((shoppingElementList) => {      
-      // If there's no list found, redirect to shopping list dashboard, else, continue to load
-      if(this.isEmptyObject(shoppingElementList)){
-        this.router.navigateByUrl('shopping-lists');
-      } else {
-        // Assign shopping list
-        this.shoppingElementList = shoppingElementList;
-        // Create form from shoppingElementList object
-        this.createShoppingElementListForm();
+    this.subscription = this.store
+      .select(selectShoppingElementListByIndex(this.shoppingElementListIndex))
+      .subscribe((shoppingElementList) => {
+        // If there's no list found, redirect to shopping list dashboard, else, continue to load
+        if (this.isEmptyObject(shoppingElementList)) {
+          this.router.navigateByUrl('shopping-lists');
+        } else {
+          // Assign shoppingElementList and create form from that
+          this.shoppingElementList = shoppingElementList;
+          this.createShoppingElementListForm();
 
-        // Calculate final price
-        this.updateFinalPrice();
+          // Calculate final price
+          this.updateFinalPrice();
 
-        // Focus on name when opening list
-        this.shoppingElementListNameHtmlElementId = 'shopping-element-list-name-textbox';
-        this.toggleEditShoppingElementListNameMode();
-        const shoppingElementListInputElement = document.getElementById(this.shoppingElementListNameHtmlElementId) as HTMLInputElement;
-        this.focusInputElement(shoppingElementListInputElement);
-        console.log('shoppingElementListIndex with index', this.shoppingElementListIndex, ' is', this.shoppingElementList);
-      }
-    });
+          // Focus on name when opening list
+          this.shoppingElementListNameHtmlElementId = 'shopping-element-list-name-textbox';
+          this.toggleEditShoppingElementListNameMode();
+          const shoppingElementListInputElement = document.getElementById(this.shoppingElementListNameHtmlElementId) as HTMLInputElement;
+          this.focusInputElement(shoppingElementListInputElement);
+          console.log('shoppingElementListIndex with index', this.shoppingElementListIndex, ' is', this.shoppingElementList);
+        }
+      });
   }
 
   ngOnDestroy(): void {
@@ -104,7 +106,7 @@ export class ShoppingElementListComponent {
    * –––––––––––––––––––––– */
 
   isEmptyObject(shoppingElementList: ShoppingElementList) {
-    return (shoppingElementList && (Object.keys(shoppingElementList).length === 0));
+    return shoppingElementList && Object.keys(shoppingElementList).length === 0;
   }
 
   // Selects text from input element
@@ -113,7 +115,7 @@ export class ShoppingElementListComponent {
     inputElement?.select();
   }
 
-  toggleEditShoppingElementListNameMode(){
+  toggleEditShoppingElementListNameMode() {
     this.isEditingShoppingElementListName = !this.isEditingShoppingElementListName;
     // Updates DOM because edit name form is now visible
     this.changeDetectorRef.detectChanges();
@@ -126,41 +128,48 @@ export class ShoppingElementListComponent {
     });
   }
 
-  getTotalPrice(shoppingElementList: ShoppingElementList){
+  getTotalPrice(shoppingElementList: ShoppingElementList) {
     let totalPrice = 0;
-    if(shoppingElementList.shoppingElements.length > 0){
-      shoppingElementList.shoppingElements.forEach(shoppingElement => {
+    if (shoppingElementList.shoppingElements.length > 0) {
+      shoppingElementList.shoppingElements.forEach((shoppingElement) => {
         totalPrice += shoppingElement.unitPrice * shoppingElement.quantity;
       });
     }
     return totalPrice;
   }
 
-  updateFinalPrice(){
+  updateFinalPrice() {
     this.finalPrice = this.getTotalPrice(this.shoppingElementList);
-    this.formattedFinalPrice = this.currencyFormatter.getFormattedPrice(this.finalPrice);
+    this.formattedFinalPrice = this.currencyFormatter.getFormattedPrice(
+      this.finalPrice
+    );
   }
 
-  editShoppingElementListName(){
+  editShoppingElementListName() {
     this.toggleEditShoppingElementListNameMode();
-    const shoppingElementListNameInputElement = document.getElementById(this.shoppingElementListNameHtmlElementId) as HTMLInputElement;
+    const shoppingElementListNameInputElement = document.getElementById(
+      this.shoppingElementListNameHtmlElementId
+    ) as HTMLInputElement;
     this.focusInputElement(shoppingElementListNameInputElement);
   }
 
   addShoppingElement() {
     // Toggle edition mode on last element back to non edition mode, if list has at least 1 element
-    if( this.shoppingElementComponents.length > 0) {
+    if (this.shoppingElementComponents.length > 0) {
       this.shoppingElementComponents.last.isEditingProductName = false;
     }
     // Push new element to shopping element list
-    // 
-    let newShoppingElement: ShoppingElement =  {
+    //
+    let newShoppingElement: ShoppingElement = {
       name: 'Nuevo producto',
       unitPrice: 0,
       quantity: 1,
       iconColor: this.colorGenerator.getRandomColor(),
     };
-    this.shoppingElementListsService.addShoppingElement(+this.shoppingElementListIndex, newShoppingElement);
+    this.shoppingElementListsService.addShoppingElement(
+      +this.shoppingElementListIndex,
+      newShoppingElement
+    );
     // Update final price
     this.updateFinalPrice();
     // Detect changes on DOM and focus on new element's name form
@@ -177,28 +186,30 @@ export class ShoppingElementListComponent {
   }
 
   // Check unit price and toggle editing mode for all elements
-  saveChanges(){
+  saveChanges() {
     // Validate inputs
     this.validateShoppingElementListNameInputControl();
     // Update name value in shoppingElementList
-    this.shoppingElementList.name = this.shoppingElementListForm.controls['name'].value!;
+    this.shoppingElementList.name =
+      this.shoppingElementListForm.controls['name'].value!;
     // Update name with shopping element service
     //////// this.shoppingElementListsService.updateShoppingListName(this.shoppingElementListIndex, this.shoppingElementListForm.controls['name'].value!);
     // Toggle editing mode
     this.isEditingShoppingElementListName = false;
   }
 
-  scrollToBottom(){
+  scrollToBottom() {
     window.scrollTo(0, document.body.scrollHeight);
   }
 
-  validateShoppingElementListNameInputControl(){
-    let shoppingElementListValue = this.shoppingElementListForm.controls['name'].value!;
+  validateShoppingElementListNameInputControl() {
+    let shoppingElementListValue =
+      this.shoppingElementListForm.controls['name'].value!;
     // If input is empty, assign name
-    if(shoppingElementListValue === ''){
+    if (shoppingElementListValue === '') {
       shoppingElementListValue = '(Lista sin nombre)';
     }
-    this.shoppingElementListForm.patchValue({name: shoppingElementListValue})    
+    this.shoppingElementListForm.patchValue({ name: shoppingElementListValue });
   }
 
   // On each key input form control is checked for max characters and patched
@@ -206,10 +217,10 @@ export class ShoppingElementListComponent {
   onShoppingElementListFormInput(inputElement: any) {
     let inputValue = inputElement?.target?.value;
     // If value has more than 32 characters, slice
-    if(inputValue.length > 30){
-      inputValue = inputValue.slice(0,-1);
+    if (inputValue.length > 30) {
+      inputValue = inputValue.slice(0, -1);
     }
-    this.shoppingElementListForm.patchValue({name: inputValue});
+    this.shoppingElementListForm.patchValue({ name: inputValue });
   }
 }
 
