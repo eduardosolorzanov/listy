@@ -22,11 +22,12 @@ import { DatePipe } from '@angular/common';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
-import { reducers } from './store/reducers';
-import { EffectsModule } from '@ngrx/effects';
-import { ShoppingElementsEffects } from './store/shopping-elements-effects';
 import { ShoppingElementListsComponent } from './components/shopping-element-lists/shopping-element-lists.component';
 import { SidenavComponent } from './components/sidenav/sidenav.component';
+import { shoppingElementListsReducer } from './components/shopping-element-lists/store/shopping-element-lists.reducer';
+import { shoppingElementListReducer } from './components/shopping-element-list/store/shopping-element-list.reducer';
+import * as fromApp from './store/app.reducer'
+import { initialState } from './store/app.reducer';
 
 @NgModule({
   declarations: [
@@ -41,8 +42,9 @@ import { SidenavComponent } from './components/sidenav/sidenav.component';
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
-    StoreModule.forRoot({}),
-    EffectsModule.forRoot(),
+    StoreModule.forRoot( fromApp.appReducer, { initialState } ),
+    // StoreModule.forRoot({}),
+    // EffectsModule.forRoot(),
     StoreDevtoolsModule.instrument({
       maxAge: 25, // Retains last 25 states
       // logOnly: environment.production, // Restrict extension to log-only mode
@@ -50,8 +52,8 @@ import { SidenavComponent } from './components/sidenav/sidenav.component';
       // logOnly: false,
     }),
     // This create a new slice of shoppingElements inside our state
-    StoreModule.forFeature('shoppingElements', reducers),
-    EffectsModule.forFeature([ShoppingElementsEffects]),
+    // StoreModule.forFeature('shoppingElements', reducers),
+    // EffectsModule.forFeature([ShoppingElementsEffects]),
     BrowserAnimationsModule,
     MatToolbarModule,
     MatIconModule,

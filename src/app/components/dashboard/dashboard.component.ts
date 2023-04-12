@@ -6,9 +6,7 @@ import { Observable, Subject, takeUntil } from 'rxjs';
 import { AppState, ShoppingElement, ShoppingElementList, User } from 'src/app/interfaces/interfaces';
 import { ColorGeneratorService } from 'src/app/services/color-generator.service copy';
 import { ShoppingElementListsService } from 'src/app/services/shopping-element-lists.service';
-import { errorSelector, isLoadingSelector, shoppingElementsSelector } from 'src/app/store/selectors';
 import { Animations } from '../../listy-animations';
-import * as ShoppingElementsActions from '../../store/actions'
 
 @Component({
   selector: 'dashboard',
@@ -44,7 +42,6 @@ export class DashboardComponent {
    * –––––––––––––––––––––– */
 
   constructor(
-    private store: Store<AppState>,
     private shoppingElementListsService: ShoppingElementListsService,
     private route: ActivatedRoute) {
     // Initialize observables
@@ -53,16 +50,7 @@ export class DashboardComponent {
     // this.shoppingElements$ = this.store.pipe(select(shoppingElementsSelector));
   }
 
-  ngOnInit(): void {
-    // Get properties from observables
-    this.store
-      .pipe(select(isLoadingSelector), takeUntil(this.unsubscribe$)) // unsubscribe to prevent memory leak
-      .subscribe(
-        // unwrap observable
-        isLoading => this.isLoading = isLoading
-    );
-    // this.setTestShoppingLists();
-  }
+  ngOnInit(): void {}
 
   ngOnDestroy(): void {
     this.unsubscribe$.next();
@@ -87,16 +75,16 @@ export class DashboardComponent {
   // }
 
   // Use when fully implementing store
-  fetchShoppingElementList() {
-    this.store.dispatch(ShoppingElementsActions.getShoppingElements());
-    this.store
-      .pipe(select(shoppingElementsSelector), takeUntil(this.unsubscribe$))
-      .subscribe(
-        shoppingElementLists => {
-          this.user.shoppingElementLists = shoppingElementLists;
-        }
-      );
-  }
+  // fetchShoppingElementList() {
+  //   this.store.dispatch(ShoppingElementsActions.getShoppingElements());
+  //   this.store
+  //     .pipe(select(shoppingElementsSelector), takeUntil(this.unsubscribe$))
+  //     .subscribe(
+  //       shoppingElementLists => {
+  //         this.user.shoppingElementLists = shoppingElementLists;
+  //       }
+  //     );
+  // }
 
   /********  Testing purposes ********/
   setTestShoppingLists() {

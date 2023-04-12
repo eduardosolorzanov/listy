@@ -1,25 +1,11 @@
 import { createSelector } from "@ngrx/store";
-import { AppState } from "../interfaces/interfaces";
+import { AppState } from "./app.reducer";
+import { ShoppingElementList } from "../interfaces/interfaces";
 
-// Get specific slice of global state
-// OLD
-// export const selectFeature = (state: AppState) => state.shoppingElements;
-export const selectFeature = (state: AppState) => state;
+export const selectShoppingElementLists= (state: AppState) => state.appShoppingElementLists.shoppingElementLists;
 
-export const isLoadingSelector = createSelector(
-  selectFeature,
-  (state) => state.isLoading
-);
-
-export const shoppingElementsSelector = createSelector(
-  selectFeature,
-  // OLD 
-  // (state) => state.shoppingElements
-  (state) => state.shoppingElementLists
-);
-
-export const errorSelector = createSelector(
-  selectFeature,
-  (state) => state.error
-);
-
+export const selectShoppingElementListByIndex = (shoppingElementListIndex: number) =>
+  createSelector(
+    selectShoppingElementLists,
+    (shoppingElementLists: ShoppingElementList[]) => shoppingElementLists[shoppingElementListIndex]
+  );

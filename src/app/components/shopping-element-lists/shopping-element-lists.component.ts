@@ -1,11 +1,16 @@
 import { DatePipe } from '@angular/common';
 import { ChangeDetectorRef, Component, Input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { ShoppingElementList } from 'src/app/interfaces/interfaces';
+import { Store } from '@ngrx/store';
+import { Observable, Subscription } from 'rxjs';
+import { ShoppingElement, ShoppingElementList } from 'src/app/interfaces/interfaces';
 import { Animations } from 'src/app/listy-animations';
 import { ColorGeneratorService } from 'src/app/services/color-generator.service copy';
 import { CurrencyFormatterService } from 'src/app/services/currency-formatter.service';
 import { ShoppingElementListsService } from 'src/app/services/shopping-element-lists.service';
+import * as ShoppingElementListsActions from './store/shopping-element-lists.actions';
+import * as fromShoppingElementLists from './store/shopping-element-lists.reducer';
+import * as fromApp from '../../store/app.reducer'
 
 @Component({
   selector: 'shopping-element-lists',
@@ -27,6 +32,11 @@ export class ShoppingElementListsComponent {
    * –––––––––––––––––––––– */
 
   shoppingElementPreviewCardMaxCharacters: number = 297;
+  shoppingElementLists$: Observable<{
+    shoppingElementLists: ShoppingElementList[],
+  }>;
+
+  private subscription: Subscription;
 
   /* –– Constructor
    * –––––––––––––––––––––– */
@@ -35,11 +45,21 @@ export class ShoppingElementListsComponent {
     private currencyFormatter: CurrencyFormatterService, 
     private shoppingElementListsService: ShoppingElementListsService, 
     private datePipe: DatePipe,
-    private changeDetectorRef: ChangeDetectorRef,) { }
+    private changeDetectorRef: ChangeDetectorRef,
+    private store: Store< fromApp.AppState >
+    ) { 
+
+    }
 
   ngOnInit(): void {
+    // this.shoppingElementLists$ = this.store.select('shoppingElementLists');
+    this.subscription = this.store.select('appShoppingElementLists').subscribe(
+      ( stateData) => {
+        this.shoppingElementLists = stateData.shoppingElementLists; 
+      }
+    );
     /***** TESTING *****/ 
-    this.shoppingElementLists = this.shoppingElementListsService.getShoppingElementLists();
+    // this.shoppingElementLists = this.shoppingElementListsService.getShoppingElementLists();
     /***** TESTING *****/ 
   }
 
@@ -92,15 +112,18 @@ export class ShoppingElementListsComponent {
       creationDate: shoppingListDate,
       shoppingElements: [],
     };
-    this.shoppingElementListsService.addShoppingElementList(newShoppingElementList);
+    this.store.dispatch(new ShoppingElementListsActions.AddShoppingElementList(newShoppingElementList));
+
+
+    // this.shoppingElementListsService.addShoppingElementList(newShoppingElementList);
     // Detect changes to update document.body and scroll properly to bottom
     this.changeDetectorRef.detectChanges();
     this.scrollToBottom();
   }
 
-  deleteShoppingList(deleteShoppingElementListIndex: number){
-    console.log('deleteShoppingList');
-    this.shoppingElementListsService.deleteShoppingElementList(deleteShoppingElementListIndex);
+  deleteShoppingElementList(shoppingElementListIndex: number){
+    this.store.dispatch(new ShoppingElementListsActions.DeleteShoppingElementList(shoppingElementListIndex));
+    // this.shoppingElementListsService.deleteShoppingElementList(deleteShoppingElementListIndex);
   }
 
   scrollToBottom(){

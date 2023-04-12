@@ -1,18 +1,17 @@
-import { ChangeDetectorRef, Component, Input, QueryList, ViewChild, ViewChildren, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectorRef, Component, QueryList, ViewChildren, ViewEncapsulation } from '@angular/core';
 import { CurrencyFormatterService } from 'src/app/services/currency-formatter.service';
-import { AppState, ShoppingElement, ShoppingElementList } from '../../interfaces/interfaces';
-import { Output, EventEmitter } from '@angular/core';
+import { ShoppingElement, ShoppingElementList } from '../../interfaces/interfaces';
 import { Animations } from '../../listy-animations';
 import { ShoppingElementComponent } from '../shopping-element/shopping-element.component';
 import { ColorGeneratorService } from 'src/app/services/color-generator.service copy';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { DatePipe } from '@angular/common';
-import { Subject, takeUntil } from 'rxjs';
-import { select, Store } from '@ngrx/store';
-import { isLoadingSelector, shoppingElementsSelector } from 'src/app/store/selectors';
-import * as ShoppingElementsActions from '../../store/actions'
+import { Subject, Subscription } from 'rxjs';
+import { Store } from '@ngrx/store';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ShoppingElementListsService } from 'src/app/services/shopping-element-lists.service';
+import * as fromApp from '../../store/app.reducer'
+import { selectShoppingElementListByIndex } from 'src/app/store/selectors';
 
 @Component({
   selector: 'shopping-element-list',
@@ -49,6 +48,7 @@ export class ShoppingElementListComponent {
 
   isLoading: boolean = false;
   private unsubscribe$ = new Subject<void>();
+  private subscription: Subscription;
 
   /* –– Constructor
    * –––––––––––––––––––––– */
@@ -58,49 +58,43 @@ export class ShoppingElementListComponent {
   private changeDetectorRef: ChangeDetectorRef,
   private colorGenerator: ColorGeneratorService,
   private formBuilder: FormBuilder,
-  private store: Store<AppState>,
   private route: ActivatedRoute,
   private router: Router,
-  private shoppingElementListsService: ShoppingElementListsService) { 
+  private shoppingElementListsService: ShoppingElementListsService,
+  private store: Store< fromApp.AppState >) { 
     this.shoppingElementComponents = new QueryList<ShoppingElementComponent>;
   }
   
   ngOnInit(): void {
-    // Get shopping list id from url
+    // Get shopping list index from url
     this.shoppingElementListIndex = +this.route.snapshot.url[1].path || 0;
-    console.log('searchedShoppingElementList', this.shoppingElementList);
-    // If there's no list found, redirect to shopping list dashboard, else, continue to load
-    if(this.isEmptyObject(this.shoppingElementListsService.getShoppingElementList(this.shoppingElementListIndex))){
-      this.router.navigateByUrl('shopping-lists');
-    } else {
-      // Assign shopping list
-      this.shoppingElementList = this.shoppingElementListsService.getShoppingElementList(this.shoppingElementListIndex);
-      // Create form from shoppingElementList object
-      this.createShoppingElementListForm();
+    
+    // Select list by index
+    this.subscription = this.store.select(selectShoppingElementListByIndex(this.shoppingElementListIndex)).subscribe((shoppingElementList) => {      
+      // If there's no list found, redirect to shopping list dashboard, else, continue to load
+      if(this.isEmptyObject(shoppingElementList)){
+        this.router.navigateByUrl('shopping-lists');
+      } else {
+        // Assign shopping list
+        this.shoppingElementList = shoppingElementList;
+        // Create form from shoppingElementList object
+        this.createShoppingElementListForm();
 
-      // Calculate final price
-      this.updateFinalPrice();
+        // Calculate final price
+        this.updateFinalPrice();
 
-      // Focus on name when opening list
-      this.shoppingElementListNameHtmlElementId = 'shopping-element-list-name-textbox';
-      this.toggleEditShoppingElementListNameMode();
-      const shoppingElementListInputElement = document.getElementById(this.shoppingElementListNameHtmlElementId) as HTMLInputElement;
-      this.focusInputElement(shoppingElementListInputElement);
-    }
-
-    // Get properties from observables
-    this.store
-      .pipe(select(isLoadingSelector), takeUntil(this.unsubscribe$)) // unsubscribe to prevent memory leak
-      .subscribe(
-        // unwrap observable
-        isLoading => this.isLoading = isLoading
-    ); 
-
+        // Focus on name when opening list
+        this.shoppingElementListNameHtmlElementId = 'shopping-element-list-name-textbox';
+        this.toggleEditShoppingElementListNameMode();
+        const shoppingElementListInputElement = document.getElementById(this.shoppingElementListNameHtmlElementId) as HTMLInputElement;
+        this.focusInputElement(shoppingElementListInputElement);
+        console.log('shoppingElementListIndex with index', this.shoppingElementListIndex, ' is', this.shoppingElementList);
+      }
+    });
   }
 
   ngOnDestroy(): void {
-    this.unsubscribe$.next();
-    this.unsubscribe$.complete();
+    this.subscription.unsubscribe();
   }
 
   // Access children here when done loading
@@ -189,7 +183,7 @@ export class ShoppingElementListComponent {
     // Update name value in shoppingElementList
     this.shoppingElementList.name = this.shoppingElementListForm.controls['name'].value!;
     // Update name with shopping element service
-    this.shoppingElementListsService.updateShoppingListName(this.shoppingElementListIndex, this.shoppingElementListForm.controls['name'].value!);
+    //////// this.shoppingElementListsService.updateShoppingListName(this.shoppingElementListIndex, this.shoppingElementListForm.controls['name'].value!);
     // Toggle editing mode
     this.isEditingShoppingElementListName = false;
   }
@@ -218,3 +212,4 @@ export class ShoppingElementListComponent {
     this.shoppingElementListForm.patchValue({name: inputValue});
   }
 }
+
