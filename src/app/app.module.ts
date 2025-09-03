@@ -27,6 +27,8 @@ import { EffectsModule } from '@ngrx/effects';
 import { ShoppingElementsEffects } from './store/shopping-elements-effects';
 import { ShoppingElementListsComponent } from './components/shopping-element-lists/shopping-element-lists.component';
 import { SidenavComponent } from './components/sidenav/sidenav.component';
+import { FruitListComponent } from './components/fruit-list/fruit-list.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -36,6 +38,7 @@ import { SidenavComponent } from './components/sidenav/sidenav.component';
     ShoppingElementComponent,
     ShoppingElementListsComponent,
     SidenavComponent,
+    FruitListComponent,
   ],
   imports: [
     BrowserModule,
@@ -60,7 +63,8 @@ import { SidenavComponent } from './components/sidenav/sidenav.component';
     MatFormFieldModule,
     MatInputModule,
     MatCheckboxModule,
-    MatSidenavModule
+    MatSidenavModule,
+    HttpClientModule
   ],
   providers: [CurrencyFormatterService, ColorGeneratorService, DatePipe],
   bootstrap: [AppComponent]

@@ -6,6 +6,11 @@ export interface User {
   shoppingElementLists: ShoppingElementList[];
 }
 
+export interface ShoppingFruit {
+  fruitId: string;
+  fruitName: string;
+}
+
 export interface ShoppingElement {
   name: string;
   unitPrice: number;
